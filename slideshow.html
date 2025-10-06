@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simple HTML5 Slideshow</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f0f0f0; }
+  .slideshow-container {
+    max-width: 600px; margin: 50px auto; background: white; padding: 20px; border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  .slide {
+    display: none; 
+    font-size: 1.5em; 
+    text-align: center; 
+    padding: 40px 20px; 
+    min-height: 150px;
+  }
+</style>
+</head>
+<body>
+  <div class="slideshow-container">
+    <div class="slide">Slide 1: Welcome to the slideshow.</div>
+    <div class="slide">Slide 2: Here is some text content.</div>
+    <div class="slide">Slide 3: This is the last slide.</div>
+  </div>
+
+  <script>
+    let slideIndex = 0;
+    const slides = document.getElementsByClassName("slide");
+    function showSlides() {
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) { slideIndex = 1; }
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 3000); // Change slide every 3 seconds
+    }
+    showSlides();
+  </script>
+</body>
+</html>
