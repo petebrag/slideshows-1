@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Rules Slideshow</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .slideshow-container {
+            width: 80%;
+            max-width: 900px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .slide {
+            display: none;
+            animation: fadeInOut 1s ease-in-out;
+            min-height: 200px; /* Adjust as needed */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .slide p {
+            font-size: 1.5em;
+            line-height: 1.6;
+            margin: 0;
+            color: #333;
+        }
+        .slide:first-child {
+            display: block; /* Show the first slide initially */
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            5% { opacity: 1; }
+            95% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="slide">
+            <p>The 4 Money Rules That Made Me a Millionaire<br>Source: YouTube (https://www.youtube.com/watch/Zeiy22UBsW4)</p>
+        </div>
+        <div class="slide">
+            <p>This video outlines a four-step framework for achieving significant wealth, presented by an entrepreneur who went from being broke to a multi-millionaire. The core philosophy is that financial success is not about luck but about systematically applying a set of rules that make success inevitable.</p>
+        </div>
+        <div class="slide">
+            <p>The strategy involves first mastering a high-value skill, then leveraging that skill to build equity rather than trading time for a salary. This process requires long-term patience with results but impatience with daily action.</p>
+        </div>
+        <div class="slide">
+            <p>Finally, one can accelerate this journey by strategically placing oneself in a high-opportunity environment.</p>
+        </div>
+        <div class="slide">
+            <p>To achieve wealth, the first rule is to Master One High-Value, Money-Making Skill. The foundation of wealth is mastery in one of four specific skills. Instead of being a generalist, you must become exceptional in one of these areas.</p>
+        </div>
+        <div class="slide">
+            <p>The first high-value, money-making skill is Selling: the art of persuasion, marketing, and closing deals.</p>
+        </div>
+        <div class="slide">
+            <p>The second high-value, money-making skill is Making: the ability to create products, whether digital (apps, content) or physical.</p>
+        </div>
+        <div class="slide">
+            <p>The third high-value, money-making skill is Designing: possessing exceptional taste and an understanding of form and function (e.g., Steve Jobs).</p>
+        </div>
+        <div class="slide">
+            <p>The fourth high-value, money-making skill is Hunting: the skill of spotting undervalued opportunities, such as in real estate, stocks, or angel investing (e.g., Warren Buffett).</p>
+        </div>
+        <div class="slide">
+            <p>To master a skill, immerse yourself in an environment where it is practiced at a high level, identify the top performer, and then double their inputs while obsessively studying the craft in your off-hours.</p>
+        </div>
+        <div class="slide">
+            <p>The second rule of money is to Own Equity, Don’t Rent Your Time. A salary, while providing security, is a cap on your earning potential. True wealth is built through ownership.</p>
+        </div>
+        <div class="slide">
+            <p>Once you have developed your money-making skill, the next step in owning equity is to use it to build equity, not to earn a higher wage. This can be accomplished in three primary ways. The first is Code: turn your skill into a scalable digital product, like a software application or a website theme, that can be sold many times over with minimal additional effort.</p>
+        </div>
+        <div class="slide">
+            <p>The second way to own equity is through Content: package your knowledge into scalable media like books, courses, or videos that can reach a massive audience.</p>
+        </div>
+        <div class="slide">
+            <p>The third way to own equity is through Capital: use your skill (particularly "hunting") to invest capital—your own or others'—into assets that generate returns, taking a percentage of the profits.</p>
+        </div>
+        <div class="slide">
+            <p>The third rule of money is to Wait: Be Patient with Results, Impatient with Action. Wealth creation is an inevitable outcome of following the right process, but it is not instantaneous. The key is to adopt a mindset of being "impatient with action and patient with results."</p>
+        </div>
+        <div class="slide">
+            <p>This means executing with urgency and consistency on a daily basis while understanding that the significant rewards will take years to materialize. Resisting the urge to constantly check for growth allows your efforts to compound over time.</p>
+        </div>
+        <div class="slide">
+            <p>The fourth rule of money is Proximity is Power. You can dramatically accelerate your progress by physically moving to the epicenter of your chosen industry (e.g., Silicon Valley for tech, Los Angeles for entertainment).</p>
+        </div>
+        <div class="slide">
+            <p>Surrounding yourself with ambitious, like-minded individuals who are on the same path creates opportunities for learning, networking, and luck. Your environment and the people you associate with have a direct and powerful influence on your mindset, standards, and ultimate success. If you want to change your life, change your zip code.</p>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.display = (i === index) ? 'flex' : 'none';
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Initial display
+        showSlide(currentSlide);
+
+        // Loop continuously, changing slide every 10 seconds
+        setInterval(nextSlide, 10000);
+    </script>
+</body>
+</html>
