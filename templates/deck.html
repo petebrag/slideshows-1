@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="html-doc template v1">
+  <title>Slideshow Machine</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101419; --paper: #19212a; --paper-2: #202b36; --text: #eef3f7; --muted: #a8b4c1;
+      --line: #334252; --accent: #78b7ff; --good: #7ee2ad; --warn: #f5c26b; --bad: #ff8a8a;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .22);
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f5f7fb; --paper: #fff; --paper-2: #edf2f7; --text: #162130; --muted: #5a6877;
+      --line: #cbd6e2; --accent: #175cc5; --good: #087443; --warn: #8a5a00; --bad: #b42318;
+      --shadow: 0 8px 24px rgba(20, 30, 45, .12);
+    }
+    * { box-sizing: border-box; }
+    html, body { background: var(--bg); }
+    body {
+      margin: 0; color: var(--text);
+      font: 1rem/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      overflow-wrap: anywhere;
+    }
+    main { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0 96px; }
+
+    /* Header */
+    .eyebrow { margin: 0 0 8px; color: var(--muted); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .eyebrow:empty, .lede:empty { display: none; }
+    h1 { margin: 0 0 10px; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; letter-spacing: -.01em; }
+    .lede { max-width: 790px; margin: 0 0 28px; color: var(--muted); font-size: 1.05rem; }
+
+    /* Sections render as cards (pandoc --section-divs emits <section>) */
+    section { margin: 20px 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+    section section { margin: 16px 0 0; padding: 0; border: 0; background: transparent; }
+    h2 { margin: 0 0 12px; font-size: 1.35rem; line-height: 1.25; }
+    h3 { margin: 18px 0 8px; font-size: 1.08rem; }
+    h4, h5, h6 { margin: 14px 0 6px; font-size: 1rem; color: var(--muted); }
+    section > h2:first-child, section > h3:first-child { margin-top: 0; }
+
+    /* Body text */
+    p { margin: 10px 0; }
+    ul, ol { margin: 10px 0; padding-left: 24px; }
+    li + li { margin-top: 6px; }
+    li > p { margin: 4px 0; }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    strong { font-weight: 700; }
+    hr { margin: 28px 0; border: 0; border-top: 1px solid var(--line); }
+    section > hr:last-child { display: none; }
+    ul.task-list, ul:has(> li > input[type="checkbox"]) { list-style: none; padding-left: 4px; }
+    li > input[type="checkbox"], li > label > input[type="checkbox"] { margin: 0 8px 0 0; vertical-align: -1px; accent-color: var(--accent); }
+    img, video { max-width: 100%; height: auto; border-radius: 6px; }
+    blockquote { margin: 14px 0; padding: 10px 16px; border-left: 4px solid var(--accent); border-radius: 0 6px 6px 0; background: var(--paper-2); color: var(--text); }
+    blockquote > :first-child { margin-top: 0; }
+    blockquote > :last-child { margin-bottom: 0; }
+
+    /* Code: wraps instead of scrolling, so print/PDF keeps everything */
+    code, pre, kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; }
+    :not(pre) > code { padding: .1em .35em; border: 1px solid var(--line); border-radius: 4px; background: var(--paper-2); }
+    pre { margin: 12px 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); white-space: pre-wrap; overflow-wrap: anywhere; }
+    pre code { padding: 0; border: 0; background: none; }
+
+    /* Tables: full width, wrapping cells, no scroll container */
+    table { width: 100%; margin: 14px 0; border-collapse: collapse; font-size: .94rem; }
+    th, td { padding: 8px 10px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    thead th { background: var(--paper-2); font-weight: 700; }
+    tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--paper-2) 45%, transparent); }
+
+    /* Callouts: <div class="callout note|good|warn|bad"> */
+    .callout { margin: 14px 0; padding: 12px 16px; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; background: var(--paper-2); }
+    .callout.good { border-left-color: var(--good); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.bad { border-left-color: var(--bad); }
+    .callout > :first-child { margin-top: 0; }
+    .callout > :last-child { margin-bottom: 0; }
+    .muted { color: var(--muted); }
+
+    /* Floating controls */
+    .controls { position: fixed; right: 20px; bottom: 20px; z-index: 10; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; max-width: calc(100% - 32px); padding: 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); box-shadow: var(--shadow); }
+    .controls button { min-height: 34px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper-2); color: var(--text); padding: 6px 10px; font: inherit; font-size: .75rem; font-weight: 700; cursor: pointer; }
+    .controls button:hover, .controls button:focus-visible, .controls button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); outline: none; }
+    .sizes { display: flex; gap: 4px; }
+    .notability-button { margin-left: 4px; border-color: var(--good) !important; color: var(--good) !important; }
+    .notability-button:hover, .notability-button:focus-visible { background: color-mix(in srgb, var(--good) 12%, var(--paper-2)); outline: 2px solid var(--good); }
+    .edit-button { margin-left: 4px; }
+    .edit-button[aria-pressed="true"] { border-color: var(--warn) !important; color: var(--warn) !important; }
+    .save-button { display: none; border-color: var(--accent) !important; color: var(--accent) !important; }
+    .save-button.visible { display: inline-flex; align-items: center; }
+    main.editing { outline: 2px dashed var(--warn); outline-offset: 10px; border-radius: 8px; }
+    main.editing section { cursor: text; }
+
+    @media (max-width: 640px) {
+      main { padding-top: 28px; }
+      section { padding: 16px; }
+      .controls { right: 8px; bottom: 8px; border-radius: 14px; }
+    }
+
+    @media print {
+      :root, :root[data-theme="dark"], :root[data-theme="light"] {
+        color-scheme: light;
+        --bg: #fff; --paper: #fff; --paper-2: #f3f5f7; --text: #000; --muted: #333;
+        --line: #777; --accent: #0645ad; --good: #075e33; --warn: #704800; --bad: #8a1c12;
+        --shadow: none;
+      }
+      html, body { background: #fff !important; color: #000 !important; font-size: 100% !important; }
+      main { width: 100%; padding: 0; outline: none !important; }
+      section, pre, blockquote, .callout, table, th, td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      blockquote, .callout, pre, tr, li { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+      .controls { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Slideshow Machine</p>
+      <h1>Slideshow Machine</h1>
+      <p class="lede">A looping slideshow</p>
+    </header>
+    <section>
+      <h2>1. Section</h2>
+      <p>Content.</p>
+    </section>
+  </main>
+  <div class="controls" aria-label="Document display controls">
+    <button type="button" data-theme-control>Light mode</button>
+    <div class="sizes" role="group" aria-label="Font size">
+      <button type="button" data-size="small" aria-pressed="true">Small</button>
+      <button type="button" data-size="medium" aria-pressed="false">Medium</button>
+      <button type="button" data-size="large" aria-pressed="false">Large</button>
+    </div>
+    <button type="button" class="notability-button" data-notability>Send to Notability</button>
+    <button type="button" class="edit-button" data-edit aria-pressed="false">Edit</button>
+    <button type="button" class="save-button" data-save>Save</button>
+  </div>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const theme = document.querySelector('[data-theme-control]');
+      const buttons = [...document.querySelectorAll('[data-size]')];
+      const notability = document.querySelector('[data-notability]');
+      const editButton = document.querySelector('[data-edit]');
+      const saveButton = document.querySelector('[data-save]');
+      const main = document.querySelector('main');
+      const sizes = { small: '100%', medium: '150%', large: '200%' };
+      const setTheme = (value) => { root.dataset.theme = value; theme.textContent = value === 'dark' ? 'Light mode' : 'Dark mode'; };
+      const setSize = (value) => { root.style.fontSize = sizes[value]; buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.size === value))); };
+      const sendToNotability = () => {
+        if (window.location.protocol !== 'file:') { alert('Send to Notability is available for local HTML files.'); return; }
+        window.location.href = 'to-notability://import?file=' + encodeURIComponent(window.location.href);
+      };
+
+      // WYSIWYG in-place edit: Edit makes <main> editable, Save copies the
+      // serialized page to the clipboard and hands off to the local
+      // wysiwyg-save:// handler, which writes it to this exact file (with a
+      // timestamped backup in <folder>/.wysiwyg-save-backups/).
+      let editing = false;
+      const setEditing = (value) => {
+        editing = value;
+        main.contentEditable = value ? 'true' : 'false';
+        main.classList.toggle('editing', value);
+        editButton.textContent = value ? 'Editing…' : 'Edit';
+        editButton.setAttribute('aria-pressed', String(value));
+        saveButton.classList.toggle('visible', value);
+      };
+      const serializedDocument = () => {
+        const clone = root.cloneNode(true);
+        clone.removeAttribute('style');
+        clone.setAttribute('data-theme', 'dark');
+        const clonedMain = clone.querySelector('main');
+        clonedMain?.removeAttribute('contenteditable');
+        clonedMain?.classList.remove('editing');
+        clone.querySelector('[data-edit]')?.setAttribute('aria-pressed', 'false');
+        clone.querySelector('[data-edit]')?.replaceChildren(document.createTextNode('Edit'));
+        clone.querySelector('[data-save]')?.classList.remove('visible');
+        return '<!doctype html>\n' + clone.outerHTML + '\n';
+      };
+      const copyToClipboard = (text) => {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch { ok = false; }
+        document.body.removeChild(area);
+        return ok;
+      };
+      const saveDoc = () => {
+        if (window.location.protocol !== 'file:') { alert('Save is available for local HTML files.'); return; }
+        const html = serializedDocument();
+        if (!copyToClipboard(html)) { alert('Save failed: could not copy the document to the clipboard.'); return; }
+        window.location.href = 'wysiwyg-save://write?file=' + encodeURIComponent(decodeURIComponent(window.location.pathname));
+        saveButton.textContent = 'Saved';
+        setEditing(false);
+        setTimeout(() => { saveButton.textContent = 'Save'; }, 1500);
+      };
+
+      setTheme('dark'); setSize('small');
+      theme.addEventListener('click', () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+      buttons.forEach((button) => button.addEventListener('click', () => setSize(button.dataset.size)));
+      notability.addEventListener('click', sendToNotability);
+      editButton.addEventListener('click', () => setEditing(!editing));
+      saveButton.addEventListener('click', saveDoc);
+    })();
+  </script>
+</body>
+</html>
