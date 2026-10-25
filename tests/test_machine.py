@@ -18,7 +18,7 @@ class CreationTests(unittest.TestCase):
         self.assertTrue(all(len(s.split()) <= 45 for s in machine.chunks(text)))
 
     def test_literal_source_survives_markdown(self):
-        original = '1. Keep *this* and <script>alert(1)</script> and [word](https://example.com) and "quotes" unchanged.'
+        original = '1. Keep *this* and <script>alert(1)</script> and [word](https://example.com) and "quotes" and &copy; and ^word^ and $5 unchanged.'
         escaped = machine.plain_markdown(original)
         self.assertEqual(machine.run('pandoc', '-f', 'markdown-smart', '-t', 'plain', '--wrap=none', input=escaped).strip(), original)
         rendered, _, _, _ = machine.render('---\ntitle: "test123"\nseconds: auto\n---\n' + escaped)

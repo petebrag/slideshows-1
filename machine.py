@@ -64,7 +64,7 @@ def chunks(text, limit=45):
 
 def plain_markdown(text):
     # Literal source is data. Escape Markdown so source punctuation cannot alter it.
-    return re.sub(r'([\\`*_{}\[\]()#+.!<>|~\-])', r'\\\1', text)
+    return re.sub(r'([\\`*_{}\[\]()#+.!<>|~&^$\-])', r'\\\1', text)
 
 
 def parse_deck(text):
