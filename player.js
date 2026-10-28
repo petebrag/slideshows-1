@@ -73,6 +73,8 @@
   play.addEventListener('click', () => setPlaying(!playing));
   document.getElementById('previous').addEventListener('click', () => step(-1));
   document.getElementById('next').addEventListener('click', () => step(1));
+  document.getElementById('edge-previous').addEventListener('click', () => step(-1));
+  document.getElementById('edge-next').addEventListener('click', () => step(1));
   speed.addEventListener('change', schedule);
   document.addEventListener('visibilitychange', () => {
     schedule();
@@ -88,7 +90,9 @@
     if (event.code === 'Space') { event.preventDefault(); setPlaying(!playing); }
   });
   const stage = document.querySelector('.stage');
-  stage.addEventListener('touchstart', event => { touchX = event.touches[0].clientX; }, {passive: true});
+  stage.addEventListener('touchstart', event => {
+    touchX = event.target.closest('.edge-navigation') ? null : event.touches[0].clientX;
+  }, {passive: true});
   stage.addEventListener('touchend', event => {
     if (touchX === null) return;
     const delta = event.changedTouches[0].clientX - touchX;

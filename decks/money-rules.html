@@ -127,6 +127,13 @@ header h1 { font-size: clamp(1.15rem, 2.5vw, 1.7rem); margin-bottom: 20px; }
 .stage { min-height: min(60dvh, 700px); display: grid; place-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: clamp(22px, 5vw, 65px); touch-action: pan-y; }
 .slide { width: 100%; font-size: clamp(1.55rem, 3.1vw, 2.9rem); line-height: 1.5; text-align: center; overflow-wrap: anywhere; }
 .slide[hidden] { display: none; }
+.stage { position: relative; padding-inline: max(64px, min(5vw, 65px)); }
+.edge-navigation { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; display: grid; place-items: center; width: 52px; height: 88px; padding: 0; border: 0; border-radius: 12px; background: transparent; color: var(--muted); cursor: pointer; touch-action: manipulation; }
+.edge-previous { left: max(4px, env(safe-area-inset-left)); }
+.edge-next { right: max(4px, env(safe-area-inset-right)); }
+.edge-navigation svg { width: 40px; height: 40px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.edge-navigation:hover { color: var(--text); background: color-mix(in srgb, var(--text) 7%, transparent); }
+.edge-navigation:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; color: var(--text); }
 .slide h1, .slide h2, .slide h3 { font-size: 1.2em; line-height: 1.25; }
 .slide p { margin: 0.6em 0; }
 .slide ul, .slide ol { text-align: left; }
@@ -134,7 +141,7 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
 .revision { font-family: monospace; }
 .presenting, .presenting body { overflow: hidden; }
 .presenting main { width: 100%; padding: 0; }
-.presenting .stage { position: fixed; inset: 0; width: 100%; height: 100dvh; min-height: 0; margin: 0; border: 0; border-radius: 0; padding: clamp(24px, 6vw, 90px); }
+.presenting .stage { position: fixed; inset: 0; width: 100%; height: 100dvh; min-height: 0; margin: 0; border: 0; border-radius: 0; padding: clamp(24px, 6vw, 90px); padding-inline: max(64px, min(6vw, 90px)); }
 .presenting main > header, .presenting .playback, .presenting footer { position: fixed; z-index: 11; padding: 12px 18px; margin: 0; background: var(--paper); box-shadow: var(--shadow); }
 .presenting main > header { top: 0; left: 0; right: 0; }
 .presenting main > header h1 { margin: 0; font-size: 1rem; }
@@ -149,17 +156,18 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
 .presenting.controls-hidden { cursor: none; }
 @media (max-width: 600px) {
   main { width: calc(100% - 24px); padding-top: 16px; padding-bottom: 190px; }
-  .stage { min-height: 48dvh; padding: 24px 18px; }
+  .stage { min-height: 48dvh; padding: 24px 64px; }
   .slide { font-size: 1.65rem; }
   .playback label { font-size: .8rem; }
   #counter { margin-left: 0; }
 }
+@media print { .edge-navigation { display: none; } }
 
 </style>
 </head>
 <body>
   <main>
-<header><p class="eyebrow">Slideshow Machine</p><h1>Money Rules</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><article class="slide" data-seconds="8" ><p>The 4 Money Rules That Made Me a Millionaire Source: YouTube (https://www.youtube.com/watch/Zeiy22UBsW4)</p>
+<header><p class="eyebrow">Slideshow Machine</p><h1>Money Rules</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><button type="button" id="edge-previous" class="edge-navigation edge-previous" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 5 8 12 15 19" /></svg></button><button type="button" id="edge-next" class="edge-navigation edge-next" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 5 16 12 9 19" /></svg></button><article class="slide" data-seconds="8" ><p>The 4 Money Rules That Made Me a Millionaire Source: YouTube (https://www.youtube.com/watch/Zeiy22UBsW4)</p>
 </article><article class="slide" data-seconds="20" hidden><p>This video outlines a four-step framework for achieving significant wealth, presented by an entrepreneur who went from being broke to a multi-millionaire. The core philosophy is that financial success is not about luck but about systematically applying a set of rules that make success inevitable.</p>
 </article><article class="slide" data-seconds="16" hidden><p>The strategy involves first mastering a high-value skill, then leveraging that skill to build equity rather than trading time for a salary. This process requires long-term patience with results but impatience with daily action.</p>
 </article><article class="slide" data-seconds="8" hidden><p>Finally, one can accelerate this journey by strategically placing oneself in a high-opportunity environment.</p>
@@ -342,6 +350,8 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
   play.addEventListener('click', () => setPlaying(!playing));
   document.getElementById('previous').addEventListener('click', () => step(-1));
   document.getElementById('next').addEventListener('click', () => step(1));
+  document.getElementById('edge-previous').addEventListener('click', () => step(-1));
+  document.getElementById('edge-next').addEventListener('click', () => step(1));
   speed.addEventListener('change', schedule);
   document.addEventListener('visibilitychange', () => {
     schedule();
@@ -357,7 +367,9 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
     if (event.code === 'Space') { event.preventDefault(); setPlaying(!playing); }
   });
   const stage = document.querySelector('.stage');
-  stage.addEventListener('touchstart', event => { touchX = event.touches[0].clientX; }, {passive: true});
+  stage.addEventListener('touchstart', event => {
+    touchX = event.target.closest('.edge-navigation') ? null : event.touches[0].clientX;
+  }, {passive: true});
   stage.addEventListener('touchend', event => {
     if (touchX === null) return;
     const delta = event.changedTouches[0].clientX - touchX;

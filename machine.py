@@ -138,6 +138,8 @@ def render(text):
     content = '<header><p class="eyebrow">Slideshow Machine</p><h1>' + html.escape(meta['title']) + '</h1></header>'
     content += '<nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><span id="counter" aria-live="polite"></span></nav>'
     content += '<div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows">'
+    for direction, points in [('previous', '15 5 8 12 15 19'), ('next', '9 5 16 12 9 19')]:
+        content += f'<button type="button" id="edge-{direction}" class="edge-navigation edge-{direction}" aria-label="{direction.capitalize()} slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="{points}" /></svg></button>'
     for i, slide in enumerate(slides):
         content += f'<article class="slide" data-seconds="{slide["seconds"]}" {"hidden" if i else ""}>{slide["html"]}</article>'
     content += '</div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision ' + revision + '</span></footer>'

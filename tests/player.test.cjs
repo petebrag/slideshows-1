@@ -120,6 +120,19 @@ test('speed changes replace the current timer, then pause cancels it', () => {
   assert.equal(p.timers.size, 0);
 });
 
+test('edge chevrons navigate and wrap with fullscreen controls hidden', async () => {
+  const p = player();
+  p.element('play').fire('click');
+  await p.element('fullscreen').fire('click');
+  p.element('edge-previous').fire('click');
+  assert.equal(p.element('counter').textContent, '2 / 2');
+  assert.equal(p.element('play').textContent, 'Play');
+  assert.equal(p.timers.size, 0);
+  p.element('edge-next').fire('click');
+  assert.equal(p.element('counter').textContent, '1 / 2');
+  assert.equal(p.document.documentElement.classList.contains('controls-hidden'), true);
+});
+
 test('hidden pages stop advancing and visible pages reacquire wake lock', async () => {
   const p = player();
   p.element('play').fire('click');
