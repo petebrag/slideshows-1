@@ -132,6 +132,21 @@ header h1 { font-size: clamp(1.15rem, 2.5vw, 1.7rem); margin-bottom: 20px; }
 .slide ul, .slide ol { text-align: left; }
 footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wrap; color: var(--muted); margin-top: 15px; font-size: .8rem; }
 .revision { font-family: monospace; }
+.presenting, .presenting body { overflow: hidden; }
+.presenting main { width: 100%; padding: 0; }
+.presenting .stage { position: fixed; inset: 0; width: 100%; height: 100dvh; min-height: 0; margin: 0; border: 0; border-radius: 0; padding: clamp(24px, 6vw, 90px); }
+.presenting main > header, .presenting .playback, .presenting footer { position: fixed; z-index: 11; padding: 12px 18px; margin: 0; background: var(--paper); box-shadow: var(--shadow); }
+.presenting main > header { top: 0; left: 0; right: 0; }
+.presenting main > header h1 { margin: 0; font-size: 1rem; }
+.presenting main > header .eyebrow { display: none; }
+.presenting .playback { bottom: 0; left: 0; right: 0; }
+.presenting footer { top: 48px; left: 0; right: 0; font-size: .75rem; }
+.presenting .controls { bottom: 85px; z-index: 12; }
+.presenting.controls-hidden main > header,
+.presenting.controls-hidden .playback,
+.presenting.controls-hidden footer,
+.presenting.controls-hidden .controls { visibility: hidden; pointer-events: none; }
+.presenting.controls-hidden { cursor: none; }
 @media (max-width: 600px) {
   main { width: calc(100% - 24px); padding-top: 16px; padding-bottom: 190px; }
   .stage { min-height: 48dvh; padding: 24px 18px; }
@@ -378,12 +393,65 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
     if (Math.abs(delta) > 65) step(delta < 0 ? 1 : -1);
   }, {passive: true});
   const fullscreen = document.getElementById('fullscreen');
-  if (!document.documentElement.requestFullscreen) fullscreen.hidden = true;
+  const root = document.documentElement;
+  let presenting = false;
+  let nativeFullscreen = false;
+  let controlsTimer = null;
+  function revealControls() {
+    clearTimeout(controlsTimer);
+    root.classList.remove('controls-hidden');
+    if (!presenting) return;
+    controlsTimer = setTimeout(() => {
+      // Keep the speed picker and document editor usable while interacting.
+      if (document.activeElement?.closest('select, [contenteditable="true"]')) {
+        revealControls();
+        return;
+      }
+      if (document.activeElement?.closest('.playback, .controls')) stage.focus({preventScroll: true});
+      root.classList.add('controls-hidden');
+    }, 3000);
+  }
+  function setPresentation(value) {
+    presenting = value;
+    root.classList.toggle('presenting', value);
+    root.classList.remove('controls-hidden');
+    clearTimeout(controlsTimer);
+    fullscreen.textContent = value ? 'Exit full screen' : 'Full screen';
+    fullscreen.setAttribute('aria-pressed', String(value));
+    if (value) {
+      stage.focus({preventScroll: true});
+      root.classList.add('controls-hidden');
+    }
+  }
+  async function exitPresentation() {
+    setPresentation(false);
+    if (document.fullscreenElement) await document.exitFullscreen();
+  }
   fullscreen.addEventListener('click', async () => {
-    try {
-      if (document.fullscreenElement) await document.exitFullscreen();
-      else await document.documentElement.requestFullscreen();
-    } catch { status.textContent = 'Fullscreen unavailable; playback still works in this view.'; }
+    if (presenting) { await exitPresentation(); return; }
+    setPresentation(true);
+    // Content-only view also works on devices without the browser fullscreen API.
+    try { await root.requestFullscreen?.(); }
+    catch { /* Keep the content-only view within the browser window. */ }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) {
+      nativeFullscreen = true;
+      if (!presenting) setPresentation(true);
+    } else if (nativeFullscreen) {
+      nativeFullscreen = false;
+      setPresentation(false);
+    }
+  });
+  document.addEventListener('pointerdown', revealControls);
+  document.addEventListener('focusin', event => {
+    if (presenting && event.target.closest('.playback, .controls')) revealControls();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && presenting) {
+      event.preventDefault();
+      exitPresentation();
+    } else if (presenting) revealControls();
   });
   show();
 })();
