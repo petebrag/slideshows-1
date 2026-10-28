@@ -28,7 +28,7 @@ Turn a user-supplied file or pasted content into a looping HTML slideshow. The u
 ## Player and verification
 
 - HTML includes all player assets and text; double-click playback works on Mac. Watching hosted files on iPad requires internet. Home Screen installation does not create offline downloads.
-- Play/Pause, arrows/swipes, speed changes, and continuous end-to-start looping are required. Manual navigation pauses. Hidden pages stop timing; returning starts a fresh interval without skipping a backlog.
+- Play/Pause, arrows/swipes, speed changes, and continuous end-to-start looping are required. Manual navigation preserves playing/paused state and starts a fresh reading interval for the selected slide. Only explicit pause controls pause playback. Hidden pages stop timing; returning starts a fresh interval without skipping a backlog.
 - Wake lock is requested during playback and released when paused/hidden. Failure is displayed with an iPad Auto-Lock fallback. Actual iPad Safari and Home Screen wake-lock behavior must be tested on Pete's device; desktop emulation is not device proof.
 - Shared html-doc controls come from the supplied templates. Edit/Save is a local Mac document convenience; edits to the rendered HTML are not the editable deck source. Make durable revisions through the agent. Notability and Save handlers are Mac-specific, not an iPad editing workflow.
 - Focused checks: `python3 -m unittest discover -s tests -v`; `node --check player.js`; `html-doc check .local/previews/<slug>.html`. Test the real browser as well; do not claim iPad confirmation from desktop tests.

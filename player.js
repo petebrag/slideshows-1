@@ -66,9 +66,9 @@
     }
   }
   function step(delta) {
-    setPlaying(false);
     index = (index + delta + slides.length) % slides.length;
     show();
+    schedule();
   }
   play.addEventListener('click', () => setPlaying(!playing));
   document.getElementById('previous').addEventListener('click', () => step(-1));

@@ -61,7 +61,7 @@ function player() {
   };
 }
 
-test('autoplay loops and manual navigation pauses without a leftover timer', () => {
+test('autoplay loops and navigation replaces the timer without pausing', () => {
   const p = player();
   p.element('play').fire('click');
   assert.equal(p.timers.size, 1);
@@ -70,9 +70,11 @@ test('autoplay loops and manual navigation pauses without a leftover timer', () 
   p.tick();
   assert.equal(p.element('counter').textContent, '1 / 2');
   p.element('next').fire('click');
-  assert.equal(p.element('play').textContent, 'Play');
+  assert.equal(p.element('play').textContent, 'Pause');
   assert.equal(p.element('counter').textContent, '2 / 2');
-  assert.equal(p.timers.size, 0);
+  assert.equal(p.timers.size, 1);
+  p.tick();
+  assert.equal(p.element('counter').textContent, '1 / 2');
 });
 
 test('content-only mode works without native fullscreen, reveals on tap, and exits', async () => {
@@ -126,11 +128,30 @@ test('edge chevrons navigate and wrap with fullscreen controls hidden', async ()
   await p.element('fullscreen').fire('click');
   p.element('edge-previous').fire('click');
   assert.equal(p.element('counter').textContent, '2 / 2');
-  assert.equal(p.element('play').textContent, 'Play');
-  assert.equal(p.timers.size, 0);
+  assert.equal(p.element('play').textContent, 'Pause');
+  assert.equal(p.timers.size, 1);
   p.element('edge-next').fire('click');
   assert.equal(p.element('counter').textContent, '1 / 2');
   assert.equal(p.document.documentElement.classList.contains('controls-hidden'), true);
+});
+
+test('navigation preserves explicit pause and gives each new slide its full interval', () => {
+  const p = player();
+  p.element('edge-next').fire('click');
+  assert.equal(p.element('play').textContent, 'Play');
+  assert.equal(p.timers.size, 0);
+  p.slides[0].dataset.seconds = '24';
+  p.element('speed').value = '2';
+  p.element('play').fire('click');
+  const priorTimer = [...p.timers.keys()][0];
+  p.element('edge-previous').fire('click');
+  assert.equal(p.timers.has(priorTimer), false);
+  assert.equal(p.timers.size, 1);
+  assert.equal([...p.timers.values()][0].delay, 12000);
+  p.element('play').fire('click');
+  p.element('next').fire('click');
+  assert.equal(p.element('play').textContent, 'Play');
+  assert.equal(p.timers.size, 0);
 });
 
 test('hidden pages stop advancing and visible pages reacquire wake lock', async () => {
