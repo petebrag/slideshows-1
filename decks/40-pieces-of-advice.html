@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="html-doc template v1">
+  <title>40 pieces of advice from 40 years of life</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101419; --paper: #19212a; --paper-2: #202b36; --text: #eef3f7; --muted: #a8b4c1;
+      --line: #334252; --accent: #78b7ff; --good: #7ee2ad; --warn: #f5c26b; --bad: #ff8a8a;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .22);
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f5f7fb; --paper: #fff; --paper-2: #edf2f7; --text: #162130; --muted: #5a6877;
+      --line: #cbd6e2; --accent: #175cc5; --good: #087443; --warn: #8a5a00; --bad: #b42318;
+      --shadow: 0 8px 24px rgba(20, 30, 45, .12);
+    }
+    * { box-sizing: border-box; }
+    html, body { background: var(--bg); }
+    body {
+      margin: 0; color: var(--text);
+      font: 1rem/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      overflow-wrap: anywhere;
+    }
+    main { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0 96px; }
+
+    /* Header */
+    .eyebrow { margin: 0 0 8px; color: var(--muted); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .eyebrow:empty, .lede:empty { display: none; }
+    h1 { margin: 0 0 10px; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; letter-spacing: -.01em; }
+    .lede { max-width: 790px; margin: 0 0 28px; color: var(--muted); font-size: 1.05rem; }
+
+    /* Sections render as cards (pandoc --section-divs emits <section>) */
+    section { margin: 20px 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+    section section { margin: 16px 0 0; padding: 0; border: 0; background: transparent; }
+    h2 { margin: 0 0 12px; font-size: 1.35rem; line-height: 1.25; }
+    h3 { margin: 18px 0 8px; font-size: 1.08rem; }
+    h4, h5, h6 { margin: 14px 0 6px; font-size: 1rem; color: var(--muted); }
+    section > h2:first-child, section > h3:first-child { margin-top: 0; }
+
+    /* Body text */
+    p { margin: 10px 0; }
+    ul, ol { margin: 10px 0; padding-left: 24px; }
+    li + li { margin-top: 6px; }
+    li > p { margin: 4px 0; }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    strong { font-weight: 700; }
+    hr { margin: 28px 0; border: 0; border-top: 1px solid var(--line); }
+    section > hr:last-child { display: none; }
+    ul.task-list, ul:has(> li > input[type="checkbox"]) { list-style: none; padding-left: 4px; }
+    li > input[type="checkbox"], li > label > input[type="checkbox"] { margin: 0 8px 0 0; vertical-align: -1px; accent-color: var(--accent); }
+    img, video { max-width: 100%; height: auto; border-radius: 6px; }
+    blockquote { margin: 14px 0; padding: 10px 16px; border-left: 4px solid var(--accent); border-radius: 0 6px 6px 0; background: var(--paper-2); color: var(--text); }
+    blockquote > :first-child { margin-top: 0; }
+    blockquote > :last-child { margin-bottom: 0; }
+
+    /* Code: wraps instead of scrolling, so print/PDF keeps everything */
+    code, pre, kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; }
+    :not(pre) > code { padding: .1em .35em; border: 1px solid var(--line); border-radius: 4px; background: var(--paper-2); }
+    pre { margin: 12px 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); white-space: pre-wrap; overflow-wrap: anywhere; }
+    pre code { padding: 0; border: 0; background: none; }
+
+    /* Tables: full width, wrapping cells, no scroll container */
+    table { width: 100%; margin: 14px 0; border-collapse: collapse; font-size: .94rem; }
+    th, td { padding: 8px 10px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    thead th { background: var(--paper-2); font-weight: 700; }
+    tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--paper-2) 45%, transparent); }
+
+    /* Callouts: <div class="callout note|good|warn|bad"> */
+    .callout { margin: 14px 0; padding: 12px 16px; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; background: var(--paper-2); }
+    .callout.good { border-left-color: var(--good); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.bad { border-left-color: var(--bad); }
+    .callout > :first-child { margin-top: 0; }
+    .callout > :last-child { margin-bottom: 0; }
+    .muted { color: var(--muted); }
+
+    /* Floating controls */
+    .controls { position: fixed; right: 20px; bottom: 20px; z-index: 10; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; max-width: calc(100% - 32px); padding: 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); box-shadow: var(--shadow); }
+    .controls button { min-height: 34px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper-2); color: var(--text); padding: 6px 10px; font: inherit; font-size: .75rem; font-weight: 700; cursor: pointer; }
+    .controls button:hover, .controls button:focus-visible, .controls button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); outline: none; }
+    .sizes { display: flex; gap: 4px; }
+    .notability-button { margin-left: 4px; border-color: var(--good) !important; color: var(--good) !important; }
+    .notability-button:hover, .notability-button:focus-visible { background: color-mix(in srgb, var(--good) 12%, var(--paper-2)); outline: 2px solid var(--good); }
+    .edit-button { margin-left: 4px; }
+    .edit-button[aria-pressed="true"] { border-color: var(--warn) !important; color: var(--warn) !important; }
+    .save-button { display: none; border-color: var(--accent) !important; color: var(--accent) !important; }
+    .save-button.visible { display: inline-flex; align-items: center; }
+    main.editing { outline: 2px dashed var(--warn); outline-offset: 10px; border-radius: 8px; }
+    main.editing section { cursor: text; }
+
+    @media (max-width: 640px) {
+      main { padding-top: 28px; }
+      section { padding: 16px; }
+      .controls { right: 8px; bottom: 8px; border-radius: 14px; }
+    }
+
+    @media print {
+      :root, :root[data-theme="dark"], :root[data-theme="light"] {
+        color-scheme: light;
+        --bg: #fff; --paper: #fff; --paper-2: #f3f5f7; --text: #000; --muted: #333;
+        --line: #777; --accent: #0645ad; --good: #075e33; --warn: #704800; --bad: #8a1c12;
+        --shadow: none;
+      }
+      html, body { background: #fff !important; color: #000 !important; font-size: 100% !important; }
+      main { width: 100%; padding: 0; outline: none !important; }
+      section, pre, blockquote, .callout, table, th, td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      blockquote, .callout, pre, tr, li { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+      .controls { display: none !important; }
+    }
+  </style>
+<style>
+/* Playback sits inside the shared html-doc document shell. */
+main { width: min(1200px, calc(100% - 32px)); padding: 22px 0 125px; }
+header h1 { font-size: clamp(1.15rem, 2.5vw, 1.7rem); margin-bottom: 20px; }
+.playback { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+.playback button, .playback select { font: inherit; color: var(--text); background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; min-height: 44px; }
+.playback button { cursor: pointer; }
+.playback button:focus-visible, .playback select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+#play { background: var(--accent); color: var(--bg); min-width: 90px; font-weight: 800; }
+.playback label { display: flex; gap: 8px; align-items: center; }
+#counter { color: var(--muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+.stage { min-height: min(60dvh, 700px); display: grid; place-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: clamp(22px, 5vw, 65px); touch-action: pan-y; }
+.slide { width: 100%; font-size: clamp(1.55rem, 3.1vw, 2.9rem); line-height: 1.5; text-align: center; overflow-wrap: anywhere; }
+.slide[hidden] { display: none; }
+.slide h1, .slide h2, .slide h3 { font-size: 1.2em; line-height: 1.25; }
+.slide p { margin: 0.6em 0; }
+.slide ul, .slide ol { text-align: left; }
+footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wrap; color: var(--muted); margin-top: 15px; font-size: .8rem; }
+.revision { font-family: monospace; }
+@media (max-width: 600px) {
+  main { width: calc(100% - 24px); padding-top: 16px; padding-bottom: 190px; }
+  .stage { min-height: 48dvh; padding: 24px 18px; }
+  .slide { font-size: 1.65rem; }
+  .playback label { font-size: .8rem; }
+  #counter { margin-left: 0; }
+}
+
+</style>
+</head>
+<body>
+  <main>
+<header><p class="eyebrow">Slideshow Machine</p><h1>40 pieces of advice from 40 years of life</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><article class="slide" data-seconds="8.0" ><h1 id="pieces-of-advice">40 pieces of advice</h1>
+<p>From 40 years of life</p>
+<p>Tim Denning · Modern Freedom</p>
+<p>October 27, 2026</p>
+</article><article class="slide" data-seconds="17" hidden><h2 id="do-extremely-hard-things.">1. Do extremely hard things.</h2>
+<p>This one pisses a lot of people off. They read it as hustle culture or burnout. Chronic underachievers hate doing hard things. They see stress as a problem. They get frustrated easily.</p>
+</article><article class="slide" data-seconds="19" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
+<p>They can’t stick at one goal for 5 years. They chase passive income. They day trade in every area of life. I’m going to be extremely blunt here. Doing hard things is an IQ test.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
+<p>People who want it to be easy, relaxing or slow never reach their potential. In a world of AI, all the easy things are now done by software, automation, and bots. “Easy” is dead.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
+<p>And as soon as you get obsessed with one hard thing, take it beyond the point of comfort, and force it to work… your life will work. It’s a pattern I can’t ignore.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
+<p>Every person I respect does hard things. They outsource all the easy sh*t to a mountain of monkeys. Hard is the cheat code. Sorry.</p>
+</article><article class="slide" data-seconds="12" hidden><h2 id="have-a-lot-of-sx.">2. Have a lot of s*x.</h2>
+<p>Nothing wrong with bonking your brains out. Gotta balance out all the hard things you do with some fun.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="study-neuroplasticity.">3. Study neuroplasticity.</h2>
+<p>I credit becoming a millionaire to neuroplasticity. Your brain either works for you or against you. What you repeat daily becomes the foundation for what your brain believes. Intentions don’t mean anything. Your brain only understands past actions.</p>
+</article><article class="slide" data-seconds="13" hidden><h2 id="study-neuroplasticity.-continued">3. Study neuroplasticity. · continued</h2>
+<p>Your identity is formed by action. So take the actions of your ideal mentor and your brain will rewire itself around that goal.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="study-neuroplasticity.-continued">3. Study neuroplasticity. · continued</h2>
+<p>But train your brain to be lazy and procrastinate, and it will help you to compound that identity all the way to loserville and extreme poverty.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="master-game-theory.">4. Master game theory.</h2>
+<p>Every game in life is rigged. Building a business, climbing the corporate ladder, real estate, investing in stocks, having a family, learning new skills, etc. To win these games most people try to work harder.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
+<p>But you only have so many hours in the day and everyone else is already playing the work harder game. You must understand how a life game works to manipulate it in your favor.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
+<p>That happens when you understand game theory. Biggest lesson I learned studying game theory: Effort spent inside a rigged game gets absorbed by the game.</p>
+</article><article class="slide" data-seconds="12" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
+<p>It also means once you understand a game you can rig it in your favor. The opposite is also true.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
+<p>If you don’t understand the game you’re playing and the incentives, it’ll be rigged against you and you’ll work harder and harder and not win.</p>
+</article><article class="slide" data-seconds="15" hidden><h2 id="focus-on-making-more-money-not-saving.">5. Focus on making more money, not saving.</h2>
+<p>You cannot save your way to wealth. Once you understand inflation and currency debasement, you realize the math is working against you every day.</p>
+</article><article class="slide" data-seconds="16" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+<p>This is why the cost of living feels like it’s rising higher than your income. But once you understand the math it makes sense.</p>
+</article><article class="slide" data-seconds="13" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+<p>Your skills and experience must be used to make more money. That’s the mindset that builds wealth.</p>
+</article><article class="slide" data-seconds="20" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+<p>And the internet creates leverage to allow you to reach more people faster so you can make more money faster. Internet leverage works in your favor if you let it. But most people hide.</p>
+</article><article class="slide" data-seconds="16" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+<p>They’ve been taught to be invisible out of fear or weird privacy reasons. So the opportunities can’t find them because no one knows they exist.</p>
+</article><article class="slide" data-seconds="17" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+<p>Most people think the solution is to keep asking for permission and applying for opportunities. It isn’t. The challenge with that approach is every opportunity is now global.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+<p>You’re competing against everyone else in the world with the same skills and experience. Some of them are probably more talented than you. Permission-seeking is a losing game by default.</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+<p>Income = Skills + Experience + Visibility</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="make-decisions-because-99-are-reversible.">6. Make decisions because 99% are reversible.</h2>
+<p>I learned an uncomfortable truth when I hit 40: Most people don’t actually make decisions. They don’t say yes or no. They say “maybe” or “someday, mate.” And this f*cks up their life.</p>
+</article><article class="slide" data-seconds="12" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
+<p>Because the only way to know if an opportunity works is to have a go.</p>
+</article><article class="slide" data-seconds="17" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
+<p>If you really want to be a psycho, the only way to make an opportunity work is to force it to work and not let any other outcome occur.</p>
+</article><article class="slide" data-seconds="19" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
+<p>You avoid decisions because you see risks and downsides. What you forget is that most risks are manageable. Say yes, try it, and if it doesn’t work, change course. Most decisions can be reversed.</p>
+</article><article class="slide" data-seconds="13" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
+<p>So saying yes is better than saying maybe, which only leads to procrastination. Mental Model = Yes + Pivots</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="chase-your-obsession.">7. Chase your obsession.</h2>
+<p>To win in life requires intensity. If you treat every opportunity like a hobby, hedge all your bets and never truly go all in – nothing much happens. You just get ignored because nobody feels anything.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="chase-your-obsession.-continued">7. Chase your obsession. · continued</h2>
+<p>Intensity creates emotion. It forces people to feel your vision/mission. It’s what helps you stand out with no extra skill or talent. Intensity comes from obsession. It’s going all in. It’s acting like a psycho.</p>
+</article><article class="slide" data-seconds="19" hidden><h2 id="chase-your-obsession.-continued">7. Chase your obsession. · continued</h2>
+<p>It’s embracing your weirdness. It’s being unreasonable enough to believe you can change the world in some small way. Before you die, it’s worth chasing at least one obsession beyond its reasonable conclusion to see what happens.</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="chase-your-obsession.-continued">7. Chase your obsession. · continued</h2>
+<p>You’ll be surprised when you do.</p>
+</article><article class="slide" data-seconds="13" hidden><h2 id="hang-around-high-performers.">8. Hang around high performers.</h2>
+<p>I shouldn’t admit this, but I spent most of my life hanging around losers – drug addicts, gamblers, alcoholics, sleaze bags, players, etc.</p>
+</article><article class="slide" data-seconds="20" hidden><h2 id="hang-around-high-performers.-continued">8. Hang around high performers. · continued</h2>
+<p>My life changed when I went to a Tony Robbins seminar and he told me to raise my standards. So I did. I raised the bar. I forced myself to hang around optimists and people building stuff.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="hang-around-high-performers.-continued">8. Hang around high performers. · continued</h2>
+<p>Then I joined paid masterminds. It changed everything. You can’t escape mediocrity if you’re not around a handful of people doing the same.</p>
+</article><article class="slide" data-seconds="19" hidden><h2 id="take-risks-or-youll-get-painful-regrets.">9. Take risks or you’ll get painful regrets.</h2>
+<p>Society programs you to avoid taking risks. It’s how they chop you back down to size, force you to follow orders, brainwash you with politics full of hidden agendas and bribes, and get you</p>
+</article><article class="slide" data-seconds="17" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
+<p>to settle for second best. This model works for some people, but if you’re reading this, it likely doesn’t work for you. It didn’t work for me either.</p>
+</article><article class="slide" data-seconds="19" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
+<p>This tweet I once read changed my mind about risk: Playing it safe isn’t actually safe. You’re just trading the chance of winning for the guarantee of nothing. Playing it safe looks smart.</p>
+</article><article class="slide" data-seconds="13" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
+<p>But it’s a hidden avoidance of growth and change, which only makes life worse the longer it persists.</p>
+</article><article class="slide" data-seconds="17" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
+<p>If you avoid risks for long enough, you end up with deep regrets about what you could have done with your life. Ouch. Worse than an ana1 probe.</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="embrace-your-weirdness.">10. Embrace your weirdness.</h2>
+</article><article class="slide" data-seconds="10" hidden><h2 id="never-try-to-fit-in.">11. Never try to fit in.</h2>
+<p>Fitting in is how we all act by default, whether we admit it or not.</p>
+</article><article class="slide" data-seconds="20" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
+<p>Trying to fit in means not saying the wrong thing, adopting other people’s beliefs and opinions, staying small, wearing an approved uniform, talking like a robot, and finishing emails with “kind regards” or “let’s circle back</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
+<p>and focus on synergy.” Fitting in is people-pleasing in disguise. I learned the hard way in corporate that you can never please everybody. Someone is always pissed off with your decision or opinion.</p>
+</article><article class="slide" data-seconds="19" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
+<p>Sometimes they just hate you because of your gender or race, too, which sucks. The better approach is to refuse to fit in. It’s to be yourself. The personal branding knobs call it authenticity.</p>
+</article><article class="slide" data-seconds="12" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
+<p>I just call it being congruent and not lying to people about who you really are. You choose.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="believe-anything-is-possible.">12. Believe anything is possible.</h2>
+<p>Most people don’t believe this truth. Not because they’re stupid, but because the news and politics trained them to think small and join a tribe.</p>
+</article><article class="slide" data-seconds="16" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
+<p>You’re taught to outsource your resourcefulness to a leader, government, or corporation and in return they’ll look after you. Haha. This is one of the greatest lies ever told.</p>
+</article><article class="slide" data-seconds="15" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
+<p>No person or organisation is looking out for you. They’re focused on looking out for themselves. Once you see this truth you can’t unsee it.</p>
+</article><article class="slide" data-seconds="17" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
+<p>I learned this truth the hard way when I had a client who was a lobbyist in Washington. It became clear that incentives and money drove decisions, not logic or neediness.</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
+<p>Save yourself before you can save others.</p>
+</article><article class="slide" data-seconds="13" hidden><h2 id="quit-climbing-the-corporate-ladder-young.">13. Quit climbing the corporate ladder young.</h2>
+<p>I didn’t quit climbing the ladder to nowhere until 34. Too late if you ask me. But better late than never.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
+<p>What changed my mind is I met with senior leaders who’d got to the top. The ones making $1m+ a year salaries and bonuses. All of them lived in quiet desperation.</p>
+</article><article class="slide" data-seconds="12" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
+<p>They had some money, although they were taxed to oblivion, but they had no free time.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
+<p>The more I spoke to them the more I realized they just wanted a day of zero meetings, but it didn’t exist.</p>
+</article><article class="slide" data-seconds="15" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
+<p>The younger you realize the corporate ladder is a scam, the happier you end up being (can’t wait to tell my two daughters).</p>
+</article><article class="slide" data-seconds="16" hidden><h2 id="pay-to-get-help-for-big-problems.">14. Pay to get help for big problems.</h2>
+<p>Going it alone with trial and error is the dumbest strategy in the world. And I did it for 5 years. Cost me millions of dollars.</p>
+</article><article class="slide" data-seconds="12" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
+<p>Eventually, I paid to get help and ended up moving 3 times faster. Speed is critical.</p>
+</article><article class="slide" data-seconds="19" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
+<p>Every day you don’t figure out your life’s problems, you waste your precious time which can never be recovered. Money is a mythical object. It doesn’t come with you when you’re dead.</p>
+</article><article class="slide" data-seconds="19" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
+<p>And you can always make more money through the internet. Since I’ve learned this lesson I’ve spent more than $500,000 on coaching and consulting. Investing money in yourself is a cheat code.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
+<p>It compounds faster than buying an Airbnb, investing in the S&amp;P 500, or getting another degree or certification that everybody else has already. Being a tightarse is an extremely expensive mistake.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="fix-your-mindset-to-fix-your-finances.">15. Fix your mindset to fix your finances.</h2>
+<p>Your income is directly proportional to your level of personal growth. Most people are unwilling to change, so their finances stay the same.</p>
+</article><article class="slide" data-seconds="17" hidden><h2 id="believe-the-world-is-working-in-your-favor.">16. Believe the world is working in your favor.</h2>
+<p>Every failure or rejection is protecting you from something. A few years back, a colleague stopped me in the hallway to talk about total B.S. It annoyed me.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="believe-the-world-is-working-in-your-favor.-continued">16. Believe the world is working in your favor. · continued</h2>
+<p>I went to lunch 15 mins late. During that time a madman drove his car up the footpath outside the office and killed a bunch of people, including a baby.</p>
+</article><article class="slide" data-seconds="20" hidden><h2 id="believe-the-world-is-working-in-your-favor.-continued">16. Believe the world is working in your favor. · continued</h2>
+<p>Had I been on time for lunch I would have been standing on the footpath with my headphones on right where the car would have hit me. That annoying colleague saved my life.</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="believe-the-world-is-working-in-your-favor.-continued">16. Believe the world is working in your favor. · continued</h2>
+<p>The inconvenience worked in my favor.</p>
+</article><article class="slide" data-seconds="16" hidden><h2 id="study-human-psychology-instead-of-math.">17. Study human psychology instead of math.</h2>
+<p>Human thinking runs the world. Understand your mind and how others think, and you’ll have a cheat code for getting what you want. Feels like Jedi mind control.</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="ignore-opinions-from-unsuccessful-people.">18. Ignore opinions from unsuccessful people.</h2>
+<p>They can find problems with every solution.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="nobody-is-thinking-about-you.">19. Nobody is thinking about you.</h2>
+<p>They’re too busy thinking about themselves. They have too many problems of their own to give two sh*ts about what you posted on InstaBAM.</p>
+</article><article class="slide" data-seconds="17" hidden><h2 id="use-money-to-create-good.">20. Use money to create good.</h2>
+<p>Money is a resource for good. Yes, it can be used for evil or to buy luxury junk. But money can be used to do good too. Money isn’t evil in itself.</p>
+</article><article class="slide" data-seconds="10" hidden><h2 id="use-money-to-create-good.-continued">20. Use money to create good. · continued</h2>
+<p>How you use it determines its goodness… and you get to choose.</p>
+</article><article class="slide" data-seconds="16" hidden><h2 id="do-work-that-doesnt-feel-like-work.">21. Do work that doesn’t feel like work.</h2>
+<p>You don’t really wanna sit on a beach and do nothing. Deep down you just want to stop doing boring work, and use your creativity and imagination.</p>
+</article><article class="slide" data-seconds="13" hidden><h2 id="do-work-that-doesnt-feel-like-work.-continued">21. Do work that doesn’t feel like work. · continued</h2>
+<p>Solve for that and you’ll fall in love with working hard. Boring work is the only cancer.</p>
+</article><article class="slide" data-seconds="12" hidden><h2 id="dare-to-build-a-personal-brand.">22. Dare to build a personal brand.</h2>
+<p>Sharing your ideas and experiences attracts people to your world. People carry opportunities – not phones, platforms, or computers.</p>
+</article><article class="slide" data-seconds="11" hidden><h2 id="start-a-weekly-newsletter.">23. Start a weekly newsletter.</h2>
+<p>Publish your deepest thinking here. Let it wow a small crowd. Nail the headlines if you want readers.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="write-online-daily.">24. Write online daily.</h2>
+<p>Use writing as a form of deep thinking. It benefits you even if nobody reads it. Choose only one platform. Master the psychology and culture of that platform. Read a lot of content on that platform.</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="write-online-daily.-continued">24. Write online daily. · continued</h2>
+<p>Then write your own posts.</p>
+</article><article class="slide" data-seconds="10" hidden><h2 id="its-never-the-right-time-to-do-anything.">25. It's never the right time to do anything.</h2>
+<p>It’s either today or it’s a p0rn fantasy. Stop kidding yourself.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="build-a-digital-business.">26. Build a digital business.</h2>
+<p>You probably won’t get wealthy and have freedom by earning a salary. A salary lets someone else profit from your work and your unrealised potential.</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="get-good-at-dealing-with-uncertainty.">27. Get good at dealing with uncertainty.</h2>
+</article><article class="slide" data-seconds="9" hidden><h2 id="make-decisions-instead-of-saying-maybe.">28. Make decisions instead of saying maybe.</h2>
+<p>A decision is yes or no. Every other outcome is procrastination.</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="get-wealthy-then-help-others.">29. Get wealthy then help others.</h2>
+<p>You can’t help anyone if you’re broke and obsessing over money 24/7.</p>
+</article><article class="slide" data-seconds="18" hidden><h2 id="never-become-a-victim.">30. Never become a victim.</h2>
+<p>Victims are insufferable. Appealing to people’s charitable nature has an extremely low chance of success and is manipulation. Turn a tragedy into a hero’s journey that lets you climb out of rock bottom and inspire people.</p>
+</article><article class="slide" data-seconds="12" hidden><h2 id="never-outsource-blame.">31. Never outsource blame.</h2>
+<p>You own every outcome. Always placing blame on yourself gives you more control, even if somebody else did f*ck up.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="never-trust-a-politician.">32. Never trust a politician.</h2>
+<p>They’re professional liars. Nice words with no actions. They will try to buy your vote with free central bank money they created from nowhere.</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="never-believe-governments-fix-problems.">33. Never believe governments fix problems.</h2>
+<p>They create more problems than they fix.</p>
+</article><article class="slide" data-seconds="11" hidden><h2 id="never-believe-someone-is-coming-to-save-you.">34. Never believe someone is coming to save you.</h2>
+<p>The incentives to save you or be your free mentor are extremely low.</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="plan-in-decades-execute-in-days.">35. Plan in decades, execute in days.</h2>
+<p>The vision should be big. The execution should be extreme.</p>
+</article><article class="slide" data-seconds="11" hidden><h2 id="dont-worry-about-publishing-a-book.">36. Don’t worry about publishing a book.</h2>
+<p>Authors are mostly broke. Have you noticed? The authors who do well have massive pre-built audiences.</p>
+</article><article class="slide" data-seconds="15" hidden><h2 id="dont-worry-about-publishing-a-book.-continued">36. Don’t worry about publishing a book. · continued</h2>
+<p>And monetizing your skills and experience with a $20 book where you don’t get the reader’s contact details has the worst ROI in history.</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="create-proof-of-work.">37. Create proof-of-work.</h2>
+<p>“Trust me, bro” doesn’t f*cking work anymore. Produce these instead… Experiments. Results. Testimonials. Case studies.</p>
+</article><article class="slide" data-seconds="16" hidden><h2 id="dont-drink-alcohol.">38. Don’t drink alcohol.</h2>
+<p>I reached 7 years sober the other day. Never felt better. No losing a day to a hangover. Acting like myself. In control. A good role model for my two daughters.</p>
+</article><article class="slide" data-seconds="12" hidden><h2 id="dont-drink-alcohol.-continued">38. Don’t drink alcohol. · continued</h2>
+<p>Seeing reality as it is, not through beer goggles. Alcohol is a perfect lie. Straight life is the best life.</p>
+</article><article class="slide" data-seconds="14" hidden><h2 id="ego-is-the-enemy.">39. Ego is the enemy.</h2>
+<p>Realize you don’t know 1/100th of f*ck all. That’s how you win. Think you’re King D*ck and people will run away. Humble people learn.</p>
+</article><article class="slide" data-seconds="12" hidden><h2 id="ego-is-the-enemy.-continued">39. Ego is the enemy. · continued</h2>
+<p>Big egos think they’re too good to learn, so they miss new opportunities and their skills fade.</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="be-cringe.">40. Be cringe.</h2>
+<p>Cringe = Bravery Cringe = Doing what already works</p>
+</article><article class="slide" data-seconds="8.0" hidden><h2 id="source">Source</h2>
+<p>Modern Freedom by Tim Denning</p>
+<p>40 pieces of advice from 40 years of life</p>
+<p>October 27, 2026</p>
+<p>Article text preserved. Email promotions and subscription footer omitted.</p>
+</article></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision 849c799cac</span></footer>
+</main>
+  <div class="controls" aria-label="Document display controls">
+    <button type="button" data-theme-control>Light mode</button>
+    <div class="sizes" role="group" aria-label="Font size">
+      <button type="button" data-size="small" aria-pressed="true">Small</button>
+      <button type="button" data-size="medium" aria-pressed="false">Medium</button>
+      <button type="button" data-size="large" aria-pressed="false">Large</button>
+    </div>
+    <button type="button" class="notability-button" data-notability>Send to Notability</button>
+    <button type="button" class="edit-button" data-edit aria-pressed="false">Edit</button>
+    <button type="button" class="save-button" data-save>Save</button>
+  </div>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const theme = document.querySelector('[data-theme-control]');
+      const buttons = [...document.querySelectorAll('[data-size]')];
+      const notability = document.querySelector('[data-notability]');
+      const editButton = document.querySelector('[data-edit]');
+      const saveButton = document.querySelector('[data-save]');
+      const main = document.querySelector('main');
+      const sizes = { small: '100%', medium: '150%', large: '200%' };
+      const setTheme = (value) => { root.dataset.theme = value; theme.textContent = value === 'dark' ? 'Light mode' : 'Dark mode'; };
+      const setSize = (value) => { root.style.fontSize = sizes[value]; buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.size === value))); };
+      const sendToNotability = () => {
+        if (window.location.protocol !== 'file:') { alert('Send to Notability is available for local HTML files.'); return; }
+        window.location.href = 'to-notability://import?file=' + encodeURIComponent(window.location.href);
+      };
+
+      // WYSIWYG in-place edit: Edit makes <main> editable, Save copies the
+      // serialized page to the clipboard and hands off to the local
+      // wysiwyg-save:// handler, which writes it to this exact file (with a
+      // timestamped backup in <folder>/.wysiwyg-save-backups/).
+      let editing = false;
+      const setEditing = (value) => {
+        editing = value;
+        main.contentEditable = value ? 'true' : 'false';
+        main.classList.toggle('editing', value);
+        editButton.textContent = value ? 'Editing…' : 'Edit';
+        editButton.setAttribute('aria-pressed', String(value));
+        saveButton.classList.toggle('visible', value);
+      };
+      const serializedDocument = () => {
+        const clone = root.cloneNode(true);
+        clone.removeAttribute('style');
+        clone.setAttribute('data-theme', 'dark');
+        const clonedMain = clone.querySelector('main');
+        clonedMain?.removeAttribute('contenteditable');
+        clonedMain?.classList.remove('editing');
+        clone.querySelector('[data-edit]')?.setAttribute('aria-pressed', 'false');
+        clone.querySelector('[data-edit]')?.replaceChildren(document.createTextNode('Edit'));
+        clone.querySelector('[data-save]')?.classList.remove('visible');
+        return '<!doctype html>\n' + clone.outerHTML + '\n';
+      };
+      const copyToClipboard = (text) => {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch { ok = false; }
+        document.body.removeChild(area);
+        return ok;
+      };
+      const saveDoc = () => {
+        if (window.location.protocol !== 'file:') { alert('Save is available for local HTML files.'); return; }
+        const html = serializedDocument();
+        if (!copyToClipboard(html)) { alert('Save failed: could not copy the document to the clipboard.'); return; }
+        window.location.href = 'wysiwyg-save://write?file=' + encodeURIComponent(decodeURIComponent(window.location.pathname));
+        saveButton.textContent = 'Saved';
+        setEditing(false);
+        setTimeout(() => { saveButton.textContent = 'Save'; }, 1500);
+      };
+
+      setTheme('dark'); setSize('small');
+      theme.addEventListener('click', () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+      buttons.forEach((button) => button.addEventListener('click', () => setSize(button.dataset.size)));
+      notability.addEventListener('click', sendToNotability);
+      editButton.addEventListener('click', () => setEditing(!editing));
+      saveButton.addEventListener('click', saveDoc);
+    })();
+  </script>
+<script>
+(() => {
+  'use strict';
+  const slides = [...document.querySelectorAll('.slide')];
+  const play = document.getElementById('play');
+  const status = document.getElementById('status');
+  const speed = document.getElementById('speed');
+  let index = 0;
+  let playing = false;
+  let timer = null;
+  let wake = null;
+  let requestingWake = false;
+  let touchX = null;
+
+  function show() {
+    slides.forEach((slide, i) => { slide.hidden = i !== index; });
+    document.getElementById('counter').textContent = `${index + 1} / ${slides.length}`;
+    play.textContent = playing ? 'Pause' : 'Play';
+    play.setAttribute('aria-pressed', String(playing));
+  }
+  function schedule() {
+    clearTimeout(timer);
+    timer = null;
+    if (playing && !document.hidden) {
+      timer = setTimeout(() => {
+        index = (index + 1) % slides.length;
+        show();
+        schedule();
+      }, Number(slides[index].dataset.seconds) * 1000 / Number(speed.value));
+    }
+  }
+  async function releaseWake() {
+    const held = wake;
+    wake = null;
+    if (held) { try { await held.release(); } catch { /* Already released by OS. */ } }
+  }
+  async function requestWake() {
+    if (!playing || document.hidden || wake || requestingWake) return;
+    if (!('wakeLock' in navigator)) {
+      status.textContent = 'Playing · keep this page open. If the screen sleeps, set iPad Auto-Lock to Never.';
+      return;
+    }
+    requestingWake = true;
+    try {
+      const lock = await navigator.wakeLock.request('screen');
+      if (!playing || document.hidden) { await lock.release(); return; }
+      wake = lock;
+      lock.addEventListener('release', () => {
+        if (wake === lock) wake = null;
+        if (playing) status.textContent = 'Playing · screen-awake lock released. Keep the screen awake manually if needed.';
+      });
+      status.textContent = 'Playing · looping · keeping screen awake';
+    } catch {
+      if (playing) status.textContent = 'Playing · screen-awake unavailable. iPad: Settings → Display & Brightness → Auto-Lock → Never, if available.';
+    } finally { requestingWake = false; }
+  }
+  function setPlaying(value) {
+    playing = value;
+    show();
+    schedule();
+    if (playing) {
+      status.textContent = 'Playing · loops continuously';
+      requestWake();
+    } else {
+      status.textContent = 'Paused · press Play to resume';
+      releaseWake();
+    }
+  }
+  function step(delta) {
+    setPlaying(false);
+    index = (index + delta + slides.length) % slides.length;
+    show();
+  }
+  play.addEventListener('click', () => setPlaying(!playing));
+  document.getElementById('previous').addEventListener('click', () => step(-1));
+  document.getElementById('next').addEventListener('click', () => step(1));
+  speed.addEventListener('change', schedule);
+  document.addEventListener('visibilitychange', () => {
+    schedule();
+    if (document.hidden) releaseWake();
+    else if (playing) requestWake();
+  });
+  window.addEventListener('pagehide', () => { clearTimeout(timer); releaseWake(); });
+  window.addEventListener('pageshow', () => { schedule(); if (playing) requestWake(); });
+  document.addEventListener('keydown', event => {
+    if (event.target.closest('input, textarea, select, button, [contenteditable="true"]')) return;
+    if (event.key === 'ArrowRight') { event.preventDefault(); step(1); }
+    if (event.key === 'ArrowLeft') { event.preventDefault(); step(-1); }
+    if (event.code === 'Space') { event.preventDefault(); setPlaying(!playing); }
+  });
+  const stage = document.querySelector('.stage');
+  stage.addEventListener('touchstart', event => { touchX = event.touches[0].clientX; }, {passive: true});
+  stage.addEventListener('touchend', event => {
+    if (touchX === null) return;
+    const delta = event.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(delta) > 65) step(delta < 0 ? 1 : -1);
+  }, {passive: true});
+  const fullscreen = document.getElementById('fullscreen');
+  if (!document.documentElement.requestFullscreen) fullscreen.hidden = true;
+  fullscreen.addEventListener('click', async () => {
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else await document.documentElement.requestFullscreen();
+    } catch { status.textContent = 'Fullscreen unavailable; playback still works in this view.'; }
+  });
+  show();
+})();
+
+</script>
+</body>
+</html>
