@@ -154,6 +154,29 @@ test('navigation preserves explicit pause and gives each new slide its full inte
   assert.equal(p.timers.size, 0);
 });
 
+test('a full side-arrow interaction navigates once without revealing fullscreen controls', async () => {
+  const p = player();
+  p.element('play').fire('click');
+  await p.element('fullscreen').fire('click');
+  const classes = p.document.documentElement.classList;
+  for (const direction of ['next', 'previous']) {
+    const button = p.element('edge-' + direction);
+    // Browsers can target the SVG polyline inside the button.
+    const target = {closest: selector => selector === '.edge-navigation' || selector.includes('button') ? button : null};
+    p.event('pointerdown', {target});
+    p.event('focusin', {target});
+    assert.equal(classes.contains('controls-hidden'), true);
+    p.event('keydown', {target, key: 'Enter'});
+    assert.equal(classes.contains('controls-hidden'), true);
+    button.fire('click');
+    assert.equal(p.element('counter').textContent, direction === 'next' ? '2 / 2' : '1 / 2');
+    assert.equal(p.element('play').textContent, 'Pause');
+    assert.equal(p.timers.size, 1);
+  }
+  p.event('pointerdown', {target: p.element('stage')});
+  assert.equal(classes.contains('controls-hidden'), false);
+});
+
 test('hidden pages stop advancing and visible pages reacquire wake lock', async () => {
   const p = player();
   p.element('play').fire('click');

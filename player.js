@@ -150,7 +150,9 @@
       setPresentation(false);
     }
   });
-  document.addEventListener('pointerdown', revealControls);
+  document.addEventListener('pointerdown', event => {
+    if (!event.target?.closest('.edge-navigation')) revealControls();
+  });
   document.addEventListener('focusin', event => {
     if (presenting && event.target.closest('.playback, .controls')) revealControls();
   });
@@ -158,7 +160,7 @@
     if (event.key === 'Escape' && presenting) {
       event.preventDefault();
       exitPresentation();
-    } else if (presenting) revealControls();
+    } else if (presenting && !event.target.closest('.edge-navigation')) revealControls();
   });
   show();
 })();
