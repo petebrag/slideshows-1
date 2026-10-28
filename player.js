@@ -96,12 +96,65 @@
     if (Math.abs(delta) > 65) step(delta < 0 ? 1 : -1);
   }, {passive: true});
   const fullscreen = document.getElementById('fullscreen');
-  if (!document.documentElement.requestFullscreen) fullscreen.hidden = true;
+  const root = document.documentElement;
+  let presenting = false;
+  let nativeFullscreen = false;
+  let controlsTimer = null;
+  function revealControls() {
+    clearTimeout(controlsTimer);
+    root.classList.remove('controls-hidden');
+    if (!presenting) return;
+    controlsTimer = setTimeout(() => {
+      // Keep the speed picker and document editor usable while interacting.
+      if (document.activeElement?.closest('select, [contenteditable="true"]')) {
+        revealControls();
+        return;
+      }
+      if (document.activeElement?.closest('.playback, .controls')) stage.focus({preventScroll: true});
+      root.classList.add('controls-hidden');
+    }, 3000);
+  }
+  function setPresentation(value) {
+    presenting = value;
+    root.classList.toggle('presenting', value);
+    root.classList.remove('controls-hidden');
+    clearTimeout(controlsTimer);
+    fullscreen.textContent = value ? 'Exit full screen' : 'Full screen';
+    fullscreen.setAttribute('aria-pressed', String(value));
+    if (value) {
+      stage.focus({preventScroll: true});
+      root.classList.add('controls-hidden');
+    }
+  }
+  async function exitPresentation() {
+    setPresentation(false);
+    if (document.fullscreenElement) await document.exitFullscreen();
+  }
   fullscreen.addEventListener('click', async () => {
-    try {
-      if (document.fullscreenElement) await document.exitFullscreen();
-      else await document.documentElement.requestFullscreen();
-    } catch { status.textContent = 'Fullscreen unavailable; playback still works in this view.'; }
+    if (presenting) { await exitPresentation(); return; }
+    setPresentation(true);
+    // Content-only view also works on devices without the browser fullscreen API.
+    try { await root.requestFullscreen?.(); }
+    catch { /* Keep the content-only view within the browser window. */ }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) {
+      nativeFullscreen = true;
+      if (!presenting) setPresentation(true);
+    } else if (nativeFullscreen) {
+      nativeFullscreen = false;
+      setPresentation(false);
+    }
+  });
+  document.addEventListener('pointerdown', revealControls);
+  document.addEventListener('focusin', event => {
+    if (presenting && event.target.closest('.playback, .controls')) revealControls();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && presenting) {
+      event.preventDefault();
+      exitPresentation();
+    } else if (presenting) revealControls();
   });
   show();
 })();

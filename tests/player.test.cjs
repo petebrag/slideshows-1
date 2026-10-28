@@ -16,18 +16,29 @@ function player() {
       value: '1', hidden: false, textContent: '', handlers: {},
       addEventListener(name, callback) { this.handlers[name] = callback; },
       setAttribute(name, value) { this[name] = value; },
-      fire(name) { this.handlers[name]?.({target: this}); },
+      fire(name) { return this.handlers[name]?.({target: this}); },
+      closest() { return null; },
+      focus() { document.activeElement = this; },
     });
     return elements.get(id);
   }
   const slides = [element('slide1'), element('slide2')];
   slides.forEach(s => { s.dataset = {seconds: '10'}; });
   const document = {
-    hidden: false, documentElement: {},
+    hidden: false, documentElement: {classList: {
+      values: new Set(),
+      add(value) { this.values.add(value); },
+      remove(value) { this.values.delete(value); },
+      toggle(value, enabled) { enabled ? this.add(value) : this.remove(value); },
+      contains(value) { return this.values.has(value); },
+    }},
     querySelectorAll: () => slides,
     querySelector: () => element('stage'),
     getElementById: element,
-    addEventListener: (name, callback) => events.set(name, callback),
+    addEventListener: (name, callback) => {
+      if (!events.has(name)) events.set(name, []);
+      events.get(name).push(callback);
+    },
   };
   const navigator = {wakeLock: {request: async () => {
     requests++;
@@ -44,7 +55,7 @@ function player() {
     clearTimeout: id => timers.delete(id),
   });
   return {element, slides, timers, document,
-    event: name => events.get(name)(),
+    event: (name, event = {}) => events.get(name)?.forEach(callback => callback(event)),
     tick: () => { const [id, timer] = timers.entries().next().value; timers.delete(id); timer.fn(); },
     wakeCounts: () => ({requests, releases}),
   };
@@ -62,6 +73,40 @@ test('autoplay loops and manual navigation pauses without a leftover timer', () 
   assert.equal(p.element('play').textContent, 'Play');
   assert.equal(p.element('counter').textContent, '2 / 2');
   assert.equal(p.timers.size, 0);
+});
+
+test('content-only mode works without native fullscreen, reveals on tap, and exits', async () => {
+  const p = player();
+  const classes = p.document.documentElement.classList;
+  await p.element('fullscreen').fire('click');
+  assert.equal(classes.contains('presenting'), true);
+  assert.equal(classes.contains('controls-hidden'), true);
+  p.event('pointerdown');
+  assert.equal(classes.contains('controls-hidden'), false);
+  p.tick();
+  assert.equal(classes.contains('controls-hidden'), true);
+  p.event('keydown', {key: 'Escape', target: p.element('stage'), preventDefault() {}});
+  assert.equal(classes.contains('presenting'), false);
+  assert.equal(classes.contains('controls-hidden'), false);
+  assert.equal(p.element('fullscreen').textContent, 'Full screen');
+  assert.equal(p.timers.size, 0);
+});
+
+test('native fullscreen exit restores the regular page without interrupting playback', async () => {
+  const p = player();
+  const root = p.document.documentElement;
+  root.requestFullscreen = async () => {
+    p.document.fullscreenElement = root;
+    p.event('fullscreenchange');
+  };
+  p.element('play').fire('click');
+  await p.element('fullscreen').fire('click');
+  assert.equal(root.classList.contains('controls-hidden'), true);
+  p.document.fullscreenElement = null;
+  p.event('fullscreenchange');
+  assert.equal(root.classList.contains('presenting'), false);
+  assert.equal(p.element('play').textContent, 'Pause');
+  assert.equal(p.timers.size, 1);
 });
 
 test('speed changes replace the current timer, then pause cancels it', () => {
