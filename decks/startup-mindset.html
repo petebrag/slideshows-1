@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="html-doc template v1">
+  <title>The Startup Mindset</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101419; --paper: #19212a; --paper-2: #202b36; --text: #eef3f7; --muted: #a8b4c1;
+      --line: #334252; --accent: #78b7ff; --good: #7ee2ad; --warn: #f5c26b; --bad: #ff8a8a;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .22);
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f5f7fb; --paper: #fff; --paper-2: #edf2f7; --text: #162130; --muted: #5a6877;
+      --line: #cbd6e2; --accent: #175cc5; --good: #087443; --warn: #8a5a00; --bad: #b42318;
+      --shadow: 0 8px 24px rgba(20, 30, 45, .12);
+    }
+    * { box-sizing: border-box; }
+    html, body { background: var(--bg); }
+    body {
+      margin: 0; color: var(--text);
+      font: 1rem/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      overflow-wrap: anywhere;
+    }
+    main { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0 96px; }
+
+    /* Header */
+    .eyebrow { margin: 0 0 8px; color: var(--muted); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .eyebrow:empty, .lede:empty { display: none; }
+    h1 { margin: 0 0 10px; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; letter-spacing: -.01em; }
+    .lede { max-width: 790px; margin: 0 0 28px; color: var(--muted); font-size: 1.05rem; }
+
+    /* Sections render as cards (pandoc --section-divs emits <section>) */
+    section { margin: 20px 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+    section section { margin: 16px 0 0; padding: 0; border: 0; background: transparent; }
+    h2 { margin: 0 0 12px; font-size: 1.35rem; line-height: 1.25; }
+    h3 { margin: 18px 0 8px; font-size: 1.08rem; }
+    h4, h5, h6 { margin: 14px 0 6px; font-size: 1rem; color: var(--muted); }
+    section > h2:first-child, section > h3:first-child { margin-top: 0; }
+
+    /* Body text */
+    p { margin: 10px 0; }
+    ul, ol { margin: 10px 0; padding-left: 24px; }
+    li + li { margin-top: 6px; }
+    li > p { margin: 4px 0; }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    strong { font-weight: 700; }
+    hr { margin: 28px 0; border: 0; border-top: 1px solid var(--line); }
+    section > hr:last-child { display: none; }
+    ul.task-list, ul:has(> li > input[type="checkbox"]) { list-style: none; padding-left: 4px; }
+    li > input[type="checkbox"], li > label > input[type="checkbox"] { margin: 0 8px 0 0; vertical-align: -1px; accent-color: var(--accent); }
+    img, video { max-width: 100%; height: auto; border-radius: 6px; }
+    blockquote { margin: 14px 0; padding: 10px 16px; border-left: 4px solid var(--accent); border-radius: 0 6px 6px 0; background: var(--paper-2); color: var(--text); }
+    blockquote > :first-child { margin-top: 0; }
+    blockquote > :last-child { margin-bottom: 0; }
+
+    /* Code: wraps instead of scrolling, so print/PDF keeps everything */
+    code, pre, kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; }
+    :not(pre) > code { padding: .1em .35em; border: 1px solid var(--line); border-radius: 4px; background: var(--paper-2); }
+    pre { margin: 12px 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); white-space: pre-wrap; overflow-wrap: anywhere; }
+    pre code { padding: 0; border: 0; background: none; }
+
+    /* Tables: full width, wrapping cells, no scroll container */
+    table { width: 100%; margin: 14px 0; border-collapse: collapse; font-size: .94rem; }
+    th, td { padding: 8px 10px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    thead th { background: var(--paper-2); font-weight: 700; }
+    tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--paper-2) 45%, transparent); }
+
+    /* Callouts: <div class="callout note|good|warn|bad"> */
+    .callout { margin: 14px 0; padding: 12px 16px; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; background: var(--paper-2); }
+    .callout.good { border-left-color: var(--good); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.bad { border-left-color: var(--bad); }
+    .callout > :first-child { margin-top: 0; }
+    .callout > :last-child { margin-bottom: 0; }
+    .muted { color: var(--muted); }
+
+    /* Floating controls */
+    .controls { position: fixed; right: 20px; bottom: 20px; z-index: 10; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; max-width: calc(100% - 32px); padding: 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); box-shadow: var(--shadow); }
+    .controls button { min-height: 34px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper-2); color: var(--text); padding: 6px 10px; font: inherit; font-size: .75rem; font-weight: 700; cursor: pointer; }
+    .controls button:hover, .controls button:focus-visible, .controls button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); outline: none; }
+    .sizes { display: flex; gap: 4px; }
+    .notability-button { margin-left: 4px; border-color: var(--good) !important; color: var(--good) !important; }
+    .notability-button:hover, .notability-button:focus-visible { background: color-mix(in srgb, var(--good) 12%, var(--paper-2)); outline: 2px solid var(--good); }
+    .edit-button { margin-left: 4px; }
+    .edit-button[aria-pressed="true"] { border-color: var(--warn) !important; color: var(--warn) !important; }
+    .save-button { display: none; border-color: var(--accent) !important; color: var(--accent) !important; }
+    .save-button.visible { display: inline-flex; align-items: center; }
+    main.editing { outline: 2px dashed var(--warn); outline-offset: 10px; border-radius: 8px; }
+    main.editing section { cursor: text; }
+
+    @media (max-width: 640px) {
+      main { padding-top: 28px; }
+      section { padding: 16px; }
+      .controls { right: 8px; bottom: 8px; border-radius: 14px; }
+    }
+
+    @media print {
+      :root, :root[data-theme="dark"], :root[data-theme="light"] {
+        color-scheme: light;
+        --bg: #fff; --paper: #fff; --paper-2: #f3f5f7; --text: #000; --muted: #333;
+        --line: #777; --accent: #0645ad; --good: #075e33; --warn: #704800; --bad: #8a1c12;
+        --shadow: none;
+      }
+      html, body { background: #fff !important; color: #000 !important; font-size: 100% !important; }
+      main { width: 100%; padding: 0; outline: none !important; }
+      section, pre, blockquote, .callout, table, th, td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      blockquote, .callout, pre, tr, li { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+      .controls { display: none !important; }
+    }
+  </style>
+<style>
+/* Playback sits inside the shared html-doc document shell. */
+main { width: min(1200px, calc(100% - 32px)); padding: 22px 0 125px; }
+header h1 { font-size: clamp(1.15rem, 2.5vw, 1.7rem); margin-bottom: 20px; }
+.playback { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+.playback button, .playback select { font: inherit; color: var(--text); background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; min-height: 44px; }
+.playback button { cursor: pointer; }
+.playback button:focus-visible, .playback select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+#play { background: var(--accent); color: var(--bg); min-width: 90px; font-weight: 800; }
+.playback label { display: flex; gap: 8px; align-items: center; }
+#counter { color: var(--muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+.stage { min-height: min(60dvh, 700px); display: grid; place-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: clamp(22px, 5vw, 65px); touch-action: pan-y; }
+.slide { width: 100%; font-size: clamp(1.55rem, 3.1vw, 2.9rem); line-height: 1.5; text-align: center; overflow-wrap: anywhere; }
+.slide[hidden] { display: none; }
+.slide h1, .slide h2, .slide h3 { font-size: 1.2em; line-height: 1.25; }
+.slide p { margin: 0.6em 0; }
+.slide ul, .slide ol { text-align: left; }
+footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wrap; color: var(--muted); margin-top: 15px; font-size: .8rem; }
+.revision { font-family: monospace; }
+@media (max-width: 600px) {
+  main { width: calc(100% - 24px); padding-top: 16px; padding-bottom: 190px; }
+  .stage { min-height: 48dvh; padding: 24px 18px; }
+  .slide { font-size: 1.65rem; }
+  .playback label { font-size: .8rem; }
+  #counter { margin-left: 0; }
+}
+
+</style>
+</head>
+<body>
+  <main>
+<header><p class="eyebrow">Slideshow Machine</p><h1>The Startup Mindset</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><article class="slide" data-seconds="6.0" ><h1 id="the-startup-mindset">The Startup Mindset</h1>
+<p>22 traits for building under pressure</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="drive-motivation">Drive / Motivation</h2>
+<p>Proving doubters wrong, revenge, seeking power, glory, or freedom</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="managing-a-psychologically-violent-environment">Managing a Psychologically Violent Environment</h2>
+<p>Enduring the emotional turbulence of firing co-founders, losing deals, and constant high-stakes conflict</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="suffering">Suffering</h2>
+<p>Accepting the emotional and physical toll, sleep deprivation, and isolation inherent in early-stage building</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="commitment">Commitment</h2>
+<p>Abandoning optionality and going 100% all-in with no retreat or surrender</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="judgment">Judgment</h2>
+<p>Accelerating decision-making capabilities by navigating high volumes of critical choices</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="tolerance-for-ambiguity">Tolerance for Ambiguity</h2>
+<p>Embracing uncertainty and imperfect information as the primary operational environment</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="extreme-ownership">Extreme Ownership</h2>
+<p>Eliminating blame, excuses, and ego, and taking total responsibility for every outcome</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="reality-based-thinking">Reality-Based Thinking</h2>
+<p>Actively seeking out negative feedback, asking for the "no," and cutting through agreeable yes-men</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="strong-opinions-loosely-held">Strong Opinions Loosely Held</h2>
+<p>Debating fiercely with co-founders while remaining willing to change course immediately upon new data</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="being-contrarian">Being Contrarian</h2>
+<p>Believing in truths that very few others accept and thinking independently</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="x-thinking">10X Thinking</h2>
+<p>Targeting massive order-of-magnitude jumps rather than minor incremental improvements</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="culture-and-internal-language-curation">Culture and Internal Language Curation</h2>
+<p>Obsessing over communication standards and team dynamics, remembering that culture eats strategy</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="personal-transformation">Personal Transformation</h2>
+<p>Treating the startup journey as an active vehicle for transforming your own mind and capabilities</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="fear-of-a-mediocre-life">Fear of a Mediocre Life</h2>
+<p>Fearing stagnation and the safe path more than failure itself</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="the-13-ways-rule">The 13 Ways Rule</h2>
+<p>Recognizing that there are multiple viable ways to solve a problem—pick one and execute</p>
+</article><article class="slide" data-seconds="11" hidden><h2 id="information-driven-fundraising">Information-Driven Fundraising</h2>
+<p>Treating investor meetings as a mechanism to gather intelligence and negative feedback rather than fixating solely on securing the check</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="paranoia">Paranoia</h2>
+<p>Maintaining relentless vigilance and avoiding complacency, entitlement, or self-congratulation when things go well</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="the-commando-mindset">The Commando Mindset</h2>
+<p>Operating with high speed, simplicity, resourcefulness, and going directly where the action is</p>
+</article><article class="slide" data-seconds="10" hidden><h2 id="finding-the-goldilocks-zone">Finding the Goldilocks Zone</h2>
+<p>Calibrating extreme attributes—such as confidence versus humility—precisely where needed rather than defaulting to a mediocre middle</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="grit-determination">Grit / Determination</h2>
+<p>Focusing on how hard you can get hit and keep moving forward</p>
+</article><article class="slide" data-seconds="9" hidden><h2 id="low-agreeableness">Low Agreeableness</h2>
+<p>Freeing yourself from the need to please others, enabling independent thought and smooth navigation through conflict</p>
+</article><article class="slide" data-seconds="8" hidden><h2 id="low-neuroticism">Low Neuroticism</h2>
+<p>Resisting chronic anxiety over criticism or self-doubt</p>
+</article><article class="slide" data-seconds="8.0" hidden><h2 id="source">Source</h2>
+<p>#PPX-0002</p>
+<p>https://youtu.be/sGlqkqKihAg</p>
+</article></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision 5b58bc8573</span></footer>
+</main>
+  <div class="controls" aria-label="Document display controls">
+    <button type="button" data-theme-control>Light mode</button>
+    <div class="sizes" role="group" aria-label="Font size">
+      <button type="button" data-size="small" aria-pressed="true">Small</button>
+      <button type="button" data-size="medium" aria-pressed="false">Medium</button>
+      <button type="button" data-size="large" aria-pressed="false">Large</button>
+    </div>
+    <button type="button" class="notability-button" data-notability>Send to Notability</button>
+    <button type="button" class="edit-button" data-edit aria-pressed="false">Edit</button>
+    <button type="button" class="save-button" data-save>Save</button>
+  </div>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const theme = document.querySelector('[data-theme-control]');
+      const buttons = [...document.querySelectorAll('[data-size]')];
+      const notability = document.querySelector('[data-notability]');
+      const editButton = document.querySelector('[data-edit]');
+      const saveButton = document.querySelector('[data-save]');
+      const main = document.querySelector('main');
+      const sizes = { small: '100%', medium: '150%', large: '200%' };
+      const setTheme = (value) => { root.dataset.theme = value; theme.textContent = value === 'dark' ? 'Light mode' : 'Dark mode'; };
+      const setSize = (value) => { root.style.fontSize = sizes[value]; buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.size === value))); };
+      const sendToNotability = () => {
+        if (window.location.protocol !== 'file:') { alert('Send to Notability is available for local HTML files.'); return; }
+        window.location.href = 'to-notability://import?file=' + encodeURIComponent(window.location.href);
+      };
+
+      // WYSIWYG in-place edit: Edit makes <main> editable, Save copies the
+      // serialized page to the clipboard and hands off to the local
+      // wysiwyg-save:// handler, which writes it to this exact file (with a
+      // timestamped backup in <folder>/.wysiwyg-save-backups/).
+      let editing = false;
+      const setEditing = (value) => {
+        editing = value;
+        main.contentEditable = value ? 'true' : 'false';
+        main.classList.toggle('editing', value);
+        editButton.textContent = value ? 'Editing…' : 'Edit';
+        editButton.setAttribute('aria-pressed', String(value));
+        saveButton.classList.toggle('visible', value);
+      };
+      const serializedDocument = () => {
+        const clone = root.cloneNode(true);
+        clone.removeAttribute('style');
+        clone.setAttribute('data-theme', 'dark');
+        const clonedMain = clone.querySelector('main');
+        clonedMain?.removeAttribute('contenteditable');
+        clonedMain?.classList.remove('editing');
+        clone.querySelector('[data-edit]')?.setAttribute('aria-pressed', 'false');
+        clone.querySelector('[data-edit]')?.replaceChildren(document.createTextNode('Edit'));
+        clone.querySelector('[data-save]')?.classList.remove('visible');
+        return '<!doctype html>\n' + clone.outerHTML + '\n';
+      };
+      const copyToClipboard = (text) => {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch { ok = false; }
+        document.body.removeChild(area);
+        return ok;
+      };
+      const saveDoc = () => {
+        if (window.location.protocol !== 'file:') { alert('Save is available for local HTML files.'); return; }
+        const html = serializedDocument();
+        if (!copyToClipboard(html)) { alert('Save failed: could not copy the document to the clipboard.'); return; }
+        window.location.href = 'wysiwyg-save://write?file=' + encodeURIComponent(decodeURIComponent(window.location.pathname));
+        saveButton.textContent = 'Saved';
+        setEditing(false);
+        setTimeout(() => { saveButton.textContent = 'Save'; }, 1500);
+      };
+
+      setTheme('dark'); setSize('small');
+      theme.addEventListener('click', () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+      buttons.forEach((button) => button.addEventListener('click', () => setSize(button.dataset.size)));
+      notability.addEventListener('click', sendToNotability);
+      editButton.addEventListener('click', () => setEditing(!editing));
+      saveButton.addEventListener('click', saveDoc);
+    })();
+  </script>
+<script>
+(() => {
+  'use strict';
+  const slides = [...document.querySelectorAll('.slide')];
+  const play = document.getElementById('play');
+  const status = document.getElementById('status');
+  const speed = document.getElementById('speed');
+  let index = 0;
+  let playing = false;
+  let timer = null;
+  let wake = null;
+  let requestingWake = false;
+  let touchX = null;
+
+  function show() {
+    slides.forEach((slide, i) => { slide.hidden = i !== index; });
+    document.getElementById('counter').textContent = `${index + 1} / ${slides.length}`;
+    play.textContent = playing ? 'Pause' : 'Play';
+    play.setAttribute('aria-pressed', String(playing));
+  }
+  function schedule() {
+    clearTimeout(timer);
+    timer = null;
+    if (playing && !document.hidden) {
+      timer = setTimeout(() => {
+        index = (index + 1) % slides.length;
+        show();
+        schedule();
+      }, Number(slides[index].dataset.seconds) * 1000 / Number(speed.value));
+    }
+  }
+  async function releaseWake() {
+    const held = wake;
+    wake = null;
+    if (held) { try { await held.release(); } catch { /* Already released by OS. */ } }
+  }
+  async function requestWake() {
+    if (!playing || document.hidden || wake || requestingWake) return;
+    if (!('wakeLock' in navigator)) {
+      status.textContent = 'Playing · keep this page open. If the screen sleeps, set iPad Auto-Lock to Never.';
+      return;
+    }
+    requestingWake = true;
+    try {
+      const lock = await navigator.wakeLock.request('screen');
+      if (!playing || document.hidden) { await lock.release(); return; }
+      wake = lock;
+      lock.addEventListener('release', () => {
+        if (wake === lock) wake = null;
+        if (playing) status.textContent = 'Playing · screen-awake lock released. Keep the screen awake manually if needed.';
+      });
+      status.textContent = 'Playing · looping · keeping screen awake';
+    } catch {
+      if (playing) status.textContent = 'Playing · screen-awake unavailable. iPad: Settings → Display & Brightness → Auto-Lock → Never, if available.';
+    } finally { requestingWake = false; }
+  }
+  function setPlaying(value) {
+    playing = value;
+    show();
+    schedule();
+    if (playing) {
+      status.textContent = 'Playing · loops continuously';
+      requestWake();
+    } else {
+      status.textContent = 'Paused · press Play to resume';
+      releaseWake();
+    }
+  }
+  function step(delta) {
+    setPlaying(false);
+    index = (index + delta + slides.length) % slides.length;
+    show();
+  }
+  play.addEventListener('click', () => setPlaying(!playing));
+  document.getElementById('previous').addEventListener('click', () => step(-1));
+  document.getElementById('next').addEventListener('click', () => step(1));
+  speed.addEventListener('change', schedule);
+  document.addEventListener('visibilitychange', () => {
+    schedule();
+    if (document.hidden) releaseWake();
+    else if (playing) requestWake();
+  });
+  window.addEventListener('pagehide', () => { clearTimeout(timer); releaseWake(); });
+  window.addEventListener('pageshow', () => { schedule(); if (playing) requestWake(); });
+  document.addEventListener('keydown', event => {
+    if (event.target.closest('input, textarea, select, button, [contenteditable="true"]')) return;
+    if (event.key === 'ArrowRight') { event.preventDefault(); step(1); }
+    if (event.key === 'ArrowLeft') { event.preventDefault(); step(-1); }
+    if (event.code === 'Space') { event.preventDefault(); setPlaying(!playing); }
+  });
+  const stage = document.querySelector('.stage');
+  stage.addEventListener('touchstart', event => { touchX = event.touches[0].clientX; }, {passive: true});
+  stage.addEventListener('touchend', event => {
+    if (touchX === null) return;
+    const delta = event.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(delta) > 65) step(delta < 0 ? 1 : -1);
+  }, {passive: true});
+  const fullscreen = document.getElementById('fullscreen');
+  if (!document.documentElement.requestFullscreen) fullscreen.hidden = true;
+  fullscreen.addEventListener('click', async () => {
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else await document.documentElement.requestFullscreen();
+    } catch { status.textContent = 'Fullscreen unavailable; playback still works in this view.'; }
+  });
+  show();
+})();
+
+</script>
+</body>
+</html>
