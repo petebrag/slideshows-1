@@ -163,60 +163,65 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
 }
 @media print { .edge-navigation { display: none; } }
 
+#muted-slides { max-width: min(100%, 300px); }
+.playback [hidden], #empty-slides[hidden] { display: none; }
+.playback button:disabled, .edge-navigation:disabled { opacity: .4; cursor: default; }
+#empty-slides { text-align: center; font-size: 1.3rem; }
+
 </style>
 </head>
 <body>
   <main>
-<header><p class="eyebrow">Slideshow Machine</p><h1>The Startup Mindset</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><button type="button" id="edge-previous" class="edge-navigation edge-previous" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 5 8 12 15 19" /></svg></button><button type="button" id="edge-next" class="edge-navigation edge-next" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 5 16 12 9 19" /></svg></button><article class="slide" data-seconds="6.0" ><h1 id="the-startup-mindset">The Startup Mindset</h1>
+<header><p class="eyebrow">Slideshow Machine</p><h1>The Startup Mindset</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><button id="mute">Mute this slide</button><select id="muted-slides" aria-label="Muted slides" hidden></select><button id="restore-slide" hidden>Restore selected slide</button><button id="restore-all" hidden>Restore all</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><button type="button" id="edge-previous" class="edge-navigation edge-previous" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 5 8 12 15 19" /></svg></button><button type="button" id="edge-next" class="edge-navigation edge-next" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 5 16 12 9 19" /></svg></button><article class="slide" data-id="67ee3077530668e92614325790d49c7557b59144704f21646d9d1d5002326289-1" data-seconds="6.0" ><h1 id="the-startup-mindset">The Startup Mindset</h1>
 <p>22 traits for building under pressure</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="drive-motivation">Drive / Motivation</h2>
+</article><article class="slide" data-id="4dab482a7dc477f05e9502b23092ce0af1ea34d182655d4f4b5e6ee709a56a5e-1" data-seconds="8" hidden><h2 id="drive-motivation">Drive / Motivation</h2>
 <p>Proving doubters wrong, revenge, seeking power, glory, or freedom</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="managing-a-psychologically-violent-environment">Managing a Psychologically Violent Environment</h2>
+</article><article class="slide" data-id="a4ecdb4040edb194eb3dda1684df7231c84adc3b28fe14eafcedcef54495db6a-1" data-seconds="9" hidden><h2 id="managing-a-psychologically-violent-environment">Managing a Psychologically Violent Environment</h2>
 <p>Enduring the emotional turbulence of firing co-founders, losing deals, and constant high-stakes conflict</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="suffering">Suffering</h2>
+</article><article class="slide" data-id="702b2d8e49f6d24ced06e08ee71a42afab96e5fa3078e74c205dd5c02eec6142-1" data-seconds="8" hidden><h2 id="suffering">Suffering</h2>
 <p>Accepting the emotional and physical toll, sleep deprivation, and isolation inherent in early-stage building</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="commitment">Commitment</h2>
+</article><article class="slide" data-id="4cb5b67e6cb3724c870608baf4d7078f3cc79b5e85d593a376859124469a2083-1" data-seconds="8" hidden><h2 id="commitment">Commitment</h2>
 <p>Abandoning optionality and going 100% all-in with no retreat or surrender</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="judgment">Judgment</h2>
+</article><article class="slide" data-id="dd8bced839dfcbffb2b070e9dc54327832935a79b35a7951afbb38fec06ca18e-1" data-seconds="8" hidden><h2 id="judgment">Judgment</h2>
 <p>Accelerating decision-making capabilities by navigating high volumes of critical choices</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="tolerance-for-ambiguity">Tolerance for Ambiguity</h2>
+</article><article class="slide" data-id="c92c6495f0de5266bcb43c1c16cffd7ce4924ca836bf0134bf8b40e2fa67012b-1" data-seconds="8" hidden><h2 id="tolerance-for-ambiguity">Tolerance for Ambiguity</h2>
 <p>Embracing uncertainty and imperfect information as the primary operational environment</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="extreme-ownership">Extreme Ownership</h2>
+</article><article class="slide" data-id="e3b22013ef12b5ed60ea9ed6a7108ea9691ded9eb1d9b169b20d31b0eb4de185-1" data-seconds="8" hidden><h2 id="extreme-ownership">Extreme Ownership</h2>
 <p>Eliminating blame, excuses, and ego, and taking total responsibility for every outcome</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="reality-based-thinking">Reality-Based Thinking</h2>
+</article><article class="slide" data-id="9d2c35e8e51ad328eab5a5e10d7728c9c32ffb6f3e2d2b262e179f7902b97c7f-1" data-seconds="8" hidden><h2 id="reality-based-thinking">Reality-Based Thinking</h2>
 <p>Actively seeking out negative feedback, asking for the "no," and cutting through agreeable yes-men</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="strong-opinions-loosely-held">Strong Opinions Loosely Held</h2>
+</article><article class="slide" data-id="c400a71235f8a2b69ed950bfca786fe7d442cb497dfc21805cb1eafe7d01d87a-1" data-seconds="9" hidden><h2 id="strong-opinions-loosely-held">Strong Opinions Loosely Held</h2>
 <p>Debating fiercely with co-founders while remaining willing to change course immediately upon new data</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="being-contrarian">Being Contrarian</h2>
+</article><article class="slide" data-id="4856c0595bc3f6a2abefa57e6debd7ef33075279e38b1295b25d289c04c76a01-1" data-seconds="8" hidden><h2 id="being-contrarian">Being Contrarian</h2>
 <p>Believing in truths that very few others accept and thinking independently</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="x-thinking">10X Thinking</h2>
+</article><article class="slide" data-id="e08c9e9a7d23c0bb11074212b70593f9a6bfcdf5f45f63ada5ae139767a47732-1" data-seconds="8" hidden><h2 id="x-thinking">10X Thinking</h2>
 <p>Targeting massive order-of-magnitude jumps rather than minor incremental improvements</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="culture-and-internal-language-curation">Culture and Internal Language Curation</h2>
+</article><article class="slide" data-id="f66e918d983799d7c5ae00d8a2b280c95789e87dddc9a73b3b9795a92ac16ab7-1" data-seconds="9" hidden><h2 id="culture-and-internal-language-curation">Culture and Internal Language Curation</h2>
 <p>Obsessing over communication standards and team dynamics, remembering that culture eats strategy</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="personal-transformation">Personal Transformation</h2>
+</article><article class="slide" data-id="1dd4cb5ddff12aae40a6614f9fcb63198a12dfdedeff4e8a3b36cb9bcb3a099e-1" data-seconds="9" hidden><h2 id="personal-transformation">Personal Transformation</h2>
 <p>Treating the startup journey as an active vehicle for transforming your own mind and capabilities</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="fear-of-a-mediocre-life">Fear of a Mediocre Life</h2>
+</article><article class="slide" data-id="3183554174772e2708c39f0ccc8fa955d109dcdb63035b648e72b29efcc40362-1" data-seconds="8" hidden><h2 id="fear-of-a-mediocre-life">Fear of a Mediocre Life</h2>
 <p>Fearing stagnation and the safe path more than failure itself</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="the-13-ways-rule">The 13 Ways Rule</h2>
+</article><article class="slide" data-id="09983595cfd4f1a9c77e8d6d7bc5d004e57e8273d26a7d4159e1e68728957c5d-1" data-seconds="9" hidden><h2 id="the-13-ways-rule">The 13 Ways Rule</h2>
 <p>Recognizing that there are multiple viable ways to solve a problem—pick one and execute</p>
-</article><article class="slide" data-seconds="11" hidden><h2 id="information-driven-fundraising">Information-Driven Fundraising</h2>
+</article><article class="slide" data-id="6b0c7ea9fd3a3390959e07a6de154c0edb86decadb9fb0541e111cf2aa6601ab-1" data-seconds="11" hidden><h2 id="information-driven-fundraising">Information-Driven Fundraising</h2>
 <p>Treating investor meetings as a mechanism to gather intelligence and negative feedback rather than fixating solely on securing the check</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="paranoia">Paranoia</h2>
+</article><article class="slide" data-id="de6f5b774dda1f49a7ca71189ab452a787188a6d3cf84ae630e695499435bd52-1" data-seconds="8" hidden><h2 id="paranoia">Paranoia</h2>
 <p>Maintaining relentless vigilance and avoiding complacency, entitlement, or self-congratulation when things go well</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="the-commando-mindset">The Commando Mindset</h2>
+</article><article class="slide" data-id="6dad7f342d5e979020a732fb5b76f85927f86cd979ff052d7e94ba082f3fd141-1" data-seconds="8" hidden><h2 id="the-commando-mindset">The Commando Mindset</h2>
 <p>Operating with high speed, simplicity, resourcefulness, and going directly where the action is</p>
-</article><article class="slide" data-seconds="10" hidden><h2 id="finding-the-goldilocks-zone">Finding the Goldilocks Zone</h2>
+</article><article class="slide" data-id="6d0d248ae57d6a9fbe1ca1b8452adf2f1940eeee3cc1b8412c0a7dcd77cd8dc4-1" data-seconds="10" hidden><h2 id="finding-the-goldilocks-zone">Finding the Goldilocks Zone</h2>
 <p>Calibrating extreme attributes—such as confidence versus humility—precisely where needed rather than defaulting to a mediocre middle</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="grit-determination">Grit / Determination</h2>
+</article><article class="slide" data-id="b95dd7c274567dab93ee5d41cf717275295484169d1232c52db4d50e30b67d78-1" data-seconds="8" hidden><h2 id="grit-determination">Grit / Determination</h2>
 <p>Focusing on how hard you can get hit and keep moving forward</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="low-agreeableness">Low Agreeableness</h2>
+</article><article class="slide" data-id="e520452e38615cc83a2d1f8798fa8f1ccb373a017b32bdaef1ac84421a107023-1" data-seconds="9" hidden><h2 id="low-agreeableness">Low Agreeableness</h2>
 <p>Freeing yourself from the need to please others, enabling independent thought and smooth navigation through conflict</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="low-neuroticism">Low Neuroticism</h2>
+</article><article class="slide" data-id="b0c035f4d65d5b0148d819793afda3832e1c58edd9a451d88c74843c864c5af3-1" data-seconds="8" hidden><h2 id="low-neuroticism">Low Neuroticism</h2>
 <p>Resisting chronic anxiety over criticism or self-doubt</p>
-</article><article class="slide" data-seconds="8.0" hidden><h2 id="source">Source</h2>
+</article><article class="slide" data-id="de61e9366e47df816b1e97fb554baa60eb9cf8314fb283f52434f72ac5ef294a-1" data-seconds="8.0" hidden><h2 id="source">Source</h2>
 <p>#PPX-0002</p>
 <p>https://youtu.be/sGlqkqKihAg</p>
-</article></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision 5b58bc8573</span></footer>
+</article><p id="empty-slides" hidden>All slides muted. Restore a slide above to watch again.</p></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision 5b58bc8573</span></footer>
 </main>
   <div class="controls" aria-label="Document display controls">
     <button type="button" data-theme-control>Light mode</button>
@@ -309,6 +314,17 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
   const play = document.getElementById('play');
   const status = document.getElementById('status');
   const speed = document.getElementById('speed');
+  const mute = document.getElementById('mute');
+  const mutedPicker = document.getElementById('muted-slides');
+  const restore = document.getElementById('restore-slide');
+  const restoreAll = document.getElementById('restore-all');
+  const storageKey = `slideshow-muted:v1:${window.location.pathname}`;
+  const slideIds = slides.map(slide => slide.dataset.id);
+  let muted = new Set();
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(storageKey) || '[]');
+    if (Array.isArray(saved)) muted = new Set(saved.filter(id => slideIds.includes(id)));
+  } catch { /* Playback still works when browser storage is unavailable. */ }
   let index = 0;
   let playing = false;
   let timer = null;
@@ -316,18 +332,52 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
   let requestingWake = false;
   let touchX = null;
 
+  function activeIndices() {
+    return slides.flatMap((slide, i) => muted.has(slideIds[i]) ? [] : [i]);
+  }
+  function nextIndex(delta) {
+    if (!activeIndices().length) return -1;
+    for (let offset = 1; offset <= slides.length; offset++) {
+      const candidate = (index + delta * offset + slides.length) % slides.length;
+      if (!muted.has(slideIds[candidate])) return candidate;
+    }
+    return -1;
+  }
+  function saveMuted() {
+    try { window.localStorage.setItem(storageKey, JSON.stringify([...muted])); }
+    catch { status.textContent = 'Mute changes apply now but cannot be saved in this browser.'; }
+  }
+
   function show() {
+    const active = activeIndices();
+    const empty = active.length === 0;
     slides.forEach((slide, i) => { slide.hidden = i !== index; });
-    document.getElementById('counter').textContent = `${index + 1} / ${slides.length}`;
+    document.getElementById('empty-slides').hidden = !empty;
+    document.getElementById('counter').textContent = empty ? 'All slides muted' : `${index + 1} / ${slides.length}` + (muted.size ? ` · ${active.length} active` : '');
+    play.disabled = empty;
+    mute.disabled = empty;
+    for (const id of ['previous', 'next', 'edge-previous', 'edge-next']) document.getElementById(id).disabled = empty;
+    const selection = mutedPicker.value;
+    const options = slides.flatMap((slide, i) => {
+      if (!muted.has(slideIds[i])) return [];
+      const option = document.createElement('option');
+      option.value = String(i);
+      option.textContent = `Slide ${i + 1}: ${slide.textContent.trim().replace(/\s+/g, ' ').slice(0, 65)}`;
+      return [option];
+    });
+    mutedPicker.replaceChildren(...options);
+    if (options.some(option => option.value === selection)) mutedPicker.value = selection;
+    mutedPicker.hidden = restore.hidden = restoreAll.hidden = !muted.size;
+    mutedPicker.setAttribute('aria-label', `Muted slides (${muted.size})`);
     play.textContent = playing ? 'Pause' : 'Play';
     play.setAttribute('aria-pressed', String(playing));
   }
   function schedule() {
     clearTimeout(timer);
     timer = null;
-    if (playing && !document.hidden) {
+    if (playing && index >= 0 && !document.hidden) {
       timer = setTimeout(() => {
-        index = (index + 1) % slides.length;
+        index = nextIndex(1);
         show();
         schedule();
       }, Number(slides[index].dataset.seconds) * 1000 / Number(speed.value));
@@ -359,7 +409,7 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
     } finally { requestingWake = false; }
   }
   function setPlaying(value) {
-    playing = value;
+    playing = value && activeIndices().length > 0;
     show();
     schedule();
     if (playing) {
@@ -371,10 +421,29 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
     }
   }
   function step(delta) {
-    index = (index + delta + slides.length) % slides.length;
+    index = nextIndex(delta);
     show();
     schedule();
   }
+  mute.addEventListener('click', () => {
+    if (index < 0) return;
+    muted.add(slideIds[index]);
+    index = nextIndex(1);
+    if (index < 0) setPlaying(false);
+    else { show(); schedule(); }
+    saveMuted();
+  });
+  function restoreMuted(all) {
+    const restoredIndex = Number(mutedPicker.value);
+    if (all) muted.clear();
+    else muted.delete(slideIds[restoredIndex]);
+    if (index < 0) index = all ? 0 : restoredIndex;
+    show();
+    schedule();
+    saveMuted();
+  }
+  restore.addEventListener('click', () => restoreMuted(false));
+  restoreAll.addEventListener('click', () => restoreMuted(true));
   play.addEventListener('click', () => setPlaying(!playing));
   document.getElementById('previous').addEventListener('click', () => step(-1));
   document.getElementById('next').addEventListener('click', () => step(1));
@@ -467,6 +536,7 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
       exitPresentation();
     } else if (presenting && !event.target.closest('.edge-navigation')) revealControls();
   });
+  index = muted.has(slideIds[0]) ? nextIndex(1) : 0;
   show();
 })();
 
