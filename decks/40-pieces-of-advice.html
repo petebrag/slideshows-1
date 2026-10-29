@@ -163,208 +163,213 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
 }
 @media print { .edge-navigation { display: none; } }
 
+#muted-slides { max-width: min(100%, 300px); }
+.playback [hidden], #empty-slides[hidden] { display: none; }
+.playback button:disabled, .edge-navigation:disabled { opacity: .4; cursor: default; }
+#empty-slides { text-align: center; font-size: 1.3rem; }
+
 </style>
 </head>
 <body>
   <main>
-<header><p class="eyebrow">Slideshow Machine</p><h1>40 pieces of advice from 40 years of life</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><button type="button" id="edge-previous" class="edge-navigation edge-previous" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 5 8 12 15 19" /></svg></button><button type="button" id="edge-next" class="edge-navigation edge-next" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 5 16 12 9 19" /></svg></button><article class="slide" data-seconds="8.0" ><h1 id="pieces-of-advice">40 pieces of advice</h1>
+<header><p class="eyebrow">Slideshow Machine</p><h1>40 pieces of advice from 40 years of life</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><button id="mute">Mute this slide</button><select id="muted-slides" aria-label="Muted slides" hidden></select><button id="restore-slide" hidden>Restore selected slide</button><button id="restore-all" hidden>Restore all</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><button type="button" id="edge-previous" class="edge-navigation edge-previous" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 5 8 12 15 19" /></svg></button><button type="button" id="edge-next" class="edge-navigation edge-next" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 5 16 12 9 19" /></svg></button><article class="slide" data-id="22daeb28256f7508cb995402d745d5c8568153116b16d8d1326762aaa7092342-1" data-seconds="8.0" ><h1 id="pieces-of-advice">40 pieces of advice</h1>
 <p>From 40 years of life</p>
 <p>Tim Denning · Modern Freedom</p>
 <p>October 27, 2026</p>
-</article><article class="slide" data-seconds="17" hidden><h2 id="do-extremely-hard-things.">1. Do extremely hard things.</h2>
+</article><article class="slide" data-id="b3d4ce43c25b8a5cb9be0c1b9858609fd13b9f0601af72c33fa59b403f72a4e5-1" data-seconds="17" hidden><h2 id="do-extremely-hard-things.">1. Do extremely hard things.</h2>
 <p>This one pisses a lot of people off. They read it as hustle culture or burnout. Chronic underachievers hate doing hard things. They see stress as a problem. They get frustrated easily.</p>
-</article><article class="slide" data-seconds="19" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
+</article><article class="slide" data-id="7bb8929f1760b80ccce29825b90561f8e3caa7d36779006ce8c87dda0f6d9fb8-1" data-seconds="19" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
 <p>They can’t stick at one goal for 5 years. They chase passive income. They day trade in every area of life. I’m going to be extremely blunt here. Doing hard things is an IQ test.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
+</article><article class="slide" data-id="b815b07dd8d5c735895fe5b7041ea827f9ccaec076eda6ecf2cbf9486ce45da0-1" data-seconds="18" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
 <p>People who want it to be easy, relaxing or slow never reach their potential. In a world of AI, all the easy things are now done by software, automation, and bots. “Easy” is dead.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
+</article><article class="slide" data-id="41ec028cfe4691d95a45331e95e92b2597af0a233a0732efc9e163d5a3efc529-1" data-seconds="18" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
 <p>And as soon as you get obsessed with one hard thing, take it beyond the point of comfort, and force it to work… your life will work. It’s a pattern I can’t ignore.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
+</article><article class="slide" data-id="894a38cff8ea12017a684b9711312b8d51742033469f700e5351ffd3fe1665b9-1" data-seconds="14" hidden><h2 id="do-extremely-hard-things.-continued">1. Do extremely hard things. · continued</h2>
 <p>Every person I respect does hard things. They outsource all the easy sh*t to a mountain of monkeys. Hard is the cheat code. Sorry.</p>
-</article><article class="slide" data-seconds="12" hidden><h2 id="have-a-lot-of-sx.">2. Have a lot of s*x.</h2>
+</article><article class="slide" data-id="8eb52c30289d589a3f537e45236db1312003e214d2afbde9d7c9689cf08f590c-1" data-seconds="12" hidden><h2 id="have-a-lot-of-sx.">2. Have a lot of s*x.</h2>
 <p>Nothing wrong with bonking your brains out. Gotta balance out all the hard things you do with some fun.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="study-neuroplasticity.">3. Study neuroplasticity.</h2>
+</article><article class="slide" data-id="3726b33f93c85efaa18d6af2e41e27930f8b1de637b9170710a48aae7f2fa43d-1" data-seconds="18" hidden><h2 id="study-neuroplasticity.">3. Study neuroplasticity.</h2>
 <p>I credit becoming a millionaire to neuroplasticity. Your brain either works for you or against you. What you repeat daily becomes the foundation for what your brain believes. Intentions don’t mean anything. Your brain only understands past actions.</p>
-</article><article class="slide" data-seconds="13" hidden><h2 id="study-neuroplasticity.-continued">3. Study neuroplasticity. · continued</h2>
+</article><article class="slide" data-id="d7f6fd16194b76974c0e0823f190aae5cae18663a7e9bbc26630cb6bd3be3340-1" data-seconds="13" hidden><h2 id="study-neuroplasticity.-continued">3. Study neuroplasticity. · continued</h2>
 <p>Your identity is formed by action. So take the actions of your ideal mentor and your brain will rewire itself around that goal.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="study-neuroplasticity.-continued">3. Study neuroplasticity. · continued</h2>
+</article><article class="slide" data-id="5178d61275608c1ea789fab0836aa16b8b4fcd57d03521d048545f85c04ccdb6-1" data-seconds="14" hidden><h2 id="study-neuroplasticity.-continued">3. Study neuroplasticity. · continued</h2>
 <p>But train your brain to be lazy and procrastinate, and it will help you to compound that identity all the way to loserville and extreme poverty.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="master-game-theory.">4. Master game theory.</h2>
+</article><article class="slide" data-id="bf54a6945a26213f5cd9a7bbf6c02d9665102fa3305cfe3da3742e6ae2fe3c0b-1" data-seconds="18" hidden><h2 id="master-game-theory.">4. Master game theory.</h2>
 <p>Every game in life is rigged. Building a business, climbing the corporate ladder, real estate, investing in stocks, having a family, learning new skills, etc. To win these games most people try to work harder.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
+</article><article class="slide" data-id="92e337436b9c99b66474c294dab082e7a3a4af530e4488966251d3ddff4e57bf-1" data-seconds="18" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
 <p>But you only have so many hours in the day and everyone else is already playing the work harder game. You must understand how a life game works to manipulate it in your favor.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
+</article><article class="slide" data-id="af68f97f1dc04c2325d7aa00d3dd45d0cce541dcc083ca9c8be818be9db44143-1" data-seconds="14" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
 <p>That happens when you understand game theory. Biggest lesson I learned studying game theory: Effort spent inside a rigged game gets absorbed by the game.</p>
-</article><article class="slide" data-seconds="12" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
+</article><article class="slide" data-id="dfdc05370f90953aa5ad1cbd2237fa37c2390c8337ee9e478e3b3aab409605cc-1" data-seconds="12" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
 <p>It also means once you understand a game you can rig it in your favor. The opposite is also true.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
+</article><article class="slide" data-id="2367fa7e4e742d8435afc3bb5cd11c643b866a793d964c990c6be741bb424e91-1" data-seconds="14" hidden><h2 id="master-game-theory.-continued">4. Master game theory. · continued</h2>
 <p>If you don’t understand the game you’re playing and the incentives, it’ll be rigged against you and you’ll work harder and harder and not win.</p>
-</article><article class="slide" data-seconds="15" hidden><h2 id="focus-on-making-more-money-not-saving.">5. Focus on making more money, not saving.</h2>
+</article><article class="slide" data-id="11eb4f6293692c8e89cc9d89e4143aec34cc03dee97e91ddcec174ba56e87b4c-1" data-seconds="15" hidden><h2 id="focus-on-making-more-money-not-saving.">5. Focus on making more money, not saving.</h2>
 <p>You cannot save your way to wealth. Once you understand inflation and currency debasement, you realize the math is working against you every day.</p>
-</article><article class="slide" data-seconds="16" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+</article><article class="slide" data-id="0d64f16490048e547ee03c18efd80077215dea15067eff539af7113ef9acbfcb-1" data-seconds="16" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
 <p>This is why the cost of living feels like it’s rising higher than your income. But once you understand the math it makes sense.</p>
-</article><article class="slide" data-seconds="13" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+</article><article class="slide" data-id="f8cf3883ed42e60c915a1659f975cb9ad56268d7756b936330d068a6c0b39d91-1" data-seconds="13" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
 <p>Your skills and experience must be used to make more money. That’s the mindset that builds wealth.</p>
-</article><article class="slide" data-seconds="20" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+</article><article class="slide" data-id="af713e75d11e4f6a0116ee3b557c9ab3be8458e95fa3f865de18b659cb199c06-1" data-seconds="20" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
 <p>And the internet creates leverage to allow you to reach more people faster so you can make more money faster. Internet leverage works in your favor if you let it. But most people hide.</p>
-</article><article class="slide" data-seconds="16" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+</article><article class="slide" data-id="3e1566803aca1055d63e2a62fdeda100ddc1d1b16bdf0a79e75f98d5af0d4f06-1" data-seconds="16" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
 <p>They’ve been taught to be invisible out of fear or weird privacy reasons. So the opportunities can’t find them because no one knows they exist.</p>
-</article><article class="slide" data-seconds="17" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+</article><article class="slide" data-id="22760365744604a719deb30b11bd4649b853c2eff5f00010b0380480a679a747-1" data-seconds="17" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
 <p>Most people think the solution is to keep asking for permission and applying for opportunities. It isn’t. The challenge with that approach is every opportunity is now global.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+</article><article class="slide" data-id="e7c4df1d03d8952b1e78b8cd649e4a0fbead688b6113a6bb848d079fc4f1a79c-1" data-seconds="18" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
 <p>You’re competing against everyone else in the world with the same skills and experience. Some of them are probably more talented than you. Permission-seeking is a losing game by default.</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
+</article><article class="slide" data-id="6e17192c76486cf9615b635be908813e5dea9533afcbbb1556bf0c60932ae1d8-1" data-seconds="9" hidden><h2 id="focus-on-making-more-money-not-saving.-continued">5. Focus on making more money, not saving. · continued</h2>
 <p>Income = Skills + Experience + Visibility</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="make-decisions-because-99-are-reversible.">6. Make decisions because 99% are reversible.</h2>
+</article><article class="slide" data-id="a064f7ac6bc87fc14255809a058dafe33d70bd3db1973fc61fc9539484edf4bf-1" data-seconds="18" hidden><h2 id="make-decisions-because-99-are-reversible.">6. Make decisions because 99% are reversible.</h2>
 <p>I learned an uncomfortable truth when I hit 40: Most people don’t actually make decisions. They don’t say yes or no. They say “maybe” or “someday, mate.” And this f*cks up their life.</p>
-</article><article class="slide" data-seconds="12" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
+</article><article class="slide" data-id="b83381f1a2df0d423dd60b2c623a8219aae42ef38682323fca3abca3148b0c8a-1" data-seconds="12" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
 <p>Because the only way to know if an opportunity works is to have a go.</p>
-</article><article class="slide" data-seconds="17" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
+</article><article class="slide" data-id="33068ac87c381ddc3aea0a9cc0f9cd036e31719f1dd94df1ac8f98a4b4d54343-1" data-seconds="17" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
 <p>If you really want to be a psycho, the only way to make an opportunity work is to force it to work and not let any other outcome occur.</p>
-</article><article class="slide" data-seconds="19" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
+</article><article class="slide" data-id="7d903c2bd9b4d72689cc01c6b48800633bdfac9147feea2708ed86e158357039-1" data-seconds="19" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
 <p>You avoid decisions because you see risks and downsides. What you forget is that most risks are manageable. Say yes, try it, and if it doesn’t work, change course. Most decisions can be reversed.</p>
-</article><article class="slide" data-seconds="13" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
+</article><article class="slide" data-id="7a703934999bc5f0340a941422230801148578768c659735bb2c97cdcd836792-1" data-seconds="13" hidden><h2 id="make-decisions-because-99-are-reversible.-continued">6. Make decisions because 99% are reversible. · continued</h2>
 <p>So saying yes is better than saying maybe, which only leads to procrastination. Mental Model = Yes + Pivots</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="chase-your-obsession.">7. Chase your obsession.</h2>
+</article><article class="slide" data-id="7c059acb8e682371fd4f171d04074d601266c39163cb91afd332a7c8105245a7-1" data-seconds="18" hidden><h2 id="chase-your-obsession.">7. Chase your obsession.</h2>
 <p>To win in life requires intensity. If you treat every opportunity like a hobby, hedge all your bets and never truly go all in – nothing much happens. You just get ignored because nobody feels anything.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="chase-your-obsession.-continued">7. Chase your obsession. · continued</h2>
+</article><article class="slide" data-id="0538fcc5a7883da270a28387e3a2231a99d67ea0dcbcf3bbeeb2e6f92d07ae1e-1" data-seconds="18" hidden><h2 id="chase-your-obsession.-continued">7. Chase your obsession. · continued</h2>
 <p>Intensity creates emotion. It forces people to feel your vision/mission. It’s what helps you stand out with no extra skill or talent. Intensity comes from obsession. It’s going all in. It’s acting like a psycho.</p>
-</article><article class="slide" data-seconds="19" hidden><h2 id="chase-your-obsession.-continued">7. Chase your obsession. · continued</h2>
+</article><article class="slide" data-id="9e60e971f9d1f69c25fb3cd6e047186edafe8d9ddbc77d3718fc8d035a17b626-1" data-seconds="19" hidden><h2 id="chase-your-obsession.-continued">7. Chase your obsession. · continued</h2>
 <p>It’s embracing your weirdness. It’s being unreasonable enough to believe you can change the world in some small way. Before you die, it’s worth chasing at least one obsession beyond its reasonable conclusion to see what happens.</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="chase-your-obsession.-continued">7. Chase your obsession. · continued</h2>
+</article><article class="slide" data-id="ae1e7682838b363fa9f0d8418d9e57057b37b443906db5f624c9680458f8520f-1" data-seconds="8" hidden><h2 id="chase-your-obsession.-continued">7. Chase your obsession. · continued</h2>
 <p>You’ll be surprised when you do.</p>
-</article><article class="slide" data-seconds="13" hidden><h2 id="hang-around-high-performers.">8. Hang around high performers.</h2>
+</article><article class="slide" data-id="d26003328995b55c318095153fd6cd2ea29a5f527ce8fc7ae8d484d7b01fb64e-1" data-seconds="13" hidden><h2 id="hang-around-high-performers.">8. Hang around high performers.</h2>
 <p>I shouldn’t admit this, but I spent most of my life hanging around losers – drug addicts, gamblers, alcoholics, sleaze bags, players, etc.</p>
-</article><article class="slide" data-seconds="20" hidden><h2 id="hang-around-high-performers.-continued">8. Hang around high performers. · continued</h2>
+</article><article class="slide" data-id="8d5a38fc618fa8d23a18f40bb7948b7e7d6d8f0c5be54990b5c5a4bbc5d02ce1-1" data-seconds="20" hidden><h2 id="hang-around-high-performers.-continued">8. Hang around high performers. · continued</h2>
 <p>My life changed when I went to a Tony Robbins seminar and he told me to raise my standards. So I did. I raised the bar. I forced myself to hang around optimists and people building stuff.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="hang-around-high-performers.-continued">8. Hang around high performers. · continued</h2>
+</article><article class="slide" data-id="70587a2f68b5566a4db3d035f5f01a34f80068fc7b05432a85c4d9919a10a9a8-1" data-seconds="14" hidden><h2 id="hang-around-high-performers.-continued">8. Hang around high performers. · continued</h2>
 <p>Then I joined paid masterminds. It changed everything. You can’t escape mediocrity if you’re not around a handful of people doing the same.</p>
-</article><article class="slide" data-seconds="19" hidden><h2 id="take-risks-or-youll-get-painful-regrets.">9. Take risks or you’ll get painful regrets.</h2>
+</article><article class="slide" data-id="749563170828e57e6afb440d21e53ed22aa527448184c8b32879c14e8a5f6493-1" data-seconds="19" hidden><h2 id="take-risks-or-youll-get-painful-regrets.">9. Take risks or you’ll get painful regrets.</h2>
 <p>Society programs you to avoid taking risks. It’s how they chop you back down to size, force you to follow orders, brainwash you with politics full of hidden agendas and bribes, and get you</p>
-</article><article class="slide" data-seconds="17" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
+</article><article class="slide" data-id="eee1e8218970e08751a55a2f4ee517aaf97efebc28d61ea11e06c491c43f927f-1" data-seconds="17" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
 <p>to settle for second best. This model works for some people, but if you’re reading this, it likely doesn’t work for you. It didn’t work for me either.</p>
-</article><article class="slide" data-seconds="19" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
+</article><article class="slide" data-id="d76c56a333b044c4ccd5dda8a5ada4a9ac77130c8b9e326f7f519042209f0a8a-1" data-seconds="19" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
 <p>This tweet I once read changed my mind about risk: Playing it safe isn’t actually safe. You’re just trading the chance of winning for the guarantee of nothing. Playing it safe looks smart.</p>
-</article><article class="slide" data-seconds="13" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
+</article><article class="slide" data-id="6f60ca40a4854da95665bd6f3c4b5bae556a7de6d8a152ef8d99e029b3102672-1" data-seconds="13" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
 <p>But it’s a hidden avoidance of growth and change, which only makes life worse the longer it persists.</p>
-</article><article class="slide" data-seconds="17" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
+</article><article class="slide" data-id="9ab61d8570015e05e65590214affb1ba755b2c63d2f865b818adfd18aa6aab3a-1" data-seconds="17" hidden><h2 id="take-risks-or-youll-get-painful-regrets.-continued">9. Take risks or you’ll get painful regrets. · continued</h2>
 <p>If you avoid risks for long enough, you end up with deep regrets about what you could have done with your life. Ouch. Worse than an ana1 probe.</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="embrace-your-weirdness.">10. Embrace your weirdness.</h2>
-</article><article class="slide" data-seconds="10" hidden><h2 id="never-try-to-fit-in.">11. Never try to fit in.</h2>
+</article><article class="slide" data-id="0d794bebc53efa17ede7596f40daec682689a059e314d5046db77e2022ac820c-1" data-seconds="8" hidden><h2 id="embrace-your-weirdness.">10. Embrace your weirdness.</h2>
+</article><article class="slide" data-id="b71d9f458b02dfbcb36bd57833bc0cf6f75a12a034df45a2ebc269e54f318a3f-1" data-seconds="10" hidden><h2 id="never-try-to-fit-in.">11. Never try to fit in.</h2>
 <p>Fitting in is how we all act by default, whether we admit it or not.</p>
-</article><article class="slide" data-seconds="20" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
+</article><article class="slide" data-id="3e83f8ea50aff0312d8dd7c7bba86f27f64c4b1b68f2a9a9f34b25d9d96133ce-1" data-seconds="20" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
 <p>Trying to fit in means not saying the wrong thing, adopting other people’s beliefs and opinions, staying small, wearing an approved uniform, talking like a robot, and finishing emails with “kind regards” or “let’s circle back</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
+</article><article class="slide" data-id="89d28c97dd696223bc404d91735b24b1ecfa382f93f56a54e704d029ad8ae5a5-1" data-seconds="18" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
 <p>and focus on synergy.” Fitting in is people-pleasing in disguise. I learned the hard way in corporate that you can never please everybody. Someone is always pissed off with your decision or opinion.</p>
-</article><article class="slide" data-seconds="19" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
+</article><article class="slide" data-id="156c5e687ed62182527e42866ebc6559f4efc5d55b308080200acfaa1027376e-1" data-seconds="19" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
 <p>Sometimes they just hate you because of your gender or race, too, which sucks. The better approach is to refuse to fit in. It’s to be yourself. The personal branding knobs call it authenticity.</p>
-</article><article class="slide" data-seconds="12" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
+</article><article class="slide" data-id="904b562f6301d1af3bb2cfe13b5b14ea4dbfb96a9048a1bffe920d2759f3a8c7-1" data-seconds="12" hidden><h2 id="never-try-to-fit-in.-continued">11. Never try to fit in. · continued</h2>
 <p>I just call it being congruent and not lying to people about who you really are. You choose.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="believe-anything-is-possible.">12. Believe anything is possible.</h2>
+</article><article class="slide" data-id="2f1b15e93a58cc7d45e5d15fde506530b53b5ff18ff45bc51940a4b1bc5f3094-1" data-seconds="14" hidden><h2 id="believe-anything-is-possible.">12. Believe anything is possible.</h2>
 <p>Most people don’t believe this truth. Not because they’re stupid, but because the news and politics trained them to think small and join a tribe.</p>
-</article><article class="slide" data-seconds="16" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
+</article><article class="slide" data-id="86a66540d3d0ade2f63f21bd15c0f1e3d832fd8e1cddfa4ded555d4d601efa40-1" data-seconds="16" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
 <p>You’re taught to outsource your resourcefulness to a leader, government, or corporation and in return they’ll look after you. Haha. This is one of the greatest lies ever told.</p>
-</article><article class="slide" data-seconds="15" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
+</article><article class="slide" data-id="a36a30efed94430e0a31a051cbd631f257ccc57e6156c57a151d48a995ef693c-1" data-seconds="15" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
 <p>No person or organisation is looking out for you. They’re focused on looking out for themselves. Once you see this truth you can’t unsee it.</p>
-</article><article class="slide" data-seconds="17" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
+</article><article class="slide" data-id="ae454cb1a1bbf071fd95a0975256d9dc46004d0536c9bad4002152b59308cb00-1" data-seconds="17" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
 <p>I learned this truth the hard way when I had a client who was a lobbyist in Washington. It became clear that incentives and money drove decisions, not logic or neediness.</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
+</article><article class="slide" data-id="51903e2c6c958322bf1cf85741049055b9a213d6577b91bd6b9df69e682bc001-1" data-seconds="8" hidden><h2 id="believe-anything-is-possible.-continued">12. Believe anything is possible. · continued</h2>
 <p>Save yourself before you can save others.</p>
-</article><article class="slide" data-seconds="13" hidden><h2 id="quit-climbing-the-corporate-ladder-young.">13. Quit climbing the corporate ladder young.</h2>
+</article><article class="slide" data-id="d2fb6b7728f266fbe865e0e33c41c65a7f3ed6f86ffef56e07091a9fc72aad4c-1" data-seconds="13" hidden><h2 id="quit-climbing-the-corporate-ladder-young.">13. Quit climbing the corporate ladder young.</h2>
 <p>I didn’t quit climbing the ladder to nowhere until 34. Too late if you ask me. But better late than never.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
+</article><article class="slide" data-id="a012e3819955ca198e275392c1be780e315fc9ea26d9dab0627d363d6cab89bc-1" data-seconds="18" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
 <p>What changed my mind is I met with senior leaders who’d got to the top. The ones making $1m+ a year salaries and bonuses. All of them lived in quiet desperation.</p>
-</article><article class="slide" data-seconds="12" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
+</article><article class="slide" data-id="05df071994f4b0966295fd0081e40f54d9f8ad2ae79aa7d8ff6b766995b7fd45-1" data-seconds="12" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
 <p>They had some money, although they were taxed to oblivion, but they had no free time.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
+</article><article class="slide" data-id="e3842f394911d90954c062ca5cfe9eb1b76b6cdbca9be0c53be860af0cf5f49e-1" data-seconds="14" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
 <p>The more I spoke to them the more I realized they just wanted a day of zero meetings, but it didn’t exist.</p>
-</article><article class="slide" data-seconds="15" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
+</article><article class="slide" data-id="fb01d0e817e6602bf2370d23a2a6f7ea8eaf92190086bc1c623fd6ef296442c7-1" data-seconds="15" hidden><h2 id="quit-climbing-the-corporate-ladder-young.-continued">13. Quit climbing the corporate ladder young. · continued</h2>
 <p>The younger you realize the corporate ladder is a scam, the happier you end up being (can’t wait to tell my two daughters).</p>
-</article><article class="slide" data-seconds="16" hidden><h2 id="pay-to-get-help-for-big-problems.">14. Pay to get help for big problems.</h2>
+</article><article class="slide" data-id="ea68d3c36edcc0af9e805929ff45167072edda547c78113ab79d1bb510809569-1" data-seconds="16" hidden><h2 id="pay-to-get-help-for-big-problems.">14. Pay to get help for big problems.</h2>
 <p>Going it alone with trial and error is the dumbest strategy in the world. And I did it for 5 years. Cost me millions of dollars.</p>
-</article><article class="slide" data-seconds="12" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
+</article><article class="slide" data-id="33c34c92e8a0b83e8ba254c3f1786d4ed24f33d5c7a64a51404a3e1913b32486-1" data-seconds="12" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
 <p>Eventually, I paid to get help and ended up moving 3 times faster. Speed is critical.</p>
-</article><article class="slide" data-seconds="19" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
+</article><article class="slide" data-id="8c76f11c1bbdb9701db6755ff698ac0a2c04c62644c739c668b7a89203f77163-1" data-seconds="19" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
 <p>Every day you don’t figure out your life’s problems, you waste your precious time which can never be recovered. Money is a mythical object. It doesn’t come with you when you’re dead.</p>
-</article><article class="slide" data-seconds="19" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
+</article><article class="slide" data-id="8f5704e4af225537ff85dac43b09fc509094cbabc8f50c4b9b152d5774bf5fd2-1" data-seconds="19" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
 <p>And you can always make more money through the internet. Since I’ve learned this lesson I’ve spent more than $500,000 on coaching and consulting. Investing money in yourself is a cheat code.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
+</article><article class="slide" data-id="39eb826947e838cebd6147e5c2c0471a57d679e240d61f73aec9c55979fd5b9f-1" data-seconds="18" hidden><h2 id="pay-to-get-help-for-big-problems.-continued">14. Pay to get help for big problems. · continued</h2>
 <p>It compounds faster than buying an Airbnb, investing in the S&amp;P 500, or getting another degree or certification that everybody else has already. Being a tightarse is an extremely expensive mistake.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="fix-your-mindset-to-fix-your-finances.">15. Fix your mindset to fix your finances.</h2>
+</article><article class="slide" data-id="6c53895350c4bb4386398e57d8a63def08a022423df96c1cb069a44d7f5abe00-1" data-seconds="14" hidden><h2 id="fix-your-mindset-to-fix-your-finances.">15. Fix your mindset to fix your finances.</h2>
 <p>Your income is directly proportional to your level of personal growth. Most people are unwilling to change, so their finances stay the same.</p>
-</article><article class="slide" data-seconds="17" hidden><h2 id="believe-the-world-is-working-in-your-favor.">16. Believe the world is working in your favor.</h2>
+</article><article class="slide" data-id="16d0067865c346cb1f0b3c919f7fcc9fca7e7f72bbf7f8ee487edcc07b9eb521-1" data-seconds="17" hidden><h2 id="believe-the-world-is-working-in-your-favor.">16. Believe the world is working in your favor.</h2>
 <p>Every failure or rejection is protecting you from something. A few years back, a colleague stopped me in the hallway to talk about total B.S. It annoyed me.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="believe-the-world-is-working-in-your-favor.-continued">16. Believe the world is working in your favor. · continued</h2>
+</article><article class="slide" data-id="809b4b9f16a46bcccf6b52087817d49f2785f2964a91ebd943715aef8f138af0-1" data-seconds="18" hidden><h2 id="believe-the-world-is-working-in-your-favor.-continued">16. Believe the world is working in your favor. · continued</h2>
 <p>I went to lunch 15 mins late. During that time a madman drove his car up the footpath outside the office and killed a bunch of people, including a baby.</p>
-</article><article class="slide" data-seconds="20" hidden><h2 id="believe-the-world-is-working-in-your-favor.-continued">16. Believe the world is working in your favor. · continued</h2>
+</article><article class="slide" data-id="17bfb8d32f25e2bf23498d85aa82a0162cf8ed4e21a8274f2c04c3a4b61b9927-1" data-seconds="20" hidden><h2 id="believe-the-world-is-working-in-your-favor.-continued">16. Believe the world is working in your favor. · continued</h2>
 <p>Had I been on time for lunch I would have been standing on the footpath with my headphones on right where the car would have hit me. That annoying colleague saved my life.</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="believe-the-world-is-working-in-your-favor.-continued">16. Believe the world is working in your favor. · continued</h2>
+</article><article class="slide" data-id="1cde0689803163abf9d9d64db07183b39698c5bc42529ba21319d38be2f25fdd-1" data-seconds="9" hidden><h2 id="believe-the-world-is-working-in-your-favor.-continued">16. Believe the world is working in your favor. · continued</h2>
 <p>The inconvenience worked in my favor.</p>
-</article><article class="slide" data-seconds="16" hidden><h2 id="study-human-psychology-instead-of-math.">17. Study human psychology instead of math.</h2>
+</article><article class="slide" data-id="c7e9671a073b74fb2c3801b4d6c3122675c937a780996802e4bbc78298fe1389-1" data-seconds="16" hidden><h2 id="study-human-psychology-instead-of-math.">17. Study human psychology instead of math.</h2>
 <p>Human thinking runs the world. Understand your mind and how others think, and you’ll have a cheat code for getting what you want. Feels like Jedi mind control.</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="ignore-opinions-from-unsuccessful-people.">18. Ignore opinions from unsuccessful people.</h2>
+</article><article class="slide" data-id="9188a76bca1d6953f0e559259472d04cf74fec846d27e2cd9924b5349f76ea32-1" data-seconds="8" hidden><h2 id="ignore-opinions-from-unsuccessful-people.">18. Ignore opinions from unsuccessful people.</h2>
 <p>They can find problems with every solution.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="nobody-is-thinking-about-you.">19. Nobody is thinking about you.</h2>
+</article><article class="slide" data-id="26f7e5aaf6143e22758e4876a14a4f953418fe4ba1f4c8a2fedf5e7a8001d6c9-1" data-seconds="14" hidden><h2 id="nobody-is-thinking-about-you.">19. Nobody is thinking about you.</h2>
 <p>They’re too busy thinking about themselves. They have too many problems of their own to give two sh*ts about what you posted on InstaBAM.</p>
-</article><article class="slide" data-seconds="17" hidden><h2 id="use-money-to-create-good.">20. Use money to create good.</h2>
+</article><article class="slide" data-id="f272f6057d004a32ee24316bf085322bbe10bcada06b7849d8a326157ec25e01-1" data-seconds="17" hidden><h2 id="use-money-to-create-good.">20. Use money to create good.</h2>
 <p>Money is a resource for good. Yes, it can be used for evil or to buy luxury junk. But money can be used to do good too. Money isn’t evil in itself.</p>
-</article><article class="slide" data-seconds="10" hidden><h2 id="use-money-to-create-good.-continued">20. Use money to create good. · continued</h2>
+</article><article class="slide" data-id="c1f0598f053b3bec7dcfb4e531f0e1b9dbe648edaf60b28d2ab0dc5d0bb3813a-1" data-seconds="10" hidden><h2 id="use-money-to-create-good.-continued">20. Use money to create good. · continued</h2>
 <p>How you use it determines its goodness… and you get to choose.</p>
-</article><article class="slide" data-seconds="16" hidden><h2 id="do-work-that-doesnt-feel-like-work.">21. Do work that doesn’t feel like work.</h2>
+</article><article class="slide" data-id="52a6663bc5422db091d74de742a9b20ecee82ed0bef500acf734d47b847f9e73-1" data-seconds="16" hidden><h2 id="do-work-that-doesnt-feel-like-work.">21. Do work that doesn’t feel like work.</h2>
 <p>You don’t really wanna sit on a beach and do nothing. Deep down you just want to stop doing boring work, and use your creativity and imagination.</p>
-</article><article class="slide" data-seconds="13" hidden><h2 id="do-work-that-doesnt-feel-like-work.-continued">21. Do work that doesn’t feel like work. · continued</h2>
+</article><article class="slide" data-id="a491a1387db138d9640b902e2080531b13c9169d20457d403e53df0c040aad61-1" data-seconds="13" hidden><h2 id="do-work-that-doesnt-feel-like-work.-continued">21. Do work that doesn’t feel like work. · continued</h2>
 <p>Solve for that and you’ll fall in love with working hard. Boring work is the only cancer.</p>
-</article><article class="slide" data-seconds="12" hidden><h2 id="dare-to-build-a-personal-brand.">22. Dare to build a personal brand.</h2>
+</article><article class="slide" data-id="a6e6d9d41cea648b36d15b2d46a360ddbddf2a9546dfc4ad6acd8bfaa805a58b-1" data-seconds="12" hidden><h2 id="dare-to-build-a-personal-brand.">22. Dare to build a personal brand.</h2>
 <p>Sharing your ideas and experiences attracts people to your world. People carry opportunities – not phones, platforms, or computers.</p>
-</article><article class="slide" data-seconds="11" hidden><h2 id="start-a-weekly-newsletter.">23. Start a weekly newsletter.</h2>
+</article><article class="slide" data-id="5d0c100de16a36c1f8de6f37a0925bc4f89abc65178b7ec4b1687d3c7952e793-1" data-seconds="11" hidden><h2 id="start-a-weekly-newsletter.">23. Start a weekly newsletter.</h2>
 <p>Publish your deepest thinking here. Let it wow a small crowd. Nail the headlines if you want readers.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="write-online-daily.">24. Write online daily.</h2>
+</article><article class="slide" data-id="9aabac2884018b062ed11a876674c43a0f003ed9b75cadeb244b2a21e5419312-1" data-seconds="18" hidden><h2 id="write-online-daily.">24. Write online daily.</h2>
 <p>Use writing as a form of deep thinking. It benefits you even if nobody reads it. Choose only one platform. Master the psychology and culture of that platform. Read a lot of content on that platform.</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="write-online-daily.-continued">24. Write online daily. · continued</h2>
+</article><article class="slide" data-id="441514fb30d1d145fe28cdb266252688b2388f81318204b459928d034ec8ba33-1" data-seconds="8" hidden><h2 id="write-online-daily.-continued">24. Write online daily. · continued</h2>
 <p>Then write your own posts.</p>
-</article><article class="slide" data-seconds="10" hidden><h2 id="its-never-the-right-time-to-do-anything.">25. It's never the right time to do anything.</h2>
+</article><article class="slide" data-id="85a5ebfc14386d8d353b9a6185e3ecce0807cb2f86391f43e061b6251c422dc6-1" data-seconds="10" hidden><h2 id="its-never-the-right-time-to-do-anything.">25. It's never the right time to do anything.</h2>
 <p>It’s either today or it’s a p0rn fantasy. Stop kidding yourself.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="build-a-digital-business.">26. Build a digital business.</h2>
+</article><article class="slide" data-id="f8053e2662760c6eae8a7f1181027df8d4b0d6d02859a5732eebd64b6ccc527e-1" data-seconds="14" hidden><h2 id="build-a-digital-business.">26. Build a digital business.</h2>
 <p>You probably won’t get wealthy and have freedom by earning a salary. A salary lets someone else profit from your work and your unrealised potential.</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="get-good-at-dealing-with-uncertainty.">27. Get good at dealing with uncertainty.</h2>
-</article><article class="slide" data-seconds="9" hidden><h2 id="make-decisions-instead-of-saying-maybe.">28. Make decisions instead of saying maybe.</h2>
+</article><article class="slide" data-id="1259dc437123367035204e5ccc069c085bc34c54de4807a745f31346ad3df44d-1" data-seconds="8" hidden><h2 id="get-good-at-dealing-with-uncertainty.">27. Get good at dealing with uncertainty.</h2>
+</article><article class="slide" data-id="a75a8188e1088848b6ae3b6df933c0f1e8dad77d0e09537342f6a78d864c19d2-1" data-seconds="9" hidden><h2 id="make-decisions-instead-of-saying-maybe.">28. Make decisions instead of saying maybe.</h2>
 <p>A decision is yes or no. Every other outcome is procrastination.</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="get-wealthy-then-help-others.">29. Get wealthy then help others.</h2>
+</article><article class="slide" data-id="e5875f2571799149e2898d478a9acf3f7eb05dc56b636e354b2c8a9c74cb96c6-1" data-seconds="9" hidden><h2 id="get-wealthy-then-help-others.">29. Get wealthy then help others.</h2>
 <p>You can’t help anyone if you’re broke and obsessing over money 24/7.</p>
-</article><article class="slide" data-seconds="18" hidden><h2 id="never-become-a-victim.">30. Never become a victim.</h2>
+</article><article class="slide" data-id="53f37187bf372bd03364dd6042e19935a5f8d07a4d41df1efb77eb595481a1a3-1" data-seconds="18" hidden><h2 id="never-become-a-victim.">30. Never become a victim.</h2>
 <p>Victims are insufferable. Appealing to people’s charitable nature has an extremely low chance of success and is manipulation. Turn a tragedy into a hero’s journey that lets you climb out of rock bottom and inspire people.</p>
-</article><article class="slide" data-seconds="12" hidden><h2 id="never-outsource-blame.">31. Never outsource blame.</h2>
+</article><article class="slide" data-id="7f2ba3b5e6d160c67855b8fe3aeeeefe0f225ecb54118e33f20cb14effc62625-1" data-seconds="12" hidden><h2 id="never-outsource-blame.">31. Never outsource blame.</h2>
 <p>You own every outcome. Always placing blame on yourself gives you more control, even if somebody else did f*ck up.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="never-trust-a-politician.">32. Never trust a politician.</h2>
+</article><article class="slide" data-id="6c5d7eb813f9409eed18aac075717e75cb561a94dbcbb4b7d7e40319d0d8f1d3-1" data-seconds="14" hidden><h2 id="never-trust-a-politician.">32. Never trust a politician.</h2>
 <p>They’re professional liars. Nice words with no actions. They will try to buy your vote with free central bank money they created from nowhere.</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="never-believe-governments-fix-problems.">33. Never believe governments fix problems.</h2>
+</article><article class="slide" data-id="e67c6ab8ba6b03032d2b3004b7ab8e57a8a634b874b12785364df12a6a3250d2-1" data-seconds="8" hidden><h2 id="never-believe-governments-fix-problems.">33. Never believe governments fix problems.</h2>
 <p>They create more problems than they fix.</p>
-</article><article class="slide" data-seconds="11" hidden><h2 id="never-believe-someone-is-coming-to-save-you.">34. Never believe someone is coming to save you.</h2>
+</article><article class="slide" data-id="bc42f4ef92c01b255c62e0a85791e7a900862f96c856b61894705d8f6481fa90-1" data-seconds="11" hidden><h2 id="never-believe-someone-is-coming-to-save-you.">34. Never believe someone is coming to save you.</h2>
 <p>The incentives to save you or be your free mentor are extremely low.</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="plan-in-decades-execute-in-days.">35. Plan in decades, execute in days.</h2>
+</article><article class="slide" data-id="309e36721fcba666cfa4c23e88adb441539874319fc99caf4be92c33b0f7299e-1" data-seconds="9" hidden><h2 id="plan-in-decades-execute-in-days.">35. Plan in decades, execute in days.</h2>
 <p>The vision should be big. The execution should be extreme.</p>
-</article><article class="slide" data-seconds="11" hidden><h2 id="dont-worry-about-publishing-a-book.">36. Don’t worry about publishing a book.</h2>
+</article><article class="slide" data-id="b94b25c9893984cb04167e79af0e8d97533d0e00c37b50b4265291fbea4acfe9-1" data-seconds="11" hidden><h2 id="dont-worry-about-publishing-a-book.">36. Don’t worry about publishing a book.</h2>
 <p>Authors are mostly broke. Have you noticed? The authors who do well have massive pre-built audiences.</p>
-</article><article class="slide" data-seconds="15" hidden><h2 id="dont-worry-about-publishing-a-book.-continued">36. Don’t worry about publishing a book. · continued</h2>
+</article><article class="slide" data-id="4417beacacde961ad7d8a4464ece0446cdbb900ae9487277c1f482a4a4c4974b-1" data-seconds="15" hidden><h2 id="dont-worry-about-publishing-a-book.-continued">36. Don’t worry about publishing a book. · continued</h2>
 <p>And monetizing your skills and experience with a $20 book where you don’t get the reader’s contact details has the worst ROI in history.</p>
-</article><article class="slide" data-seconds="9" hidden><h2 id="create-proof-of-work.">37. Create proof-of-work.</h2>
+</article><article class="slide" data-id="86857a6f8a12f4ed07b3cc405954fea0591540129977d31875a0a0ab2819fd74-1" data-seconds="9" hidden><h2 id="create-proof-of-work.">37. Create proof-of-work.</h2>
 <p>“Trust me, bro” doesn’t f*cking work anymore. Produce these instead… Experiments. Results. Testimonials. Case studies.</p>
-</article><article class="slide" data-seconds="16" hidden><h2 id="dont-drink-alcohol.">38. Don’t drink alcohol.</h2>
+</article><article class="slide" data-id="6f9bf2e8974268b05606814c6e2224d4a0ff23dc8618ce667d144e2375642a77-1" data-seconds="16" hidden><h2 id="dont-drink-alcohol.">38. Don’t drink alcohol.</h2>
 <p>I reached 7 years sober the other day. Never felt better. No losing a day to a hangover. Acting like myself. In control. A good role model for my two daughters.</p>
-</article><article class="slide" data-seconds="12" hidden><h2 id="dont-drink-alcohol.-continued">38. Don’t drink alcohol. · continued</h2>
+</article><article class="slide" data-id="408fa6a3be690b7f24dd0aac30f8cdc01f395da52a4e6b11f0d197043cbafbde-1" data-seconds="12" hidden><h2 id="dont-drink-alcohol.-continued">38. Don’t drink alcohol. · continued</h2>
 <p>Seeing reality as it is, not through beer goggles. Alcohol is a perfect lie. Straight life is the best life.</p>
-</article><article class="slide" data-seconds="14" hidden><h2 id="ego-is-the-enemy.">39. Ego is the enemy.</h2>
+</article><article class="slide" data-id="4b5d32ed801693fc2fd7b920bd775d79c8ee8f45e6000cea06f6627051c504d0-1" data-seconds="14" hidden><h2 id="ego-is-the-enemy.">39. Ego is the enemy.</h2>
 <p>Realize you don’t know 1/100th of f*ck all. That’s how you win. Think you’re King D*ck and people will run away. Humble people learn.</p>
-</article><article class="slide" data-seconds="12" hidden><h2 id="ego-is-the-enemy.-continued">39. Ego is the enemy. · continued</h2>
+</article><article class="slide" data-id="ea3a15cb9402970c1df342daae67716c9f45cf1c98b0ce7e4d1dbae86bd5808d-1" data-seconds="12" hidden><h2 id="ego-is-the-enemy.-continued">39. Ego is the enemy. · continued</h2>
 <p>Big egos think they’re too good to learn, so they miss new opportunities and their skills fade.</p>
-</article><article class="slide" data-seconds="8" hidden><h2 id="be-cringe.">40. Be cringe.</h2>
+</article><article class="slide" data-id="d8d8fa15c12440d86f2eab6d869c344362c7532b36565d0381ea7206fa1abfe3-1" data-seconds="8" hidden><h2 id="be-cringe.">40. Be cringe.</h2>
 <p>Cringe = Bravery Cringe = Doing what already works</p>
-</article><article class="slide" data-seconds="8.0" hidden><h2 id="source">Source</h2>
+</article><article class="slide" data-id="18760b3b3544e2beb941e70c9247976830b34d5cc50aa24b3ed370e2412bb8de-1" data-seconds="8.0" hidden><h2 id="source">Source</h2>
 <p>Modern Freedom by Tim Denning</p>
 <p>40 pieces of advice from 40 years of life</p>
 <p>October 27, 2026</p>
 <p>Article text preserved. Email promotions and subscription footer omitted.</p>
-</article></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision 849c799cac</span></footer>
+</article><p id="empty-slides" hidden>All slides muted. Restore a slide above to watch again.</p></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision 849c799cac</span></footer>
 </main>
   <div class="controls" aria-label="Document display controls">
     <button type="button" data-theme-control>Light mode</button>
@@ -457,6 +462,17 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
   const play = document.getElementById('play');
   const status = document.getElementById('status');
   const speed = document.getElementById('speed');
+  const mute = document.getElementById('mute');
+  const mutedPicker = document.getElementById('muted-slides');
+  const restore = document.getElementById('restore-slide');
+  const restoreAll = document.getElementById('restore-all');
+  const storageKey = `slideshow-muted:v1:${window.location.pathname}`;
+  const slideIds = slides.map(slide => slide.dataset.id);
+  let muted = new Set();
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(storageKey) || '[]');
+    if (Array.isArray(saved)) muted = new Set(saved.filter(id => slideIds.includes(id)));
+  } catch { /* Playback still works when browser storage is unavailable. */ }
   let index = 0;
   let playing = false;
   let timer = null;
@@ -464,18 +480,52 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
   let requestingWake = false;
   let touchX = null;
 
+  function activeIndices() {
+    return slides.flatMap((slide, i) => muted.has(slideIds[i]) ? [] : [i]);
+  }
+  function nextIndex(delta) {
+    if (!activeIndices().length) return -1;
+    for (let offset = 1; offset <= slides.length; offset++) {
+      const candidate = (index + delta * offset + slides.length) % slides.length;
+      if (!muted.has(slideIds[candidate])) return candidate;
+    }
+    return -1;
+  }
+  function saveMuted() {
+    try { window.localStorage.setItem(storageKey, JSON.stringify([...muted])); }
+    catch { status.textContent = 'Mute changes apply now but cannot be saved in this browser.'; }
+  }
+
   function show() {
+    const active = activeIndices();
+    const empty = active.length === 0;
     slides.forEach((slide, i) => { slide.hidden = i !== index; });
-    document.getElementById('counter').textContent = `${index + 1} / ${slides.length}`;
+    document.getElementById('empty-slides').hidden = !empty;
+    document.getElementById('counter').textContent = empty ? 'All slides muted' : `${index + 1} / ${slides.length}` + (muted.size ? ` · ${active.length} active` : '');
+    play.disabled = empty;
+    mute.disabled = empty;
+    for (const id of ['previous', 'next', 'edge-previous', 'edge-next']) document.getElementById(id).disabled = empty;
+    const selection = mutedPicker.value;
+    const options = slides.flatMap((slide, i) => {
+      if (!muted.has(slideIds[i])) return [];
+      const option = document.createElement('option');
+      option.value = String(i);
+      option.textContent = `Slide ${i + 1}: ${slide.textContent.trim().replace(/\s+/g, ' ').slice(0, 65)}`;
+      return [option];
+    });
+    mutedPicker.replaceChildren(...options);
+    if (options.some(option => option.value === selection)) mutedPicker.value = selection;
+    mutedPicker.hidden = restore.hidden = restoreAll.hidden = !muted.size;
+    mutedPicker.setAttribute('aria-label', `Muted slides (${muted.size})`);
     play.textContent = playing ? 'Pause' : 'Play';
     play.setAttribute('aria-pressed', String(playing));
   }
   function schedule() {
     clearTimeout(timer);
     timer = null;
-    if (playing && !document.hidden) {
+    if (playing && index >= 0 && !document.hidden) {
       timer = setTimeout(() => {
-        index = (index + 1) % slides.length;
+        index = nextIndex(1);
         show();
         schedule();
       }, Number(slides[index].dataset.seconds) * 1000 / Number(speed.value));
@@ -507,7 +557,7 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
     } finally { requestingWake = false; }
   }
   function setPlaying(value) {
-    playing = value;
+    playing = value && activeIndices().length > 0;
     show();
     schedule();
     if (playing) {
@@ -519,10 +569,29 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
     }
   }
   function step(delta) {
-    index = (index + delta + slides.length) % slides.length;
+    index = nextIndex(delta);
     show();
     schedule();
   }
+  mute.addEventListener('click', () => {
+    if (index < 0) return;
+    muted.add(slideIds[index]);
+    index = nextIndex(1);
+    if (index < 0) setPlaying(false);
+    else { show(); schedule(); }
+    saveMuted();
+  });
+  function restoreMuted(all) {
+    const restoredIndex = Number(mutedPicker.value);
+    if (all) muted.clear();
+    else muted.delete(slideIds[restoredIndex]);
+    if (index < 0) index = all ? 0 : restoredIndex;
+    show();
+    schedule();
+    saveMuted();
+  }
+  restore.addEventListener('click', () => restoreMuted(false));
+  restoreAll.addEventListener('click', () => restoreMuted(true));
   play.addEventListener('click', () => setPlaying(!playing));
   document.getElementById('previous').addEventListener('click', () => step(-1));
   document.getElementById('next').addEventListener('click', () => step(1));
@@ -615,6 +684,7 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
       exitPresentation();
     } else if (presenting && !event.target.closest('.edge-navigation')) revealControls();
   });
+  index = muted.has(slideIds[0]) ? nextIndex(1) : 0;
   show();
 })();
 

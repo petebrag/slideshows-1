@@ -4,6 +4,17 @@
   const play = document.getElementById('play');
   const status = document.getElementById('status');
   const speed = document.getElementById('speed');
+  const mute = document.getElementById('mute');
+  const mutedPicker = document.getElementById('muted-slides');
+  const restore = document.getElementById('restore-slide');
+  const restoreAll = document.getElementById('restore-all');
+  const storageKey = `slideshow-muted:v1:${window.location.pathname}`;
+  const slideIds = slides.map(slide => slide.dataset.id);
+  let muted = new Set();
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(storageKey) || '[]');
+    if (Array.isArray(saved)) muted = new Set(saved.filter(id => slideIds.includes(id)));
+  } catch { /* Playback still works when browser storage is unavailable. */ }
   let index = 0;
   let playing = false;
   let timer = null;
@@ -11,18 +22,52 @@
   let requestingWake = false;
   let touchX = null;
 
+  function activeIndices() {
+    return slides.flatMap((slide, i) => muted.has(slideIds[i]) ? [] : [i]);
+  }
+  function nextIndex(delta) {
+    if (!activeIndices().length) return -1;
+    for (let offset = 1; offset <= slides.length; offset++) {
+      const candidate = (index + delta * offset + slides.length) % slides.length;
+      if (!muted.has(slideIds[candidate])) return candidate;
+    }
+    return -1;
+  }
+  function saveMuted() {
+    try { window.localStorage.setItem(storageKey, JSON.stringify([...muted])); }
+    catch { status.textContent = 'Mute changes apply now but cannot be saved in this browser.'; }
+  }
+
   function show() {
+    const active = activeIndices();
+    const empty = active.length === 0;
     slides.forEach((slide, i) => { slide.hidden = i !== index; });
-    document.getElementById('counter').textContent = `${index + 1} / ${slides.length}`;
+    document.getElementById('empty-slides').hidden = !empty;
+    document.getElementById('counter').textContent = empty ? 'All slides muted' : `${index + 1} / ${slides.length}` + (muted.size ? ` · ${active.length} active` : '');
+    play.disabled = empty;
+    mute.disabled = empty;
+    for (const id of ['previous', 'next', 'edge-previous', 'edge-next']) document.getElementById(id).disabled = empty;
+    const selection = mutedPicker.value;
+    const options = slides.flatMap((slide, i) => {
+      if (!muted.has(slideIds[i])) return [];
+      const option = document.createElement('option');
+      option.value = String(i);
+      option.textContent = `Slide ${i + 1}: ${slide.textContent.trim().replace(/\s+/g, ' ').slice(0, 65)}`;
+      return [option];
+    });
+    mutedPicker.replaceChildren(...options);
+    if (options.some(option => option.value === selection)) mutedPicker.value = selection;
+    mutedPicker.hidden = restore.hidden = restoreAll.hidden = !muted.size;
+    mutedPicker.setAttribute('aria-label', `Muted slides (${muted.size})`);
     play.textContent = playing ? 'Pause' : 'Play';
     play.setAttribute('aria-pressed', String(playing));
   }
   function schedule() {
     clearTimeout(timer);
     timer = null;
-    if (playing && !document.hidden) {
+    if (playing && index >= 0 && !document.hidden) {
       timer = setTimeout(() => {
-        index = (index + 1) % slides.length;
+        index = nextIndex(1);
         show();
         schedule();
       }, Number(slides[index].dataset.seconds) * 1000 / Number(speed.value));
@@ -54,7 +99,7 @@
     } finally { requestingWake = false; }
   }
   function setPlaying(value) {
-    playing = value;
+    playing = value && activeIndices().length > 0;
     show();
     schedule();
     if (playing) {
@@ -66,10 +111,29 @@
     }
   }
   function step(delta) {
-    index = (index + delta + slides.length) % slides.length;
+    index = nextIndex(delta);
     show();
     schedule();
   }
+  mute.addEventListener('click', () => {
+    if (index < 0) return;
+    muted.add(slideIds[index]);
+    index = nextIndex(1);
+    if (index < 0) setPlaying(false);
+    else { show(); schedule(); }
+    saveMuted();
+  });
+  function restoreMuted(all) {
+    const restoredIndex = Number(mutedPicker.value);
+    if (all) muted.clear();
+    else muted.delete(slideIds[restoredIndex]);
+    if (index < 0) index = all ? 0 : restoredIndex;
+    show();
+    schedule();
+    saveMuted();
+  }
+  restore.addEventListener('click', () => restoreMuted(false));
+  restoreAll.addEventListener('click', () => restoreMuted(true));
   play.addEventListener('click', () => setPlaying(!playing));
   document.getElementById('previous').addEventListener('click', () => step(-1));
   document.getElementById('next').addEventListener('click', () => step(1));
@@ -162,5 +226,6 @@
       exitPresentation();
     } else if (presenting && !event.target.closest('.edge-navigation')) revealControls();
   });
+  index = muted.has(slideIds[0]) ? nextIndex(1) : 0;
   show();
 })();

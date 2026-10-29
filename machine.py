@@ -136,13 +136,17 @@ def render(text):
     meta, slides = parse_deck(text)
     revision = hashlib.sha256(text.encode()).hexdigest()[:10]
     content = '<header><p class="eyebrow">Slideshow Machine</p><h1>' + html.escape(meta['title']) + '</h1></header>'
-    content += '<nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><span id="counter" aria-live="polite"></span></nav>'
+    content += '<nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><button id="mute">Mute this slide</button><select id="muted-slides" aria-label="Muted slides" hidden></select><button id="restore-slide" hidden>Restore selected slide</button><button id="restore-all" hidden>Restore all</button><span id="counter" aria-live="polite"></span></nav>'
     content += '<div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows">'
     for direction, points in [('previous', '15 5 8 12 15 19'), ('next', '9 5 16 12 9 19')]:
         content += f'<button type="button" id="edge-{direction}" class="edge-navigation edge-{direction}" aria-label="{direction.capitalize()} slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="{points}" /></svg></button>'
+    occurrences = {}
     for i, slide in enumerate(slides):
-        content += f'<article class="slide" data-seconds="{slide["seconds"]}" {"hidden" if i else ""}>{slide["html"]}</article>'
-    content += '</div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision ' + revision + '</span></footer>'
+        digest = hashlib.sha256(slide["html"].encode()).hexdigest()
+        occurrences[digest] = occurrences.get(digest, 0) + 1
+        slide_id = f"{digest}-{occurrences[digest]}"
+        content += f'<article class="slide" data-id="{slide_id}" data-seconds="{slide["seconds"]}" {"hidden" if i else ""}>{slide["html"]}</article>'
+    content += '<p id="empty-slides" hidden>All slides muted. Restore a slide above to watch again.</p></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision ' + revision + '</span></footer>'
     out = shell('deck.html', meta['title'], content)
     css = (ROOT / 'player.css').read_text()
     js = (ROOT / 'player.js').read_text()

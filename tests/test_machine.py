@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import re
 import subprocess
 import tempfile
 import unittest
@@ -12,6 +13,15 @@ spec.loader.exec_module(machine)
 
 
 class CreationTests(unittest.TestCase):
+    def test_mute_ids_survive_reordering_and_distinguish_duplicate_slides(self):
+        base = '---\ntitle: "test123"\nseconds: auto\n---\n'
+        first, _, _, _ = machine.render(base + 'one\n---\ntwo\n---\none')
+        second, _, _, _ = machine.render(base + 'two\n---\none\n---\none')
+        ids = lambda text: re.findall(r'class="slide" data-id="([^"]+)"', text)
+        a, b = ids(first), ids(second)
+        self.assertEqual(len(set(a)), 3)
+        self.assertEqual(a, [b[1], b[0], b[2]])
+
     def test_word_preserving_split(self):
         text = ' '.join('word' + str(i) for i in range(160)) + '\n\nlast paragraph.'
         self.assertEqual(' '.join(machine.chunks(text)).split(), text.split())

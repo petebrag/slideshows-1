@@ -4,7 +4,8 @@ const vm = require('node:vm');
 const fs = require('node:fs');
 const path = require('node:path');
 
-function player() {
+function player({saved = null, storageFails = false} = {}) {
+  const storage = new Map(saved ? [["slideshow-muted:v1:/deck.html", saved]] : []);
   const elements = new Map();
   const timers = new Map();
   const events = new Map();
@@ -14,6 +15,7 @@ function player() {
   function element(id) {
     if (!elements.has(id)) elements.set(id, {
       value: '1', hidden: false, textContent: '', handlers: {},
+      replaceChildren(...children) { this.children = children; this.value = children[0]?.value || ''; },
       addEventListener(name, callback) { this.handlers[name] = callback; },
       setAttribute(name, value) { this[name] = value; },
       fire(name) { return this.handlers[name]?.({target: this}); },
@@ -23,8 +25,9 @@ function player() {
     return elements.get(id);
   }
   const slides = [element('slide1'), element('slide2')];
-  slides.forEach(s => { s.dataset = {seconds: '10'}; });
+  slides.forEach((s, i) => { s.dataset = {seconds: '10', id: 'slide-' + i}; s.textContent = 'Slide ' + (i + 1); });
   const document = {
+    createElement: () => ({value: '', textContent: ''}),
     hidden: false, documentElement: {classList: {
       values: new Set(),
       add(value) { this.values.add(value); },
@@ -50,11 +53,14 @@ function player() {
   }}};
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../player.js'), 'utf8'), {
     document, navigator,
-    window: {addEventListener() {}},
+    window: {addEventListener() {}, location: {pathname: '/deck.html'}, localStorage: {
+      getItem: key => { if (storageFails) throw Error('blocked'); return storage.get(key); },
+      setItem: (key, value) => { if (storageFails) throw Error('blocked'); storage.set(key, value); },
+    }},
     setTimeout: (fn, delay) => { timers.set(++timerId, {fn, delay}); return timerId; },
     clearTimeout: id => timers.delete(id),
   });
-  return {element, slides, timers, document,
+  return {element, slides, timers, document, storage,
     event: (name, event = {}) => events.get(name)?.forEach(callback => callback(event)),
     tick: () => { const [id, timer] = timers.entries().next().value; timers.delete(id); timer.fn(); },
     wakeCounts: () => ({requests, releases}),
@@ -202,4 +208,69 @@ test('pausing during an outstanding wake request releases the late lock', async 
   assert.equal(p.wakeCounts().releases, 1);
   assert.equal(p.element('play').textContent, 'Play');
   assert.equal(p.timers.size, 0);
+});
+
+
+test('mute skips current slide in autoplay and both navigation directions; restore resumes inclusion', () => {
+  const p = player();
+  p.element('play').fire('click');
+  p.element('mute').fire('click');
+  assert.equal(p.slides[0].hidden, true);
+  assert.equal(p.slides[1].hidden, false);
+  assert.equal(p.element('play').textContent, 'Pause');
+  p.tick();
+  assert.equal(p.slides[1].hidden, false);
+  p.element('previous').fire('click');
+  assert.equal(p.slides[1].hidden, false);
+  p.element('next').fire('click');
+  assert.equal(p.slides[1].hidden, false);
+  assert.equal(p.element('muted-slides').children.length, 1);
+  p.element('restore-slide').fire('click');
+  p.tick();
+  assert.equal(p.element('counter').textContent, '1 / 2');
+  assert.equal(p.element('restore-slide').hidden, true);
+});
+
+test('muted slides persist across reloads and stale IDs are ignored', () => {
+  const p = player();
+  p.element('mute').fire('click');
+  const saved = p.storage.get('slideshow-muted:v1:/deck.html');
+  const reloaded = player({saved});
+  assert.equal(reloaded.slides[0].hidden, true);
+  assert.equal(reloaded.slides[1].hidden, false);
+  const stale = player({saved: '["old-slide"]'});
+  assert.equal(stale.element('counter').textContent, '1 / 2');
+});
+
+test('all muted pauses safely; restoring one or all makes playback available', () => {
+  const p = player();
+  p.element('play').fire('click');
+  p.element('mute').fire('click');
+  p.element('mute').fire('click');
+  assert.equal(p.slides.every(slide => slide.hidden), true);
+  assert.equal(p.element('empty-slides').hidden, false);
+  assert.equal(p.element('play').disabled, true);
+  assert.equal(p.timers.size, 0);
+  p.element('next').fire('click');
+  assert.equal(p.element('counter').textContent, 'All slides muted');
+  p.element('muted-slides').value = '1';
+  p.element('restore-slide').fire('click');
+  assert.equal(p.slides[1].hidden, false);
+  assert.equal(p.element('play').disabled, false);
+  assert.equal(p.element('play').textContent, 'Play');
+  p.element('restore-all').fire('click');
+  assert.equal(p.element('restore-all').hidden, true);
+  p.element('next').fire('click');
+  assert.equal(p.element('counter').textContent, '1 / 2');
+});
+
+test('invalid or unavailable storage does not break muting or restoring', () => {
+  for (const config of [{saved: '{bad'}, {saved: '{}'}, {storageFails: true}]) {
+    const p = player(config);
+    p.element('mute').fire('click');
+    assert.equal(p.slides[0].hidden, true);
+    p.element('restore-all').fire('click');
+    p.element('previous').fire('click');
+    assert.equal(p.slides[0].hidden, false);
+  }
 });

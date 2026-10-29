@@ -46,3 +46,8 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
   #counter { margin-left: 0; }
 }
 @media print { .edge-navigation { display: none; } }
+
+#muted-slides { max-width: min(100%, 300px); }
+.playback [hidden], #empty-slides[hidden] { display: none; }
+.playback button:disabled, .edge-navigation:disabled { opacity: .4; cursor: default; }
+#empty-slides { text-align: center; font-size: 1.3rem; }
