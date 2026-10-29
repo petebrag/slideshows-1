@@ -163,32 +163,37 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
 }
 @media print { .edge-navigation { display: none; } }
 
+#muted-slides { max-width: min(100%, 300px); }
+.playback [hidden], #empty-slides[hidden] { display: none; }
+.playback button:disabled, .edge-navigation:disabled { opacity: .4; cursor: default; }
+#empty-slides { text-align: center; font-size: 1.3rem; }
+
 </style>
 </head>
 <body>
   <main>
-<header><p class="eyebrow">Slideshow Machine</p><h1>Money Rules</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><button type="button" id="edge-previous" class="edge-navigation edge-previous" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 5 8 12 15 19" /></svg></button><button type="button" id="edge-next" class="edge-navigation edge-next" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 5 16 12 9 19" /></svg></button><article class="slide" data-seconds="8" ><p>The 4 Money Rules That Made Me a Millionaire Source: YouTube (https://www.youtube.com/watch/Zeiy22UBsW4)</p>
-</article><article class="slide" data-seconds="20" hidden><p>This video outlines a four-step framework for achieving significant wealth, presented by an entrepreneur who went from being broke to a multi-millionaire. The core philosophy is that financial success is not about luck but about systematically applying a set of rules that make success inevitable.</p>
-</article><article class="slide" data-seconds="16" hidden><p>The strategy involves first mastering a high-value skill, then leveraging that skill to build equity rather than trading time for a salary. This process requires long-term patience with results but impatience with daily action.</p>
-</article><article class="slide" data-seconds="8" hidden><p>Finally, one can accelerate this journey by strategically placing oneself in a high-opportunity environment.</p>
-</article><article class="slide" data-seconds="18" hidden><p>To achieve wealth, the first rule is to Master One High-Value, Money-Making Skill. The foundation of wealth is mastery in one of four specific skills. Instead of being a generalist, you must become exceptional in one of these areas.</p>
-</article><article class="slide" data-seconds="8" hidden><p>The first high-value, money-making skill is Selling: the art of persuasion, marketing, and closing deals.</p>
-</article><article class="slide" data-seconds="9" hidden><p>The second high-value, money-making skill is Making: the ability to create products, whether digital (apps, content) or physical.</p>
-</article><article class="slide" data-seconds="10" hidden><p>The third high-value, money-making skill is Designing: possessing exceptional taste and an understanding of form and function (e.g., Steve Jobs).</p>
-</article><article class="slide" data-seconds="12" hidden><p>The fourth high-value, money-making skill is Hunting: the skill of spotting undervalued opportunities, such as in real estate, stocks, or angel investing (e.g., Warren Buffett).</p>
-</article><article class="slide" data-seconds="16" hidden><p>To master a skill, immerse yourself in an environment where it is practiced at a high level, identify the top performer, and then double their inputs while obsessively studying the craft in your off-hours.</p>
-</article><article class="slide" data-seconds="14" hidden><p>The second rule of money is to Own Equity, Don’t Rent Your Time. A salary, while providing security, is a cap on your earning potential. True wealth is built through ownership.</p>
-</article><article class="slide" data-seconds="16" hidden><p>Once you have developed your money-making skill, the next step in owning equity is to use it to build equity, not to earn a higher wage. This can be accomplished in three primary ways.</p>
-</article><article class="slide" data-seconds="14" hidden><p>The first is Code: turn your skill into a scalable digital product, like a software application or a website theme, that can be sold many times over with minimal additional effort.</p>
-</article><article class="slide" data-seconds="12" hidden><p>The second way to own equity is through Content: package your knowledge into scalable media like books, courses, or videos that can reach a massive audience.</p>
-</article><article class="slide" data-seconds="14" hidden><p>The third way to own equity is through Capital: use your skill (particularly "hunting") to invest capital—your own or others'—into assets that generate returns, taking a percentage of the profits.</p>
-</article><article class="slide" data-seconds="14" hidden><p>The third rule of money is to Wait: Be Patient with Results, Impatient with Action. Wealth creation is an inevitable outcome of following the right process, but it is not instantaneous.</p>
-</article><article class="slide" data-seconds="8" hidden><p>The key is to adopt a mindset of being "impatient with action and patient with results."</p>
-</article><article class="slide" data-seconds="17" hidden><p>This means executing with urgency and consistency on a daily basis while understanding that the significant rewards will take years to materialize. Resisting the urge to constantly check for growth allows your efforts to compound over time.</p>
-</article><article class="slide" data-seconds="16" hidden><p>The fourth rule of money is Proximity is Power. You can dramatically accelerate your progress by physically moving to the epicenter of your chosen industry (e.g., Silicon Valley for tech, Los Angeles for entertainment).</p>
-</article><article class="slide" data-seconds="18" hidden><p>Surrounding yourself with ambitious, like-minded individuals who are on the same path creates opportunities for learning, networking, and luck. Your environment and the people you associate with have a direct and powerful influence on your mindset, standards, and ultimate success.</p>
-</article><article class="slide" data-seconds="8" hidden><p>If you want to change your life, change your zip code.</p>
-</article></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision 01629b4f4b</span></footer>
+<header><p class="eyebrow">Slideshow Machine</p><h1>Money Rules</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><button id="mute">Mute this slide</button><select id="muted-slides" aria-label="Muted slides" hidden></select><button id="restore-slide" hidden>Restore selected slide</button><button id="restore-all" hidden>Restore all</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><button type="button" id="edge-previous" class="edge-navigation edge-previous" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 5 8 12 15 19" /></svg></button><button type="button" id="edge-next" class="edge-navigation edge-next" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 5 16 12 9 19" /></svg></button><article class="slide" data-id="73cec3e7841eae8521b7c1ebb695be2d4d6deeb7da96ece5c83bc7c9290532e5-1" data-seconds="8" ><p>The 4 Money Rules That Made Me a Millionaire Source: YouTube (https://www.youtube.com/watch/Zeiy22UBsW4)</p>
+</article><article class="slide" data-id="31362878f5ab4c04fd8f3e45a0e1817e672bb832645653258f9b7014ead54a98-1" data-seconds="20" hidden><p>This video outlines a four-step framework for achieving significant wealth, presented by an entrepreneur who went from being broke to a multi-millionaire. The core philosophy is that financial success is not about luck but about systematically applying a set of rules that make success inevitable.</p>
+</article><article class="slide" data-id="ec45b72479cee76eedf9c38fb82e7d68f1101ebcb95cbaa9481ba0df98501f4f-1" data-seconds="16" hidden><p>The strategy involves first mastering a high-value skill, then leveraging that skill to build equity rather than trading time for a salary. This process requires long-term patience with results but impatience with daily action.</p>
+</article><article class="slide" data-id="bb30371fb520c36a66cc098ab499341ed2d77cda26696de99218e834d1bb074b-1" data-seconds="8" hidden><p>Finally, one can accelerate this journey by strategically placing oneself in a high-opportunity environment.</p>
+</article><article class="slide" data-id="25e3c315424315098ab98cc40515455c3f2874e7e4eae66dacbd68cff8981bea-1" data-seconds="18" hidden><p>To achieve wealth, the first rule is to Master One High-Value, Money-Making Skill. The foundation of wealth is mastery in one of four specific skills. Instead of being a generalist, you must become exceptional in one of these areas.</p>
+</article><article class="slide" data-id="f0e1136675de400afc7dd7e1956340b7a60699cf85056adee9ba8eb360a9ff3d-1" data-seconds="8" hidden><p>The first high-value, money-making skill is Selling: the art of persuasion, marketing, and closing deals.</p>
+</article><article class="slide" data-id="5c6147c0a568734e61b9410ff18240b87067436022d7c9b0855d5f20b1cf33df-1" data-seconds="9" hidden><p>The second high-value, money-making skill is Making: the ability to create products, whether digital (apps, content) or physical.</p>
+</article><article class="slide" data-id="92cc4705b40b70062854ee12597bf545e13e055cf4ee3b8bbc8d64115f7314f2-1" data-seconds="10" hidden><p>The third high-value, money-making skill is Designing: possessing exceptional taste and an understanding of form and function (e.g., Steve Jobs).</p>
+</article><article class="slide" data-id="31a941134e9ef44377c277e0f1ed8e8a8148a406c07fa5d1c2a9594fe2516dd2-1" data-seconds="12" hidden><p>The fourth high-value, money-making skill is Hunting: the skill of spotting undervalued opportunities, such as in real estate, stocks, or angel investing (e.g., Warren Buffett).</p>
+</article><article class="slide" data-id="27ef236d1f7d3ceb663f1db03f9787f141af9b45db1cae50437c8d10e103aa72-1" data-seconds="16" hidden><p>To master a skill, immerse yourself in an environment where it is practiced at a high level, identify the top performer, and then double their inputs while obsessively studying the craft in your off-hours.</p>
+</article><article class="slide" data-id="d732c84f9e02402a120fffe6f52abbe63fd07dbed6198c8c14bdc8190fcee244-1" data-seconds="14" hidden><p>The second rule of money is to Own Equity, Don’t Rent Your Time. A salary, while providing security, is a cap on your earning potential. True wealth is built through ownership.</p>
+</article><article class="slide" data-id="200d88a13577ea7328c883cee13440449ce179727567299fde5aff3014376733-1" data-seconds="16" hidden><p>Once you have developed your money-making skill, the next step in owning equity is to use it to build equity, not to earn a higher wage. This can be accomplished in three primary ways.</p>
+</article><article class="slide" data-id="283ae01d3f6904a17779177806d98f59eeff2e8fe53f84e0c5009f543e074041-1" data-seconds="14" hidden><p>The first is Code: turn your skill into a scalable digital product, like a software application or a website theme, that can be sold many times over with minimal additional effort.</p>
+</article><article class="slide" data-id="875911fd6aecc654fc44352154ddc7baed646b3f58f8c9d87060671038633eb7-1" data-seconds="12" hidden><p>The second way to own equity is through Content: package your knowledge into scalable media like books, courses, or videos that can reach a massive audience.</p>
+</article><article class="slide" data-id="047ce95993731d40680e8f1087650752b7b0b72f2b40ef0c5083feb504183def-1" data-seconds="14" hidden><p>The third way to own equity is through Capital: use your skill (particularly "hunting") to invest capital—your own or others'—into assets that generate returns, taking a percentage of the profits.</p>
+</article><article class="slide" data-id="4c5650b77963a780da1b5f6400bc8bd06c3c7473034827a39f9cdae5c3a99117-1" data-seconds="14" hidden><p>The third rule of money is to Wait: Be Patient with Results, Impatient with Action. Wealth creation is an inevitable outcome of following the right process, but it is not instantaneous.</p>
+</article><article class="slide" data-id="6025800f8d9ad5c7b65b44ad5d969688103a4bb4625fe075c52ca0d7bef75f6e-1" data-seconds="8" hidden><p>The key is to adopt a mindset of being "impatient with action and patient with results."</p>
+</article><article class="slide" data-id="19b8dd69dfdc992d97f84e85e2df0c58f205c6f2596c473903738f90e42b50fc-1" data-seconds="17" hidden><p>This means executing with urgency and consistency on a daily basis while understanding that the significant rewards will take years to materialize. Resisting the urge to constantly check for growth allows your efforts to compound over time.</p>
+</article><article class="slide" data-id="aca3612f9a404b42919bee513587e62c3bc704a58ba08797bfc5b4d86f2d5968-1" data-seconds="16" hidden><p>The fourth rule of money is Proximity is Power. You can dramatically accelerate your progress by physically moving to the epicenter of your chosen industry (e.g., Silicon Valley for tech, Los Angeles for entertainment).</p>
+</article><article class="slide" data-id="f3d9638b388dc9bc71545169b25ea37a3af86e491b74a1564b17a99419b2407e-1" data-seconds="18" hidden><p>Surrounding yourself with ambitious, like-minded individuals who are on the same path creates opportunities for learning, networking, and luck. Your environment and the people you associate with have a direct and powerful influence on your mindset, standards, and ultimate success.</p>
+</article><article class="slide" data-id="028117819b7f8a6bbe2b332151590b022a1047638278273eede2ea2416bb3448-1" data-seconds="8" hidden><p>If you want to change your life, change your zip code.</p>
+</article><p id="empty-slides" hidden>All slides muted. Restore a slide above to watch again.</p></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision 01629b4f4b</span></footer>
 </main>
   <div class="controls" aria-label="Document display controls">
     <button type="button" data-theme-control>Light mode</button>
@@ -281,6 +286,17 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
   const play = document.getElementById('play');
   const status = document.getElementById('status');
   const speed = document.getElementById('speed');
+  const mute = document.getElementById('mute');
+  const mutedPicker = document.getElementById('muted-slides');
+  const restore = document.getElementById('restore-slide');
+  const restoreAll = document.getElementById('restore-all');
+  const storageKey = `slideshow-muted:v1:${window.location.pathname}`;
+  const slideIds = slides.map(slide => slide.dataset.id);
+  let muted = new Set();
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(storageKey) || '[]');
+    if (Array.isArray(saved)) muted = new Set(saved.filter(id => slideIds.includes(id)));
+  } catch { /* Playback still works when browser storage is unavailable. */ }
   let index = 0;
   let playing = false;
   let timer = null;
@@ -288,18 +304,52 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
   let requestingWake = false;
   let touchX = null;
 
+  function activeIndices() {
+    return slides.flatMap((slide, i) => muted.has(slideIds[i]) ? [] : [i]);
+  }
+  function nextIndex(delta) {
+    if (!activeIndices().length) return -1;
+    for (let offset = 1; offset <= slides.length; offset++) {
+      const candidate = (index + delta * offset + slides.length) % slides.length;
+      if (!muted.has(slideIds[candidate])) return candidate;
+    }
+    return -1;
+  }
+  function saveMuted() {
+    try { window.localStorage.setItem(storageKey, JSON.stringify([...muted])); }
+    catch { status.textContent = 'Mute changes apply now but cannot be saved in this browser.'; }
+  }
+
   function show() {
+    const active = activeIndices();
+    const empty = active.length === 0;
     slides.forEach((slide, i) => { slide.hidden = i !== index; });
-    document.getElementById('counter').textContent = `${index + 1} / ${slides.length}`;
+    document.getElementById('empty-slides').hidden = !empty;
+    document.getElementById('counter').textContent = empty ? 'All slides muted' : `${index + 1} / ${slides.length}` + (muted.size ? ` · ${active.length} active` : '');
+    play.disabled = empty;
+    mute.disabled = empty;
+    for (const id of ['previous', 'next', 'edge-previous', 'edge-next']) document.getElementById(id).disabled = empty;
+    const selection = mutedPicker.value;
+    const options = slides.flatMap((slide, i) => {
+      if (!muted.has(slideIds[i])) return [];
+      const option = document.createElement('option');
+      option.value = String(i);
+      option.textContent = `Slide ${i + 1}: ${slide.textContent.trim().replace(/\s+/g, ' ').slice(0, 65)}`;
+      return [option];
+    });
+    mutedPicker.replaceChildren(...options);
+    if (options.some(option => option.value === selection)) mutedPicker.value = selection;
+    mutedPicker.hidden = restore.hidden = restoreAll.hidden = !muted.size;
+    mutedPicker.setAttribute('aria-label', `Muted slides (${muted.size})`);
     play.textContent = playing ? 'Pause' : 'Play';
     play.setAttribute('aria-pressed', String(playing));
   }
   function schedule() {
     clearTimeout(timer);
     timer = null;
-    if (playing && !document.hidden) {
+    if (playing && index >= 0 && !document.hidden) {
       timer = setTimeout(() => {
-        index = (index + 1) % slides.length;
+        index = nextIndex(1);
         show();
         schedule();
       }, Number(slides[index].dataset.seconds) * 1000 / Number(speed.value));
@@ -331,7 +381,7 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
     } finally { requestingWake = false; }
   }
   function setPlaying(value) {
-    playing = value;
+    playing = value && activeIndices().length > 0;
     show();
     schedule();
     if (playing) {
@@ -343,10 +393,29 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
     }
   }
   function step(delta) {
-    index = (index + delta + slides.length) % slides.length;
+    index = nextIndex(delta);
     show();
     schedule();
   }
+  mute.addEventListener('click', () => {
+    if (index < 0) return;
+    muted.add(slideIds[index]);
+    index = nextIndex(1);
+    if (index < 0) setPlaying(false);
+    else { show(); schedule(); }
+    saveMuted();
+  });
+  function restoreMuted(all) {
+    const restoredIndex = Number(mutedPicker.value);
+    if (all) muted.clear();
+    else muted.delete(slideIds[restoredIndex]);
+    if (index < 0) index = all ? 0 : restoredIndex;
+    show();
+    schedule();
+    saveMuted();
+  }
+  restore.addEventListener('click', () => restoreMuted(false));
+  restoreAll.addEventListener('click', () => restoreMuted(true));
   play.addEventListener('click', () => setPlaying(!playing));
   document.getElementById('previous').addEventListener('click', () => step(-1));
   document.getElementById('next').addEventListener('click', () => step(1));
@@ -439,6 +508,7 @@ footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wr
       exitPresentation();
     } else if (presenting && !event.target.closest('.edge-navigation')) revealControls();
   });
+  index = muted.has(slideIds[0]) ? nextIndex(1) : 0;
   show();
 })();
 
