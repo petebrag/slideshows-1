@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="html-doc template v1">
+  <title>The Speed Talk (NFX)</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101419; --paper: #19212a; --paper-2: #202b36; --text: #eef3f7; --muted: #a8b4c1;
+      --line: #334252; --accent: #78b7ff; --good: #7ee2ad; --warn: #f5c26b; --bad: #ff8a8a;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .22);
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f5f7fb; --paper: #fff; --paper-2: #edf2f7; --text: #162130; --muted: #5a6877;
+      --line: #cbd6e2; --accent: #175cc5; --good: #087443; --warn: #8a5a00; --bad: #b42318;
+      --shadow: 0 8px 24px rgba(20, 30, 45, .12);
+    }
+    * { box-sizing: border-box; }
+    html, body { background: var(--bg); }
+    body {
+      margin: 0; color: var(--text);
+      font: 1rem/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      overflow-wrap: anywhere;
+    }
+    main { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0 96px; }
+
+    /* Header */
+    .eyebrow { margin: 0 0 8px; color: var(--muted); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .eyebrow:empty, .lede:empty { display: none; }
+    h1 { margin: 0 0 10px; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; letter-spacing: -.01em; }
+    .lede { max-width: 790px; margin: 0 0 28px; color: var(--muted); font-size: 1.05rem; }
+
+    /* Sections render as cards (pandoc --section-divs emits <section>) */
+    section { margin: 20px 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+    section section { margin: 16px 0 0; padding: 0; border: 0; background: transparent; }
+    h2 { margin: 0 0 12px; font-size: 1.35rem; line-height: 1.25; }
+    h3 { margin: 18px 0 8px; font-size: 1.08rem; }
+    h4, h5, h6 { margin: 14px 0 6px; font-size: 1rem; color: var(--muted); }
+    section > h2:first-child, section > h3:first-child { margin-top: 0; }
+
+    /* Body text */
+    p { margin: 10px 0; }
+    ul, ol { margin: 10px 0; padding-left: 24px; }
+    li + li { margin-top: 6px; }
+    li > p { margin: 4px 0; }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    strong { font-weight: 700; }
+    hr { margin: 28px 0; border: 0; border-top: 1px solid var(--line); }
+    section > hr:last-child { display: none; }
+    ul.task-list, ul:has(> li > input[type="checkbox"]) { list-style: none; padding-left: 4px; }
+    li > input[type="checkbox"], li > label > input[type="checkbox"] { margin: 0 8px 0 0; vertical-align: -1px; accent-color: var(--accent); }
+    img, video { max-width: 100%; height: auto; border-radius: 6px; }
+    blockquote { margin: 14px 0; padding: 10px 16px; border-left: 4px solid var(--accent); border-radius: 0 6px 6px 0; background: var(--paper-2); color: var(--text); }
+    blockquote > :first-child { margin-top: 0; }
+    blockquote > :last-child { margin-bottom: 0; }
+
+    /* Code: wraps instead of scrolling, so print/PDF keeps everything */
+    code, pre, kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; }
+    :not(pre) > code { padding: .1em .35em; border: 1px solid var(--line); border-radius: 4px; background: var(--paper-2); }
+    pre { margin: 12px 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); white-space: pre-wrap; overflow-wrap: anywhere; }
+    pre code { padding: 0; border: 0; background: none; }
+
+    /* Tables: full width, wrapping cells, no scroll container */
+    table { width: 100%; margin: 14px 0; border-collapse: collapse; font-size: .94rem; }
+    th, td { padding: 8px 10px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    thead th { background: var(--paper-2); font-weight: 700; }
+    tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--paper-2) 45%, transparent); }
+
+    /* Callouts: <div class="callout note|good|warn|bad"> */
+    .callout { margin: 14px 0; padding: 12px 16px; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; background: var(--paper-2); }
+    .callout.good { border-left-color: var(--good); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.bad { border-left-color: var(--bad); }
+    .callout > :first-child { margin-top: 0; }
+    .callout > :last-child { margin-bottom: 0; }
+    .muted { color: var(--muted); }
+
+    /* Floating controls */
+    .controls { position: fixed; right: 20px; bottom: 20px; z-index: 10; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; max-width: calc(100% - 32px); padding: 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); box-shadow: var(--shadow); }
+    .controls button { min-height: 34px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper-2); color: var(--text); padding: 6px 10px; font: inherit; font-size: .75rem; font-weight: 700; cursor: pointer; }
+    .controls button:hover, .controls button:focus-visible, .controls button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); outline: none; }
+    .sizes { display: flex; gap: 4px; }
+    .notability-button { margin-left: 4px; border-color: var(--good) !important; color: var(--good) !important; }
+    .notability-button:hover, .notability-button:focus-visible { background: color-mix(in srgb, var(--good) 12%, var(--paper-2)); outline: 2px solid var(--good); }
+    .edit-button { margin-left: 4px; }
+    .edit-button[aria-pressed="true"] { border-color: var(--warn) !important; color: var(--warn) !important; }
+    .save-button { display: none; border-color: var(--accent) !important; color: var(--accent) !important; }
+    .save-button.visible { display: inline-flex; align-items: center; }
+    main.editing { outline: 2px dashed var(--warn); outline-offset: 10px; border-radius: 8px; }
+    main.editing section { cursor: text; }
+
+    @media (max-width: 640px) {
+      main { padding-top: 28px; }
+      section { padding: 16px; }
+      .controls { right: 8px; bottom: 8px; border-radius: 14px; }
+    }
+
+    @media print {
+      :root, :root[data-theme="dark"], :root[data-theme="light"] {
+        color-scheme: light;
+        --bg: #fff; --paper: #fff; --paper-2: #f3f5f7; --text: #000; --muted: #333;
+        --line: #777; --accent: #0645ad; --good: #075e33; --warn: #704800; --bad: #8a1c12;
+        --shadow: none;
+      }
+      html, body { background: #fff !important; color: #000 !important; font-size: 100% !important; }
+      main { width: 100%; padding: 0; outline: none !important; }
+      section, pre, blockquote, .callout, table, th, td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      blockquote, .callout, pre, tr, li { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+      .controls { display: none !important; }
+    }
+  </style>
+<style>
+/* Playback sits inside the shared html-doc document shell. */
+main { width: min(1200px, calc(100% - 32px)); padding: 22px 0 125px; }
+header h1 { font-size: clamp(1.15rem, 2.5vw, 1.7rem); margin-bottom: 20px; }
+.playback { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+.playback button, .playback select { font: inherit; color: var(--text); background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; min-height: 44px; }
+.playback button { cursor: pointer; }
+.playback button:focus-visible, .playback select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+#play { background: var(--accent); color: var(--bg); min-width: 90px; font-weight: 800; }
+.playback label { display: flex; gap: 8px; align-items: center; }
+#counter { color: var(--muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+.stage { min-height: min(60dvh, 700px); display: grid; place-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: clamp(22px, 5vw, 65px); touch-action: pan-y; }
+.slide { width: 100%; font-size: clamp(1.55rem, 3.1vw, 2.9rem); line-height: 1.5; text-align: center; overflow-wrap: anywhere; }
+.slide[hidden] { display: none; }
+.stage { position: relative; padding-inline: max(64px, min(5vw, 65px)); }
+.edge-navigation { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; display: grid; place-items: center; width: 52px; height: 88px; padding: 0; border: 0; border-radius: 12px; background: transparent; color: var(--muted); cursor: pointer; touch-action: manipulation; }
+.edge-previous { left: max(4px, env(safe-area-inset-left)); }
+.edge-next { right: max(4px, env(safe-area-inset-right)); }
+.edge-navigation svg { width: 40px; height: 40px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.edge-navigation:hover { color: var(--text); background: color-mix(in srgb, var(--text) 7%, transparent); }
+.edge-navigation:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; color: var(--text); }
+.slide h1, .slide h2, .slide h3 { font-size: 1.2em; line-height: 1.25; }
+.slide p { margin: 0.6em 0; }
+.slide ul, .slide ol { text-align: left; }
+footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wrap; color: var(--muted); margin-top: 15px; font-size: .8rem; }
+.revision { font-family: monospace; }
+.presenting, .presenting body { overflow: hidden; }
+.presenting main { width: 100%; padding: 0; }
+.presenting .stage { position: fixed; inset: 0; width: 100%; height: 100dvh; min-height: 0; margin: 0; border: 0; border-radius: 0; padding: clamp(24px, 6vw, 90px); padding-inline: max(64px, min(6vw, 90px)); }
+.presenting main > header, .presenting .playback, .presenting footer { position: fixed; z-index: 11; padding: 12px 18px; margin: 0; background: var(--paper); box-shadow: var(--shadow); }
+.presenting main > header { top: 0; left: 0; right: 0; }
+.presenting main > header h1 { margin: 0; font-size: 1rem; }
+.presenting main > header .eyebrow { display: none; }
+.presenting .playback { bottom: 0; left: 0; right: 0; }
+.presenting footer { top: 48px; left: 0; right: 0; font-size: .75rem; }
+.presenting .controls { bottom: 85px; z-index: 12; }
+.presenting.controls-hidden main > header,
+.presenting.controls-hidden .playback,
+.presenting.controls-hidden footer,
+.presenting.controls-hidden .controls { visibility: hidden; pointer-events: none; }
+.presenting.controls-hidden { cursor: none; }
+@media (max-width: 600px) {
+  main { width: calc(100% - 24px); padding-top: 16px; padding-bottom: 190px; }
+  .stage { min-height: 48dvh; padding: 24px 64px; }
+  .slide { font-size: 1.65rem; }
+  .playback label { font-size: .8rem; }
+  #counter { margin-left: 0; }
+}
+@media print { .edge-navigation { display: none; } }
+
+#muted-slides { max-width: min(100%, 300px); }
+.playback [hidden], #empty-slides[hidden] { display: none; }
+.playback button:disabled, .edge-navigation:disabled { opacity: .4; cursor: default; }
+#empty-slides { text-align: center; font-size: 1.3rem; }
+
+</style>
+</head>
+<body>
+  <main>
+<header><p class="eyebrow">Slideshow Machine</p><h1>The Speed Talk (NFX)</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><button id="mute">Mute this slide</button><select id="muted-slides" aria-label="Muted slides" hidden></select><button id="restore-slide" hidden>Restore selected slide</button><button id="restore-all" hidden>Restore all</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><button type="button" id="edge-previous" class="edge-navigation edge-previous" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 5 8 12 15 19" /></svg></button><button type="button" id="edge-next" class="edge-navigation edge-next" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 5 16 12 9 19" /></svg></button><article class="slide" data-id="6e9776960ddcd6f7cc98d0fad713168fe32553bc0d04b962d990f11e662fd4b4-1" data-seconds="8.0" ><h1 id="the-speed-talk">The Speed Talk</h1>
+<p>James Currier, NFX · How to think about speed in a startup</p>
+</article><article class="slide" data-id="f44588592658860d67ea9397946589ce7d53f0a4cfed771367a0cf225bbe7931-1" data-seconds="16" hidden><h2 id="why-this-talk-exists">Why this talk exists</h2>
+<p>Ten years of writing and rehearsing. NFX gives it to every founder it backs. It is their most-watched video, and many founders have each new employee watch it on day one.</p>
+</article><article class="slide" data-id="658e388db3dc4a9f77d503c46b8d95cc0856c1a94bb6561614e07f56eaff843d-1" data-seconds="13" hidden><h2 id="the-thesis">The thesis</h2>
+<p>Speed is the number one competitive advantage in startup life. Most of what slows you down is in your mind, and it can be fixed.</p>
+</article><article class="slide" data-id="6ec83dc21d3973d9e5e1e724a257d783dfd11676ff04b7aac12fe6524f9dfa07-1" data-seconds="6.0" hidden><h1 id="part-1">Part 1</h1>
+<p>Why speed wins</p>
+</article><article class="slide" data-id="07c5f6fbb91de5424a4f9717cc5de33d939472bcc41c39bd8764d5419a15b0f1-1" data-seconds="20" hidden><h2 id="what-nfx-looks-for-in-founders">What NFX looks for in founders</h2>
+<p>Not a long checklist. Just speed.</p>
+<ul>
+<li>They reply to email fast</li>
+<li>They change the marketing plan fast</li>
+<li>They change the spreadsheets fast</li>
+</ul>
+<p>You can feel speed when it’s there: people aren’t encumbered. They’re just going.</p>
+</article><article class="slide" data-id="e83305d82730607d20fd137182ebe1fcb5415675c0c6618224df8f704867dbf3-1" data-seconds="16" hidden><h2 id="youre-an-x-wing.-theyre-death-stars.">You’re an X-wing. They’re Death Stars.</h2>
+<p>In 1994 there were a few incumbents, like Microsoft and AOL. Now you face lots of Death Stars, and you’re in a star fighter. Your only advantage is speed.</p>
+</article><article class="slide" data-id="f5b87d4f7ad8d4f36b07a1b90b75ec024d1d3f3d1d8145bc0fa9da5aeb598e7c-1" data-seconds="11" hidden><h2 id="were-going-in-full-throttle">“We’re going in full throttle”</h2>
+<p>That’s Luke Skywalker’s call as he attacks the Death Star. Full-throttle speed is the only advantage he has.</p>
+</article><article class="slide" data-id="4775e0d1297fcef682ca6d96e6ccae77c8857f858495751f0ce6e9debc4cdd28-1" data-seconds="17" hidden><h2 id="your-team-needs-to-be-wedge">Your team needs to be Wedge</h2>
+<p>When Luke goes full throttle, Wedge doesn’t ask “Are you sure? Can we talk about this?” He says: “I’m right with you, boss.”</p>
+<p>Wedge was the only other pilot to survive.</p>
+</article><article class="slide" data-id="2de50c1e07601d0d82d79cf1afdfe546b119b4b980e8cc48601bc21b7a3ddc33-1" data-seconds="15" hidden><h2 id="two-moves-for-every-one-of-theirs">Two moves for every one of theirs</h2>
+<p>If you move twice as fast, or 3×, 5×, 20× faster than your competitors, you can beat anybody who is bigger or smarter. That’s your advantage.</p>
+</article><article class="slide" data-id="51d02a1bfbf3cbdf67b35104f038af1fb7004409eaad168b476889e8adf05c3c-1" data-seconds="18" hidden><h2 id="what-speed-buys-you">What speed buys you</h2>
+<ul>
+<li><strong>A better product, faster:</strong> rapid activity beats the competition</li>
+<li><strong>More fun:</strong> the team accomplishes more</li>
+<li><strong>Attention:</strong> press, investors and future employees follow a company with lots of announcements</li>
+<li><strong>Valuation goes up</strong></li>
+</ul>
+</article><article class="slide" data-id="8bcd8b3f2d081de863090161d7d254047f1aa70017d91f0fd65b11940410d976-1" data-seconds="6.0" hidden><h1 id="part-2">Part 2</h1>
+<p>Why people don’t go faster</p>
+</article><article class="slide" data-id="f64bb58c27c8962a6a8da21972ac376f8de7ec17df849a60957456490fc0ccf5-1" data-seconds="18" hidden><h2 id="three-barriers-mostly-in-your-mind">Three barriers, mostly in your mind</h2>
+<ol type="1">
+<li>Your speed bar is set too low</li>
+<li>You’re too fearful</li>
+<li>You’re not making things simple enough</li>
+</ol>
+<p>From four venture-backed startups, roughly 300 investments, a 75-company accelerator, a venture firm and an incubator.</p>
+</article><article class="slide" data-id="cfa4f52cb0e02d2aa03ad9da408266ac500dbd32f948bc2056dda57c6a504123-1" data-seconds="26" hidden><h2 id="barrier-1-its-not-your-fault">Barrier 1: It’s not your fault</h2>
+<p>Your speed bar was set too low by your own success.</p>
+<ul>
+<li><strong>School</strong> is incredibly slow, and you were good at it</li>
+<li><strong>Corporations</strong> don’t reward going fast; it scares people, who need to be informed and tweak things</li>
+</ul>
+<p>You thought you were learning school or Google. You were learning to go too slow.</p>
+</article><article class="slide" data-id="1df819ed1d7f66a1078203f439f8be861b7d9fe805aacf896ddefcb79c1defd2-1" data-seconds="20" hidden><h2 id="success-makes-you-cautious">Success makes you cautious</h2>
+<p>Less successful people go faster because they have nothing to lose. You feel you have a lot to lose, and you think you know how the world works.</p>
+<p>You didn’t get it wrong. The people around you did. Reset your speed bar.</p>
+</article><article class="slide" data-id="eaba089a9699a125a789b303f36f6022e50bddba44fab631b5b04eb6dd575403-1" data-seconds="23" hidden><h2 id="mike-cassidy-the-founder-of-speed">Mike Cassidy, the founder of speed</h2>
+<p>In the 1990s, a startup typically took about 24 months:</p>
+<ul>
+<li>6 months to explore ideas</li>
+<li>3 months to raise money</li>
+<li>3 months to hire the core team</li>
+<li>13 months to build</li>
+<li>3 months to launch</li>
+</ul>
+<p>Cassidy did it in <strong>4 months</strong>.</p>
+</article><article class="slide" data-id="a90989f28c2f2cb0d4d0079bf901061436a0016ac6370bbd3f3b3795707a8560-1" data-seconds="20" hidden><h2 id="cassidy-raise-money-in-two-days">Cassidy: raise money in two days</h2>
+<p>All the investor meetings on the same day. At the end of each: “I’ve got six other meetings today. Here are the terms. Let me know tonight.”</p>
+<p>Two or three term sheets by evening. A winner the next day.</p>
+</article><article class="slide" data-id="1d48f508d6b411298fb2059c90de35f41e5bccf6e179e912f3f4641b88688037-1" data-seconds="20" hidden><h2 id="cassidy-hire-in-two-weeks">Cassidy: hire in two weeks</h2>
+<p>At the end of the interview, the offer is ready with the price. “You have 24 hours to sign. You start tomorrow.”</p>
+<p>He coached James through his first startup in the late 1990s: “Why does it take you that long?”</p>
+</article><article class="slide" data-id="b565409a9420b26024464de01bc03cf5f7c7666870a6c5b3bb71849ab46c0e8b-1" data-seconds="20" hidden><h2 id="the-incubator-one-tenth-the-cost-and-time">The incubator: one-tenth the cost and time</h2>
+<p>In 2007, after their first exit, they started an incubator: 45 people in one room, building four products at once.</p>
+<p>They built 20 products for one-tenth of the money and one-tenth of the time competitors were spending.</p>
+</article><article class="slide" data-id="1adf399f1bdb2766ea6b4b842c4517b29cce031808511c9fab68f7889981bd82-1" data-seconds="20" hidden><h2 id="a-game-in-21-days">A game in 21 days</h2>
+<p>Hired gaming experts said a good game would take 12–14 months. There were maybe 35 days.</p>
+<p>A web engineer who had never made a game said: “I’ll build it in 21 days. No meetings. Give me half a designer.”</p>
+</article><article class="slide" data-id="d167dfac4d1816c0bf96f4de0db1aa8aa338fb8dad01a2c953c0c1ace0328dfe-1" data-seconds="17" hidden><h2 id="he-didnt-know-he-couldnt">He didn’t know he couldn’t</h2>
+<p>He delivered a working game in 21 days. Three weeks later it had 3 million users and earned real revenue.</p>
+<p>He worked nights and weekends, and had a great time doing it.</p>
+</article><article class="slide" data-id="f28ad73467cd6470c3f2049b6e79246ea5b0b35142d8310120928e58d6e425cf-1" data-seconds="18" hidden><h2 id="dragons-of-atlantis">Dragons of Atlantis</h2>
+<p>Same company, $600K left, about to go out of business. The estimate for a serious game: $4M and 12 months.</p>
+<p>The team built it in <strong>5 months for $450K</strong>. The next year it made <strong>$120M</strong> in revenue.</p>
+</article><article class="slide" data-id="9fd048ddce2c65c2d9801179817466263b5397930744ff90f89c4ce95d2c98e2-1" data-seconds="21" hidden><h2 id="release-four-times-a-day">Release four times a day</h2>
+<p>Dragons of Atlantis had 45 million registered users and up to 3 million concurrent users. The team still released <strong>four times a day</strong>.</p>
+<p>Most firms release every week or two. If your team says it can’t release daily, it can do better.</p>
+</article><article class="slide" data-id="90547b4c772bb8d2c90a27a621a230a8cba8debe2aed7624938ba300abb15bb7-1" data-seconds="13" hidden><h2 id="daily-releases-change-minds">Daily releases change minds</h2>
+<p>In the accelerator, it took weeks to convince founders they could release every day. Once they did, their thinking opened up and everything accelerated.</p>
+</article><article class="slide" data-id="5a081f29e68f17ed73dfb5603dfe6b5f184cce916492c02e9dc242c96d17419f-1" data-seconds="20" hidden><h2 id="sailing-the-atlantic-at-16">Sailing the Atlantic at 16</h2>
+<p>Most people take 5 years and $350K to prepare for a solo Atlantic crossing.</p>
+<p>James’s son learned to sail in March, left in June in a $12K boat, and finished at the end of July: <strong>7 months, about $20K</strong>.</p>
+</article><article class="slide" data-id="e94386aff95464cb795a852ded8a04b9a12ba749e9c6812a026bfb762dfc1307-1" data-seconds="17" hidden><h2 id="others-will-call-it-dangerous">Others will call it dangerous</h2>
+<p>The people who spent $350K say it’s dangerous or wrong. It’s because their speed bar is set too low.</p>
+<p>Don’t worry about your age, your experience or what everyone says it will take.</p>
+</article><article class="slide" data-id="64eb72d6aa5f3e6ea772919a67f448f4c65036339a954a1d390ce514696264d6-1" data-seconds="17" hidden><h2 id="how-often-do-you-experiment">How often do you experiment?</h2>
+<p>Hardware is harder. In software, run <strong>20 to 100 experiments a month</strong>.</p>
+<p>Dragons of Atlantis ran 20 to 100 a week. If you can’t do 20 a month, you’re not in the game.</p>
+</article><article class="slide" data-id="1f5516a660561cd6fd885982a33ebd9de19edaa9d53060dd2233f3efb391a277-1" data-seconds="23" hidden><h2 id="built-in-days-and-months">Built in days and months</h2>
+<ul>
+<li><strong>Direct Hit:</strong> built in 3 months, sold for $500M after 500 days</li>
+<li><strong>Xfire:</strong> built in 3 months, sold to MTV about 12 months later for $110M</li>
+<li><strong>Hot or Not:</strong> built in 8 days by a company named Eight Days</li>
+<li><strong>Meerkat</strong> and <strong>Clubhouse:</strong> 30-day projects</li>
+</ul>
+</article><article class="slide" data-id="970769d74d6870237f3eaa72805278b925e5f3bcdb0f9bc14bc17fc80b3b30e9-1" data-seconds="16" hidden><h2 id="pick-what-fits-the-time">Pick what fits the time</h2>
+<p>James Hong didn’t ask what to build. He asked what he could get done in 8 days. If it couldn’t be done in 8 days, they didn’t build it.</p>
+</article><article class="slide" data-id="6efadcaaca5cc1276ad629068e29f3603b78a7959c354316203848bef9c104a5-1" data-seconds="20" hidden><h2 id="running-out-of-money-is-a-tactic">Running out of money is a tactic</h2>
+<p>With 30 days of cash left and a pitch in 30 days, James’s team designed, built and launched a product in 30 days. He raised $7.5M.</p>
+<p>The deadline was an external force, not the boss cracking the whip.</p>
+</article><article class="slide" data-id="7557900f64c658f995add67cd8492a46e22194133ee120907fb9ff8ce7b9b729-1" data-seconds="13" hidden><h2 id="your-speed-bar-can-be-much-higher">Your speed bar can be much higher</h2>
+<p>If people tell you it can’t be done, you now have examples. You’ll see more once you start doing it yourself.</p>
+</article><article class="slide" data-id="c8858ab9295631d345df27e915487264b0cbaba8a40b8e5bdef4178bbd1af969-1" data-seconds="6.0" hidden><h1 id="part-3">Part 3</h1>
+<p>Fear is the main barrier: 12 ways around it</p>
+</article><article class="slide" data-id="7f42f26a75945d807f7f559a4e9ff8790c3307a998c5957db0c00bda2cd89066-1" data-seconds="17" hidden><h2 id="the-product-is-not-you">1. The product is not you</h2>
+<p>In your head, the product is your soul: if people love it, they’ll love you.</p>
+<p>It’s not you. It’s a bunch of pixels, a feature, a start. Get it out the door.</p>
+</article><article class="slide" data-id="142e8745e7d565eca19615eecf2d786442f4b541e9fa0bff028105704e840ff9-1" data-seconds="17" hidden><h2 id="dont-try-to-get-it-right">2. Don’t try to get it right</h2>
+<p>Product people want it perfect. Go incremental: get it up, measure it, iterate.</p>
+<p>Roughly <strong>10% product, 50% metrics, 40% onboarding flow</strong>. Getting it right is what big companies are for.</p>
+</article><article class="slide" data-id="e1fdeaf00927c8401ca1a33ed44868452d38d1a2fbb85dde6380670c54bd4f7b-1" data-seconds="17" hidden><h2 id="build-the-skateboard-first">3. Build the skateboard first</h2>
+<p>Don’t build a wheel, then a chassis, then a body, then the car. Nothing moves until the end.</p>
+<p>Build a skateboard, then a push scooter, a bicycle, a motorcycle, and finally the car.</p>
+</article><article class="slide" data-id="2c95000a3c41d951289ec0d8ad6bf33610381b256735a8feca8727c2bd1c9bb8-1" data-seconds="18" hidden><h2 id="why-the-skateboard-wins">Why the skateboard wins</h2>
+<p>You look silly on a skateboard while others drive. But you’re actually moving, so you’ll iterate to the car faster than anybody else.</p>
+<p>People he has coached come back to this diagram year after year.</p>
+</article><article class="slide" data-id="da20b938e476aaaf490fa64284e2aed523b2b0296c6ac8830e6c559c4c390b88-1" data-seconds="17" hidden><h2 id="launch-behind-the-scenes">4. Launch behind the scenes</h2>
+<p>If your company is NFX, don’t launch on nfx.com. Launch on another domain to a small group.</p>
+<p>One fearful team relaxed once its broken experiments lived on other URLs that friends wouldn’t see.</p>
+</article><article class="slide" data-id="a6958e118a5c22ac6a424a6ba950107993cf86274c43b9bdf2d52c536d1504aa-1" data-seconds="19" hidden><h2 id="run-experiments-dont-play-business">5. Run experiments, don’t play business</h2>
+<p>Founders idolize the end state and play business, like spending months on how to run a board meeting.</p>
+<p>You’re not building a business yet. You’re running a series of experiments that will look like a skateboard.</p>
+</article><article class="slide" data-id="01297ac5a6368378c25379d90fcf489e163229170e67b60ea8d3920856741df2-1" data-seconds="22" hidden><h2 id="think-like-a-studio-meerkat">6. Think like a studio: Meerkat</h2>
+<p>The team built for 14 months, then for 8 months on a seven-feature plan. Neither worked.</p>
+<p>In 90 minutes at a whiteboard they picked five ideas, each with a color, a name and one or two features, to launch one every 30 days.</p>
+</article><article class="slide" data-id="4deb32160501215bf806149dc955028453d9036648e54af3f5c1266b5b625227-1" data-seconds="22" hidden><h2 id="why-the-studio-works">Why the studio works</h2>
+<p>If you know the next one ships 30 days after this one, you stop over-caring about this one.</p>
+<p>Meerkat took 60 days instead of 8 or 14 months, and took off before Twitter shut it down. The next one, built in 30 days, became <strong>Houseparty</strong>.</p>
+</article><article class="slide" data-id="858ddb94ee43944bee81508aca282d0dea2f6f83662c0acec3b73e29a3715072-1" data-seconds="12" hidden><h2 id="your-job-is-to-learn">7. Your job is to learn</h2>
+<p>Your job is to run experiments and learn. The question each day is: “What did you learn today?”</p>
+</article><article class="slide" data-id="cf62b01f0e5bd0b8ef9cf4063abf0c6c5a147d0ee10af041d2e865a563816767-1" data-seconds="14" hidden><h2 id="borrow-what-already-works">8. Borrow what already works</h2>
+<p>Copy what works. Don’t debate it. Need a calendar? Copy the best calendar.</p>
+<p>You’ll still create something unique, because you have a unique mind and situation.</p>
+</article><article class="slide" data-id="0f780c521bd75d71016d43c5205152bc2d46a7b0649e2d88b8c57332f2984a6b-1" data-seconds="19" hidden><h2 id="same-code-different-outcomes">Same code, different outcomes</h2>
+<p>Two teams launched the exact same product from the same code. In six months one reached 53 million people, the other 47 million.</p>
+<p>One stayed a photo-sharing product. The other became Bebo, a social network that sold for $850M.</p>
+</article><article class="slide" data-id="e3de790e2cc27a5d0a85c475eb98cb2848b7c43086590cf90eb856726ae2264c-1" data-seconds="22" hidden><h2 id="the-giants-borrowed-too">The giants borrowed too</h2>
+<ul>
+<li><strong>Google:</strong> copied nearly everything; AdSense was bought</li>
+<li><strong>Facebook:</strong> Friendster, down to the blue</li>
+<li><strong>Airbnb:</strong> took off when it became more like VRBO, at a 10% fee</li>
+<li><strong>Uber:</strong> copied Lyft within 30 days</li>
+<li><strong>Lyft:</strong> Sidecar invented it but was too slow</li>
+</ul>
+</article><article class="slide" data-id="cc42894ff8bfb1eda69d82c25dc0be9b8ebba495c6150f007d370b28052cc79e-1" data-seconds="21" hidden><h2 id="the-f-it-mentality">9. The “f*** it” mentality</h2>
+<p>His best business moments came with his back against the wall, out of money and not sleeping. Then he gave up the fear and built what the market needed.</p>
+<p>Don’t wait for the last 30 to 60 days of cash. Start that way.</p>
+</article><article class="slide" data-id="5a94402b5b37d4908d305b6e24c78e6c755a7de5037d54597987e9e476895497-1" data-seconds="20" hidden><h2 id="watch-for-self-sabotage">10. Watch for self-sabotage</h2>
+<p>Many founders start companies to prove something. Elon Musk’s friend said the one sign was a father who told him he’d never amount to anything.</p>
+<p>If part of you feels unworthy, you may be quietly sabotaging yourself while looking busy.</p>
+</article><article class="slide" data-id="cf0e97320bbd409a23888af8bb6f491df69f2922064f7327f135e98ad76818d2-1" data-seconds="14" hidden><h2 id="slowness-is-often-self-sabotage">Slowness is often self-sabotage</h2>
+<p>Mapping founders, speed and success are clearly correlated. The slow ones’ psychology is mostly self-sabotage.</p>
+<p>Learn about it, and call it out in your co-founders.</p>
+</article><article class="slide" data-id="d590074d440b661cbd186b88318fb0e9e346cdbb26862243f77bc3bec7409e2e-1" data-seconds="17" hidden><h2 id="stop-being-a-wimp-decide">11. Stop being a wimp: decide</h2>
+<p>When it isn’t working, don’t hedge or keep the old product while starting a new one. Half measures are self-sabotage.</p>
+<p>Move the whole company now. Founders who do beat those who hedge.</p>
+</article><article class="slide" data-id="149faaf30fa40e42450e30e13179c84b0a30b6340662858c859fd397e6fef91d-1" data-seconds="13" hidden><h2 id="do-it-for-them">12. Do it for them</h2>
+<p>If you won’t go fast for yourself, do it for the employees, teammates and investors counting on you. You owe it to them.</p>
+</article><article class="slide" data-id="252459bd270ed516d8400282b8a1e0ad7376ce8ed813ff028d621e7e98adad44-1" data-seconds="6.0" hidden><h1 id="part-4">Part 4</h1>
+<p>Simplify and go where the action is</p>
+</article><article class="slide" data-id="0c8c0c4e5aa16cc7cf90256b117e810a3717e1118e692d98633755e87593e130-1" data-seconds="12" hidden><h2 id="dont-innovate-in-the-basics">Don’t innovate in the basics</h2>
+<ul>
+<li>Incorporate in Delaware</li>
+<li>Use standard, simple contracts</li>
+<li>Innovate in your customer and go-to-market, not in paperwork</li>
+</ul>
+</article><article class="slide" data-id="49aca37a2e28e87c26ab6f8e92555fddcad94faa28f627911dfe96adbee0f51a-1" data-seconds="16" hidden><h2 id="keep-the-terms-vanilla">Keep the terms vanilla</h2>
+<p>Avoid warrants, milestones, contingencies, first rights and participation. One founder team that ignored this got a board member trying to take the company over.</p>
+<p>Take $18M vanilla over $28M with strings.</p>
+</article><article class="slide" data-id="eed04de47c017fa706e37b5c6188ceb4132ba7a6fcf0f200305530fd2f86fa18-1" data-seconds="16" hidden><h2 id="no-partnerships-no-bizdev">No partnerships, no bizdev</h2>
+<p>His first investor made him promise: no partnerships. After four weeks of trying, he saw it: endless talks, negotiation, implementation and conflicting interests.</p>
+<p>You cannot bizdev your way to a big business.</p>
+</article><article class="slide" data-id="7bc682b4686a63cdf2b6a6cf9457834c8861d0f1e761aebb0aa9b45890e5b59a-1" data-seconds="17" hidden><h2 id="simplify-the-product">Simplify the product</h2>
+<ul>
+<li>Focus on the metrics</li>
+<li>Stay open to a route at one-sixth the cost and time</li>
+<li>Ask how basic it can be: Twitter, LinkedIn, Facebook and Google all launched with simple first versions</li>
+</ul>
+</article><article class="slide" data-id="590174615b1874bb8b651d4fa29afbc215dcf745a6576a410d7be97878399d41-1" data-seconds="15" hidden><h2 id="do-less-software">Do less software</h2>
+<p>Find ways to get it done without building software.</p>
+<p>Instead of a week or two of building, they renamed a button and dropped a whole section, then kept experimenting.</p>
+</article><article class="slide" data-id="507bcd4639b85341bf367049d2cffa8ce66cc2a57a30ee537b604817bd2f1ca2-1" data-seconds="24" hidden><h2 id="choose-what-not-to-do">Choose what not to do</h2>
+<ul>
+<li>No QA</li>
+<li>No usability studies or focus groups: ship it and watch the metrics</li>
+<li>No politics: nothing left unsaid</li>
+<li>A three-person board that the founders control</li>
+<li>No PR early: obscurity lets you iterate</li>
+<li>Zero marketing spend</li>
+<li>No budget process before 30 people</li>
+</ul>
+</article><article class="slide" data-id="e1ec4c1faea3a14b57ed1f98760e0a363ff9c2dae0e423ab23977372c0a22e63-1" data-seconds="19" hidden><h2 id="go-where-the-action-is">Go where the action is</h2>
+<p>The biggest waste is building something people don’t want. Someone has tried your idea.</p>
+<p>Do the research. Take a competitor’s former VP of sales to lunch. Founders who meet six such people say it transforms their thinking.</p>
+</article><article class="slide" data-id="9333db7979ff2085b870c245bfb87116720af00ba2600c0ac7d01dee8e521737-1" data-seconds="10" hidden><h2 id="find-the-fast-moving-water">Find the fast-moving water</h2>
+<p>Growing 10% a month and not fired yet? That’s not good enough. Aim for <strong>70% a month</strong>.</p>
+</article><article class="slide" data-id="a37a117b54a89b65423b4b7653e16bd644fd5d8338fdf5ee8496789b4792cca1-1" data-seconds="18" hidden><h2 id="pull-in-resources-fast-zynga">Pull in resources fast: Zynga</h2>
+<p>On the Facebook platform, Zynga bought Texas Hold’em Poker, raised $35M and hired about 150 people in two months.</p>
+<p>With money, press and bought traffic, it built a network effect business once worth $11B.</p>
+</article><article class="slide" data-id="fd4659e2a82033a2ed376222a12a4c2ad3a79242d004827786351c1a78121a9b-1" data-seconds="13" hidden><h2 id="recruit-in-three-weeks">Recruit in three weeks</h2>
+<p>Make the offer before candidates leave the interview. Give yourself at most three weeks to fill a slot. Use the new AI recruiting tools.</p>
+</article><article class="slide" data-id="06d0b2c8d033d0163ab088b53384a859f55be7f9a77737c6650ea9628ff71daa-1" data-seconds="6.0" hidden><h1 id="part-5">Part 5</h1>
+<p>Your team and your tactics</p>
+</article><article class="slide" data-id="8c9f0f1c9f6d3288a207b8909ddc89f7448201528295f13ff76050ad62cee472-1" data-seconds="16" hidden><h2 id="kick-ass-and-get-your-ass-kicked">Kick ass, and get your ass kicked</h2>
+<p>Welcome being challenged by the market, investors and co-founders, or you won’t change fast enough.</p>
+<p>This is a gladiator sport, not a career path. Be competitive and decisive.</p>
+</article><article class="slide" data-id="c1eafa04e740fd4c36bb5421e6e4f3d308a4f37700822ea10c30f5b99798edc7-1" data-seconds="14" hidden><h2 id="sauvage">“Sauvage”</h2>
+<p>Emily Leproust, founder of Twist Bioscience, did the patents, the fundraising, sales and hiring.</p>
+<p>She looks for founders who are <em>sauvage</em>: not evil, but decisive, aggressive and fast.</p>
+</article><article class="slide" data-id="282a17587b743e04dda83b38f825d64aa906d806c452e7330950c23075b35901-1" data-seconds="18" hidden><h2 id="keep-the-team-small">Keep the team small</h2>
+<p>Every new person adds conversations and needs: to belong, be invited and be heard. Those needs slow you down.</p>
+<p>The right four engineers beat 35. Stay humble and don’t be too attached to the answers.</p>
+</article><article class="slide" data-id="585e05f1854432a2e3bfb701fc0ed6ae2713d5fa9947dfee8f4dcfc30292aadc-1" data-seconds="16" hidden><h2 id="cheap-fast-and-good-go-together">Cheap, fast and good go together</h2>
+<p>His last VP of product said: “Cheap, fast or good: pick two.” He fired him and never hired another.</p>
+<p>Something cheap and fast can usually be iterated until it’s good.</p>
+</article><article class="slide" data-id="657d43522c0377a93297ea5f0f4a299f60dc1b37554a150d9dc4da04c1edbcda-1" data-seconds="19" hidden><h2 id="stoke-the-math-of-speed">Stoke: the math of speed</h2>
+<p>The rocket company burns about <strong>$80K a day</strong>. Saving one day saves $80K, so paying 20% more to get a part 5 days sooner is a yes.</p>
+<p>Going faster also means more experiments, which gets to higher quality.</p>
+</article><article class="slide" data-id="b5634ef0d5a2b5ddbb3bc077ef52a85b889480e68f69d38e05ef4f017ffcb8b2-1" data-seconds="15" hidden><h2 id="speed-is-not-working-more-hours">Speed is not working more hours</h2>
+<p>Speed, quality and cost reinforce each other.</p>
+<p>Going fast is about removing your mental and operational barriers, not burning yourself out. You were taught the wrong things.</p>
+</article><article class="slide" data-id="c58a555c828251018477bc067219ef18865cf03ab6f4a1003567faea8d976ec4-1" data-seconds="19" hidden><h2 id="commandos-soldiers-and-police">Commandos, soldiers and police</h2>
+<ul>
+<li><strong>Commandos</strong> take the hill: cost 150%, deliver 10×</li>
+<li><strong>Soldiers</strong> calm things down: cost 110%, deliver 3×</li>
+<li><strong>Police</strong> make sure nothing goes wrong: cost 100%, deliver less than 1×</li>
+</ul>
+<p>Hire commandos for your first thousand people.</p>
+</article><article class="slide" data-id="504e95cf700dd44d94aef20aa5bcaefe1cbb7815fb4151c429a07b62495849ef-1" data-seconds="16" hidden><h2 id="soldiers-bring-in-police">Soldiers bring in police</h2>
+<p>Steve Jobs: B players bring in C players. A soldier brings in police, who make the soldier look bold.</p>
+<p>Eight good people and three slow ones? Let the slow ones go.</p>
+</article><article class="slide" data-id="10131c9f6f9a9e9cee5522d10a9bdc40613af8d81def19dcd2629912715f75bd-1" data-seconds="16" hidden><h2 id="tactics-time-and-network">Tactics: time and network</h2>
+<ul>
+<li>Set the time, not the output: what can we ship before bed?</li>
+<li>Keep building your network</li>
+<li>One call, one answer, move on: don’t turn a question into a dinner</li>
+</ul>
+</article><article class="slide" data-id="c2466ac5ef8f8f60c6704c7b849367f316d573cdc6d0724ca634c3b482c991c2-1" data-seconds="13" hidden><h2 id="tactics-psychology-and-priorities">Tactics: psychology and priorities</h2>
+<p>Boards paid James to help CEOs with growth. The work was always psychology and prioritization.</p>
+<p>Unicorn founders need help with both. So do you.</p>
+</article><article class="slide" data-id="3043d34240585809ef62696d1ac2aebf401b646a77bc9c89b2116491ce98d893-1" data-seconds="16" hidden><h2 id="tactics-a-priority-dashboard">Tactics: a priority dashboard</h2>
+<p>Project it on the wall and change it together every Monday. Anyone with a pet project must justify moving it up.</p>
+<p>About 40 minutes a week; works well up to 30 people.</p>
+</article><article class="slide" data-id="d5b0cd362d7d47f29330f6f02460214feaf69477fc0743cca06a688f8c4ebe1f-1" data-seconds="18" hidden><h2 id="tactics-feedback-by-lunchtime">Tactics: feedback by lunchtime</h2>
+<p>Skip the focus group. Take a laptop onto the street, show 8 to 10 people, watch what they click, and fix it that afternoon.</p>
+<p>Or use an email group: Gmail had about 80 testers for 14 months.</p>
+</article><article class="slide" data-id="0c6788ac759302639dbb4223bbf4e24459381a43c51c5c0b958c30a63e2602fa-1" data-seconds="21" hidden><h2 id="tactics-the-minimum-experiment">Tactics: the minimum experiment</h2>
+<p>Get the answer without building the product.</p>
+<ul>
+<li><strong>Paper mock-ups:</strong> Outdoorsy asked 10; 9 wanted it, and it grew into a $2B company</li>
+<li><strong>Landing pages:</strong> do they click? Do they enter a card?</li>
+<li><strong>Announce first:</strong> Bill Gates’s vaporware kept rivals unfunded</li>
+</ul>
+</article><article class="slide" data-id="69b5291d60a9a43461b2b4bbfd2691fafe2a6ff534465a3b124d9914c783cb98-1" data-seconds="17" hidden><h2 id="more-minimum-experiments">More minimum experiments</h2>
+<ul>
+<li><strong>Explainer video:</strong> Dropbox’s 3-minute narrated mock-up took the waiting list from 5,000 to 75,000 overnight</li>
+<li><strong>Email list or form:</strong> Zappos bought shoes from a store and shipped them for its first 2,000 orders</li>
+</ul>
+</article><article class="slide" data-id="8c987700d5ff656a2b0f4166d0d7117d64f440d69f98c2967e357cf35951958f-1" data-seconds="20" hidden><h2 id="tactics-external-deadlines">Tactics: external deadlines</h2>
+<p>People believe a deadline from a customer or demo day more than one from you. That’s why Y Combinator works.</p>
+<p>Accelerator founders did 12 to 18 months of work in three, with an excuse to tell everyone else to back off.</p>
+</article><article class="slide" data-id="facada91470ca25788f6f14d4393e35c820865b4bedde0c6f442cae9d299e9bd-1" data-seconds="18" hidden><h2 id="tactics-outsource-and-share-the-numbers">Tactics: outsource and share the numbers</h2>
+<ul>
+<li>Outsource everything you can, and use AI</li>
+<li>As few processes as possible, except trust, safety and payments</li>
+<li>Email everyone yesterday’s metrics daily, so people act without you in the room</li>
+</ul>
+</article><article class="slide" data-id="d3bc8361f353d8304abddb094fc0ac617c460642aaef578214d648ce3170deb5-1" data-seconds="20" hidden><h2 id="what-slows-founders-down">What slows founders down</h2>
+<ul>
+<li><strong>Remote work:</strong> under 100 people, be in the same room</li>
+<li><strong>Acquisition talks</strong> that flatter your ego</li>
+<li><strong>An incomplete team</strong> for more than three weeks, or the wrong team</li>
+<li><strong>Wanting to be proven right</strong> about your first idea</li>
+</ul>
+</article><article class="slide" data-id="70de4b98b3d3df2df0bf4748c8de692cb5eb1f5afb24f4f4ffed3cc13ed2e1b5-1" data-seconds="25" hidden><h2 id="more-things-that-slow-you-down">More things that slow you down</h2>
+<ul>
+<li>No focus on one key customer</li>
+<li>Maintaining two products</li>
+<li>Not renaming the company when you need to</li>
+<li>A crowded cap table (he had 16 angels)</li>
+<li>Too little capital: aim for 12 to 24 months of runway</li>
+<li>Complex terms and a bad investor on the board</li>
+</ul>
+</article><article class="slide" data-id="817ac8258348be8f297551ee86a121efdb87c39ab724a368e5e359d4085a7f78-1" data-seconds="10.0" hidden><h1 id="make-a-religion-of-speed">Make a religion of speed</h1>
+<p>Reset your speed bar. Get around your fear. Simplify everything. Then go in full throttle.</p>
+</article><p id="empty-slides" hidden>All slides muted. Restore a slide above to watch again.</p></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision ab8550c26f</span></footer>
+</main>
+  <div class="controls" aria-label="Document display controls">
+    <button type="button" data-theme-control>Light mode</button>
+    <div class="sizes" role="group" aria-label="Font size">
+      <button type="button" data-size="small" aria-pressed="true">Small</button>
+      <button type="button" data-size="medium" aria-pressed="false">Medium</button>
+      <button type="button" data-size="large" aria-pressed="false">Large</button>
+    </div>
+    <button type="button" class="notability-button" data-notability>Send to Notability</button>
+    <button type="button" class="edit-button" data-edit aria-pressed="false">Edit</button>
+    <button type="button" class="save-button" data-save>Save</button>
+  </div>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const theme = document.querySelector('[data-theme-control]');
+      const buttons = [...document.querySelectorAll('[data-size]')];
+      const notability = document.querySelector('[data-notability]');
+      const editButton = document.querySelector('[data-edit]');
+      const saveButton = document.querySelector('[data-save]');
+      const main = document.querySelector('main');
+      const sizes = { small: '100%', medium: '150%', large: '200%' };
+      const setTheme = (value) => { root.dataset.theme = value; theme.textContent = value === 'dark' ? 'Light mode' : 'Dark mode'; };
+      const setSize = (value) => { root.style.fontSize = sizes[value]; buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.size === value))); };
+      const sendToNotability = () => {
+        if (window.location.protocol !== 'file:') { alert('Send to Notability is available for local HTML files.'); return; }
+        window.location.href = 'to-notability://import?file=' + encodeURIComponent(window.location.href);
+      };
+
+      // WYSIWYG in-place edit: Edit makes <main> editable, Save copies the
+      // serialized page to the clipboard and hands off to the local
+      // wysiwyg-save:// handler, which writes it to this exact file (with a
+      // timestamped backup in <folder>/.wysiwyg-save-backups/).
+      let editing = false;
+      const setEditing = (value) => {
+        editing = value;
+        main.contentEditable = value ? 'true' : 'false';
+        main.classList.toggle('editing', value);
+        editButton.textContent = value ? 'Editing…' : 'Edit';
+        editButton.setAttribute('aria-pressed', String(value));
+        saveButton.classList.toggle('visible', value);
+      };
+      const serializedDocument = () => {
+        const clone = root.cloneNode(true);
+        clone.removeAttribute('style');
+        clone.setAttribute('data-theme', 'dark');
+        const clonedMain = clone.querySelector('main');
+        clonedMain?.removeAttribute('contenteditable');
+        clonedMain?.classList.remove('editing');
+        clone.querySelector('[data-edit]')?.setAttribute('aria-pressed', 'false');
+        clone.querySelector('[data-edit]')?.replaceChildren(document.createTextNode('Edit'));
+        clone.querySelector('[data-save]')?.classList.remove('visible');
+        return '<!doctype html>\n' + clone.outerHTML + '\n';
+      };
+      const copyToClipboard = (text) => {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch { ok = false; }
+        document.body.removeChild(area);
+        return ok;
+      };
+      const saveDoc = () => {
+        if (window.location.protocol !== 'file:') { alert('Save is available for local HTML files.'); return; }
+        const html = serializedDocument();
+        if (!copyToClipboard(html)) { alert('Save failed: could not copy the document to the clipboard.'); return; }
+        window.location.href = 'wysiwyg-save://write?file=' + encodeURIComponent(decodeURIComponent(window.location.pathname));
+        saveButton.textContent = 'Saved';
+        setEditing(false);
+        setTimeout(() => { saveButton.textContent = 'Save'; }, 1500);
+      };
+
+      setTheme('dark'); setSize('small');
+      theme.addEventListener('click', () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+      buttons.forEach((button) => button.addEventListener('click', () => setSize(button.dataset.size)));
+      notability.addEventListener('click', sendToNotability);
+      editButton.addEventListener('click', () => setEditing(!editing));
+      saveButton.addEventListener('click', saveDoc);
+    })();
+  </script>
+<script>
+(() => {
+  'use strict';
+  const slides = [...document.querySelectorAll('.slide')];
+  const play = document.getElementById('play');
+  const status = document.getElementById('status');
+  const speed = document.getElementById('speed');
+  const mute = document.getElementById('mute');
+  const mutedPicker = document.getElementById('muted-slides');
+  const restore = document.getElementById('restore-slide');
+  const restoreAll = document.getElementById('restore-all');
+  const storageKey = `slideshow-muted:v1:${window.location.pathname}`;
+  const slideIds = slides.map(slide => slide.dataset.id);
+  let muted = new Set();
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(storageKey) || '[]');
+    if (Array.isArray(saved)) muted = new Set(saved.filter(id => slideIds.includes(id)));
+  } catch { /* Playback still works when browser storage is unavailable. */ }
+  let index = 0;
+  let playing = false;
+  let timer = null;
+  let wake = null;
+  let requestingWake = false;
+  let touchX = null;
+
+  function activeIndices() {
+    return slides.flatMap((slide, i) => muted.has(slideIds[i]) ? [] : [i]);
+  }
+  function nextIndex(delta) {
+    if (!activeIndices().length) return -1;
+    for (let offset = 1; offset <= slides.length; offset++) {
+      const candidate = (index + delta * offset + slides.length) % slides.length;
+      if (!muted.has(slideIds[candidate])) return candidate;
+    }
+    return -1;
+  }
+  function saveMuted() {
+    try { window.localStorage.setItem(storageKey, JSON.stringify([...muted])); }
+    catch { status.textContent = 'Mute changes apply now but cannot be saved in this browser.'; }
+  }
+
+  function show() {
+    const active = activeIndices();
+    const empty = active.length === 0;
+    slides.forEach((slide, i) => { slide.hidden = i !== index; });
+    document.getElementById('empty-slides').hidden = !empty;
+    document.getElementById('counter').textContent = empty ? 'All slides muted' : `${index + 1} / ${slides.length}` + (muted.size ? ` · ${active.length} active` : '');
+    play.disabled = empty;
+    mute.disabled = empty;
+    for (const id of ['previous', 'next', 'edge-previous', 'edge-next']) document.getElementById(id).disabled = empty;
+    const selection = mutedPicker.value;
+    const options = slides.flatMap((slide, i) => {
+      if (!muted.has(slideIds[i])) return [];
+      const option = document.createElement('option');
+      option.value = String(i);
+      option.textContent = `Slide ${i + 1}: ${slide.textContent.trim().replace(/\s+/g, ' ').slice(0, 65)}`;
+      return [option];
+    });
+    mutedPicker.replaceChildren(...options);
+    if (options.some(option => option.value === selection)) mutedPicker.value = selection;
+    mutedPicker.hidden = restore.hidden = restoreAll.hidden = !muted.size;
+    mutedPicker.setAttribute('aria-label', `Muted slides (${muted.size})`);
+    play.textContent = playing ? 'Pause' : 'Play';
+    play.setAttribute('aria-pressed', String(playing));
+  }
+  function schedule() {
+    clearTimeout(timer);
+    timer = null;
+    if (playing && index >= 0 && !document.hidden) {
+      timer = setTimeout(() => {
+        index = nextIndex(1);
+        show();
+        schedule();
+      }, Number(slides[index].dataset.seconds) * 1000 / Number(speed.value));
+    }
+  }
+  async function releaseWake() {
+    const held = wake;
+    wake = null;
+    if (held) { try { await held.release(); } catch { /* Already released by OS. */ } }
+  }
+  async function requestWake() {
+    if (!playing || document.hidden || wake || requestingWake) return;
+    if (!('wakeLock' in navigator)) {
+      status.textContent = 'Playing · keep this page open. If the screen sleeps, set iPad Auto-Lock to Never.';
+      return;
+    }
+    requestingWake = true;
+    try {
+      const lock = await navigator.wakeLock.request('screen');
+      if (!playing || document.hidden) { await lock.release(); return; }
+      wake = lock;
+      lock.addEventListener('release', () => {
+        if (wake === lock) wake = null;
+        if (playing) status.textContent = 'Playing · screen-awake lock released. Keep the screen awake manually if needed.';
+      });
+      status.textContent = 'Playing · looping · keeping screen awake';
+    } catch {
+      if (playing) status.textContent = 'Playing · screen-awake unavailable. iPad: Settings → Display & Brightness → Auto-Lock → Never, if available.';
+    } finally { requestingWake = false; }
+  }
+  function setPlaying(value) {
+    playing = value && activeIndices().length > 0;
+    show();
+    schedule();
+    if (playing) {
+      status.textContent = 'Playing · loops continuously';
+      requestWake();
+    } else {
+      status.textContent = 'Paused · press Play to resume';
+      releaseWake();
+    }
+  }
+  function step(delta) {
+    index = nextIndex(delta);
+    show();
+    schedule();
+  }
+  mute.addEventListener('click', () => {
+    if (index < 0) return;
+    muted.add(slideIds[index]);
+    index = nextIndex(1);
+    if (index < 0) setPlaying(false);
+    else { show(); schedule(); }
+    saveMuted();
+  });
+  function restoreMuted(all) {
+    const restoredIndex = Number(mutedPicker.value);
+    if (all) muted.clear();
+    else muted.delete(slideIds[restoredIndex]);
+    if (index < 0) index = all ? 0 : restoredIndex;
+    show();
+    schedule();
+    saveMuted();
+  }
+  restore.addEventListener('click', () => restoreMuted(false));
+  restoreAll.addEventListener('click', () => restoreMuted(true));
+  play.addEventListener('click', () => setPlaying(!playing));
+  document.getElementById('previous').addEventListener('click', () => step(-1));
+  document.getElementById('next').addEventListener('click', () => step(1));
+  document.getElementById('edge-previous').addEventListener('click', () => step(-1));
+  document.getElementById('edge-next').addEventListener('click', () => step(1));
+  speed.addEventListener('change', schedule);
+  document.addEventListener('visibilitychange', () => {
+    schedule();
+    if (document.hidden) releaseWake();
+    else if (playing) requestWake();
+  });
+  window.addEventListener('pagehide', () => { clearTimeout(timer); releaseWake(); });
+  window.addEventListener('pageshow', () => { schedule(); if (playing) requestWake(); });
+  document.addEventListener('keydown', event => {
+    if (event.target.closest('input, textarea, select, button, [contenteditable="true"]')) return;
+    if (event.key === 'ArrowRight') { event.preventDefault(); step(1); }
+    if (event.key === 'ArrowLeft') { event.preventDefault(); step(-1); }
+    if (event.code === 'Space') { event.preventDefault(); setPlaying(!playing); }
+  });
+  const stage = document.querySelector('.stage');
+  stage.addEventListener('touchstart', event => {
+    touchX = event.target.closest('.edge-navigation') ? null : event.touches[0].clientX;
+  }, {passive: true});
+  stage.addEventListener('touchend', event => {
+    if (touchX === null) return;
+    const delta = event.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(delta) > 65) step(delta < 0 ? 1 : -1);
+  }, {passive: true});
+  const fullscreen = document.getElementById('fullscreen');
+  const root = document.documentElement;
+  let presenting = false;
+  let nativeFullscreen = false;
+  let controlsTimer = null;
+  function revealControls() {
+    clearTimeout(controlsTimer);
+    root.classList.remove('controls-hidden');
+    if (!presenting) return;
+    controlsTimer = setTimeout(() => {
+      // Keep the speed picker and document editor usable while interacting.
+      if (document.activeElement?.closest('select, [contenteditable="true"]')) {
+        revealControls();
+        return;
+      }
+      if (document.activeElement?.closest('.playback, .controls')) stage.focus({preventScroll: true});
+      root.classList.add('controls-hidden');
+    }, 3000);
+  }
+  function setPresentation(value) {
+    presenting = value;
+    root.classList.toggle('presenting', value);
+    root.classList.remove('controls-hidden');
+    clearTimeout(controlsTimer);
+    fullscreen.textContent = value ? 'Exit full screen' : 'Full screen';
+    fullscreen.setAttribute('aria-pressed', String(value));
+    if (value) {
+      stage.focus({preventScroll: true});
+      root.classList.add('controls-hidden');
+    }
+  }
+  async function exitPresentation() {
+    setPresentation(false);
+    if (document.fullscreenElement) await document.exitFullscreen();
+  }
+  fullscreen.addEventListener('click', async () => {
+    if (presenting) { await exitPresentation(); return; }
+    setPresentation(true);
+    // Content-only view also works on devices without the browser fullscreen API.
+    try { await root.requestFullscreen?.(); }
+    catch { /* Keep the content-only view within the browser window. */ }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) {
+      nativeFullscreen = true;
+      if (!presenting) setPresentation(true);
+    } else if (nativeFullscreen) {
+      nativeFullscreen = false;
+      setPresentation(false);
+    }
+  });
+  document.addEventListener('pointerdown', event => {
+    if (!event.target?.closest('.edge-navigation')) revealControls();
+  });
+  document.addEventListener('focusin', event => {
+    if (presenting && event.target.closest('.playback, .controls')) revealControls();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && presenting) {
+      event.preventDefault();
+      exitPresentation();
+    } else if (presenting && !event.target.closest('.edge-navigation')) revealControls();
+  });
+  index = muted.has(slideIds[0]) ? nextIndex(1) : 0;
+  show();
+})();
+
+</script>
+</body>
+</html>
