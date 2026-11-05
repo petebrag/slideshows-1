@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="html-doc template v1">
+  <title>Effortless — Make What Matters Easier</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101419; --paper: #19212a; --paper-2: #202b36; --text: #eef3f7; --muted: #a8b4c1;
+      --line: #334252; --accent: #78b7ff; --good: #7ee2ad; --warn: #f5c26b; --bad: #ff8a8a;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .22);
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f5f7fb; --paper: #fff; --paper-2: #edf2f7; --text: #162130; --muted: #5a6877;
+      --line: #cbd6e2; --accent: #175cc5; --good: #087443; --warn: #8a5a00; --bad: #b42318;
+      --shadow: 0 8px 24px rgba(20, 30, 45, .12);
+    }
+    * { box-sizing: border-box; }
+    html, body { background: var(--bg); }
+    body {
+      margin: 0; color: var(--text);
+      font: 1rem/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      overflow-wrap: anywhere;
+    }
+    main { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0 96px; }
+
+    /* Header */
+    .eyebrow { margin: 0 0 8px; color: var(--muted); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .eyebrow:empty, .lede:empty { display: none; }
+    h1 { margin: 0 0 10px; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; letter-spacing: -.01em; }
+    .lede { max-width: 790px; margin: 0 0 28px; color: var(--muted); font-size: 1.05rem; }
+
+    /* Sections render as cards (pandoc --section-divs emits <section>) */
+    section { margin: 20px 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+    section section { margin: 16px 0 0; padding: 0; border: 0; background: transparent; }
+    h2 { margin: 0 0 12px; font-size: 1.35rem; line-height: 1.25; }
+    h3 { margin: 18px 0 8px; font-size: 1.08rem; }
+    h4, h5, h6 { margin: 14px 0 6px; font-size: 1rem; color: var(--muted); }
+    section > h2:first-child, section > h3:first-child { margin-top: 0; }
+
+    /* Body text */
+    p { margin: 10px 0; }
+    ul, ol { margin: 10px 0; padding-left: 24px; }
+    li + li { margin-top: 6px; }
+    li > p { margin: 4px 0; }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    strong { font-weight: 700; }
+    hr { margin: 28px 0; border: 0; border-top: 1px solid var(--line); }
+    section > hr:last-child { display: none; }
+    ul.task-list, ul:has(> li > input[type="checkbox"]) { list-style: none; padding-left: 4px; }
+    li > input[type="checkbox"], li > label > input[type="checkbox"] { margin: 0 8px 0 0; vertical-align: -1px; accent-color: var(--accent); }
+    img, video { max-width: 100%; height: auto; border-radius: 6px; }
+    blockquote { margin: 14px 0; padding: 10px 16px; border-left: 4px solid var(--accent); border-radius: 0 6px 6px 0; background: var(--paper-2); color: var(--text); }
+    blockquote > :first-child { margin-top: 0; }
+    blockquote > :last-child { margin-bottom: 0; }
+
+    /* Code: wraps instead of scrolling, so print/PDF keeps everything */
+    code, pre, kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; }
+    :not(pre) > code { padding: .1em .35em; border: 1px solid var(--line); border-radius: 4px; background: var(--paper-2); }
+    pre { margin: 12px 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); white-space: pre-wrap; overflow-wrap: anywhere; }
+    pre code { padding: 0; border: 0; background: none; }
+
+    /* Tables: full width, wrapping cells, no scroll container */
+    table { width: 100%; margin: 14px 0; border-collapse: collapse; font-size: .94rem; }
+    th, td { padding: 8px 10px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    thead th { background: var(--paper-2); font-weight: 700; }
+    tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--paper-2) 45%, transparent); }
+
+    /* Callouts: <div class="callout note|good|warn|bad"> */
+    .callout { margin: 14px 0; padding: 12px 16px; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; background: var(--paper-2); }
+    .callout.good { border-left-color: var(--good); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.bad { border-left-color: var(--bad); }
+    .callout > :first-child { margin-top: 0; }
+    .callout > :last-child { margin-bottom: 0; }
+    .muted { color: var(--muted); }
+
+    /* Floating controls */
+    .controls { position: fixed; right: 20px; bottom: 20px; z-index: 10; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; max-width: calc(100% - 32px); padding: 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); box-shadow: var(--shadow); }
+    .controls button { min-height: 34px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper-2); color: var(--text); padding: 6px 10px; font: inherit; font-size: .75rem; font-weight: 700; cursor: pointer; }
+    .controls button:hover, .controls button:focus-visible, .controls button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); outline: none; }
+    .sizes { display: flex; gap: 4px; }
+    .notability-button { margin-left: 4px; border-color: var(--good) !important; color: var(--good) !important; }
+    .notability-button:hover, .notability-button:focus-visible { background: color-mix(in srgb, var(--good) 12%, var(--paper-2)); outline: 2px solid var(--good); }
+    .edit-button { margin-left: 4px; }
+    .edit-button[aria-pressed="true"] { border-color: var(--warn) !important; color: var(--warn) !important; }
+    .save-button { display: none; border-color: var(--accent) !important; color: var(--accent) !important; }
+    .save-button.visible { display: inline-flex; align-items: center; }
+    main.editing { outline: 2px dashed var(--warn); outline-offset: 10px; border-radius: 8px; }
+    main.editing section { cursor: text; }
+
+    @media (max-width: 640px) {
+      main { padding-top: 28px; }
+      section { padding: 16px; }
+      .controls { right: 8px; bottom: 8px; border-radius: 14px; }
+    }
+
+    @media print {
+      :root, :root[data-theme="dark"], :root[data-theme="light"] {
+        color-scheme: light;
+        --bg: #fff; --paper: #fff; --paper-2: #f3f5f7; --text: #000; --muted: #333;
+        --line: #777; --accent: #0645ad; --good: #075e33; --warn: #704800; --bad: #8a1c12;
+        --shadow: none;
+      }
+      html, body { background: #fff !important; color: #000 !important; font-size: 100% !important; }
+      main { width: 100%; padding: 0; outline: none !important; }
+      section, pre, blockquote, .callout, table, th, td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      blockquote, .callout, pre, tr, li { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+      .controls { display: none !important; }
+    }
+  </style>
+<style>
+/* Playback sits inside the shared html-doc document shell. */
+main { width: min(1200px, calc(100% - 32px)); padding: 22px 0 125px; }
+header h1 { font-size: clamp(1.15rem, 2.5vw, 1.7rem); margin-bottom: 20px; }
+.playback { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+.playback button, .playback select { font: inherit; color: var(--text); background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; min-height: 44px; }
+.playback button { cursor: pointer; }
+.playback button:focus-visible, .playback select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+#play { background: var(--accent); color: var(--bg); min-width: 90px; font-weight: 800; }
+.playback label { display: flex; gap: 8px; align-items: center; }
+#counter { color: var(--muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+.stage { min-height: min(60dvh, 700px); display: grid; place-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: clamp(22px, 5vw, 65px); touch-action: pan-y; }
+.slide { width: 100%; font-size: clamp(1.55rem, 3.1vw, 2.9rem); line-height: 1.5; text-align: center; overflow-wrap: anywhere; }
+.slide[hidden] { display: none; }
+.stage { position: relative; padding-inline: max(64px, min(5vw, 65px)); }
+.edge-navigation { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; display: grid; place-items: center; width: 52px; height: 88px; padding: 0; border: 0; border-radius: 12px; background: transparent; color: var(--muted); cursor: pointer; touch-action: manipulation; }
+.edge-previous { left: max(4px, env(safe-area-inset-left)); }
+.edge-next { right: max(4px, env(safe-area-inset-right)); }
+.edge-navigation svg { width: 40px; height: 40px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.edge-navigation:hover { color: var(--text); background: color-mix(in srgb, var(--text) 7%, transparent); }
+.edge-navigation:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; color: var(--text); }
+.slide h1, .slide h2, .slide h3 { font-size: 1.2em; line-height: 1.25; }
+.slide p { margin: 0.6em 0; }
+.slide ul, .slide ol { text-align: left; }
+footer { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wrap; color: var(--muted); margin-top: 15px; font-size: .8rem; }
+.revision { font-family: monospace; }
+.presenting, .presenting body { overflow: hidden; }
+.presenting main { width: 100%; padding: 0; }
+.presenting .stage { position: fixed; inset: 0; width: 100%; height: 100dvh; min-height: 0; margin: 0; border: 0; border-radius: 0; padding: clamp(24px, 6vw, 90px); padding-inline: max(64px, min(6vw, 90px)); }
+.presenting main > header, .presenting .playback, .presenting footer { position: fixed; z-index: 11; padding: 12px 18px; margin: 0; background: var(--paper); box-shadow: var(--shadow); }
+.presenting main > header { top: 0; left: 0; right: 0; }
+.presenting main > header h1 { margin: 0; font-size: 1rem; }
+.presenting main > header .eyebrow { display: none; }
+.presenting .playback { bottom: 0; left: 0; right: 0; }
+.presenting footer { top: 48px; left: 0; right: 0; font-size: .75rem; }
+.presenting .controls { bottom: 85px; z-index: 12; }
+.presenting.controls-hidden main > header,
+.presenting.controls-hidden .playback,
+.presenting.controls-hidden footer,
+.presenting.controls-hidden .controls { visibility: hidden; pointer-events: none; }
+.presenting.controls-hidden { cursor: none; }
+@media (max-width: 600px) {
+  main { width: calc(100% - 24px); padding-top: 16px; padding-bottom: 190px; }
+  .stage { min-height: 48dvh; padding: 24px 64px; }
+  .slide { font-size: 1.65rem; }
+  .playback label { font-size: .8rem; }
+  #counter { margin-left: 0; }
+}
+@media print { .edge-navigation { display: none; } }
+
+#muted-slides { max-width: min(100%, 300px); }
+.playback [hidden], #empty-slides[hidden] { display: none; }
+.playback button:disabled, .edge-navigation:disabled { opacity: .4; cursor: default; }
+#empty-slides { text-align: center; font-size: 1.3rem; }
+
+</style>
+</head>
+<body>
+  <main>
+<header><p class="eyebrow">Slideshow Machine</p><h1>Effortless — Make What Matters Easier</h1></header><nav class="playback" aria-label="Playback"><button id="previous" aria-label="Previous slide">←</button><button id="play">Play</button><button id="next" aria-label="Next slide">→</button><label>Reading time <select id="speed"><option value="0.5">Slower</option><option value="1" selected>Normal</option><option value="1.5">Faster</option><option value="2">Fastest</option></select></label><button id="fullscreen">Full screen</button><button id="mute">Mute this slide</button><select id="muted-slides" aria-label="Muted slides" hidden></select><button id="restore-slide" hidden>Restore selected slide</button><button id="restore-all" hidden>Restore all</button><span id="counter" aria-live="polite"></span></nav><div class="stage" tabindex="0" aria-label="Slideshow; use left and right arrows"><button type="button" id="edge-previous" class="edge-navigation edge-previous" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 5 8 12 15 19" /></svg></button><button type="button" id="edge-next" class="edge-navigation edge-next" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 5 16 12 9 19" /></svg></button><article class="slide" data-id="590a50f76fd0e03cdafcbd7f54321ae42ce67c2930247333cd166eff834e72a2-1" data-seconds="10" ><h1 id="effortless">Effortless</h1>
+<p>Make It Easier to Do What Matters Most</p>
+<p>Greg McKeown · 2021</p>
+<p>A presentation adapted from your supplied book summary.</p>
+</article><article class="slide" data-id="db9a78911f106a95bedd25e01623fd6308d7a6a99168babab97ee6734ec6ae10-1" data-seconds="16" hidden><h2 id="important-work-can-become-easier">Important work can become easier</h2>
+<p>When meaningful work overwhelms you, adding effort is not the only option.</p>
+<p>Redesign how you work: reduce friction, simplify execution, and create benefits that continue after the work ends.</p>
+</article><article class="slide" data-id="49f73ca8d739543c3d87b2a73cdad28a10ae96dd260e354633eb398aae85ec26-1" data-seconds="16" hidden><h2 id="essentialism-chooses.-effortless-redesigns.">Essentialism chooses. Effortless redesigns.</h2>
+<ul>
+<li>Essentialism: What deserves my time and energy?</li>
+<li>Effortless: How can I make those essential things easier?</li>
+</ul>
+<p>Even a carefully chosen workload can become exhausting if the methods remain unnecessarily difficult.</p>
+</article><article class="slide" data-id="4b6608e8d78ee712bb17ef0253f2279edd7eb6da1af847d30da334b992ae5920-1" data-seconds="16" hidden><h2 id="the-exhaustion-cycle">The exhaustion cycle</h2>
+<p>More responsibilities → more effort → less recovery.</p>
+<p>Exhaustion reduces clarity. Routine work becomes harder. You respond with still more effort.</p>
+<p>Break the cycle by changing the process and protecting recovery.</p>
+</article><article class="slide" data-id="6b1170b414988132a2ccf8c1d0e4c4ac708ab01e3184f63242ea133a4c6c7514-1" data-seconds="17" hidden><h2 id="three-places-to-reduce-friction">Three places to reduce friction</h2>
+<ol type="1">
+<li>State: become rested, attentive, and clearheaded.</li>
+<li>Action: make essential work easier to start and finish.</li>
+<li>Results: build systems that keep creating value.</li>
+</ol>
+<p>A clearer mind. Simpler execution. Lasting benefits.</p>
+</article><article class="slide" data-id="1c4c284d20586cc80bc06c18f1032e9b753d4180bbbea8589993a9191117c64b-1" data-seconds="10" hidden><h1 id="part-i-effortless-state">Part I · Effortless State</h1>
+<p>Make it easier to focus.</p>
+<p>The five shifts: Invert, Enjoy, Release, Rest, and Notice.</p>
+</article><article class="slide" data-id="8b2d90cefab9aa79408ec73cb96c1c8934a59e48d42d6972ad446fd1a1b15aec-1" data-seconds="17" hidden><h2 id="invert-the-question">1 · Invert the question</h2>
+<p>Before asking how to work harder, ask:</p>
+<p>What would an easier way to achieve this result look like?</p>
+<p>Difficulty may come from the method rather than the objective. Investigate alternatives before accepting complexity.</p>
+</article><article class="slide" data-id="f1ac6756cab5fb2ab0f32eae5d6a6b90b1f6efe2728286cf5a6a653525e291cf-1" data-seconds="19" hidden><h2 id="illustration-redesign-the-weekly-report">Illustration · Redesign the weekly report</h2>
+<p>Instead of sacrificing Saturday to a lengthy report:</p>
+<ul>
+<li>Identify the five metrics readers actually need.</li>
+<li>Generate the figures automatically.</li>
+<li>Remove commentary that changes no decision.</li>
+</ul>
+<p>Keep the useful result. Reduce the work surrounding it.</p>
+</article><article class="slide" data-id="831cce84975946e455eb497c766dda97256ba7aa5882c34abcbd658f3a3a1701-1" data-seconds="19" hidden><h2 id="make-essential-work-enjoyable">2 · Make essential work enjoyable</h2>
+<p>Enjoyment can be part of the activity, rather than something postponed until afterward.</p>
+<ul>
+<li>Pair chores with music.</li>
+<li>Make exercise social.</li>
+<li>Use a pleasant, familiar starting ritual.</li>
+</ul>
+<p>Reduce resistance so beginning requires less willpower.</p>
+</article><article class="slide" data-id="03baa5cef63f04ac264b29543ed31a9baa30d57d5cd03527ef1dbdb2bf0daff8-1" data-seconds="19" hidden><h2 id="release-mental-burdens">3 · Release mental burdens</h2>
+<p>Resentment, regret, and repeated complaints occupy attention even when you are not physically working.</p>
+<p>Notice the burden. Act on what you can influence. Practice appreciation where it helps.</p>
+<p>Releasing unproductive rumination does not mean ignoring legitimate problems.</p>
+</article><article class="slide" data-id="f5a6a1f7ad02f91789e3577e29734fdb9fa59294a5e700dc85e7c193d79572d1-1" data-seconds="18" hidden><h2 id="treat-rest-as-an-input">4 · Treat rest as an input</h2>
+<p>Sleep, breaks, and recovery support concentration and judgment.</p>
+<p>A heroic day followed by two exhausted days may produce less than steady, moderate work.</p>
+<p>Protect tomorrow’s capacity when deciding how much to do today.</p>
+</article><article class="slide" data-id="d7f7146d698c8bee131085781b0f64be03c95ef219368176bd3e943a21832ddb-1" data-seconds="18" hidden><h2 id="notice-what-matters">5 · Notice what matters</h2>
+<p>Separate the central issue from distractions and assumptions.</p>
+<ul>
+<li>Close unrelated documents.</li>
+<li>Silence interruptions during focused work.</li>
+<li>Listen to what people are experiencing.</li>
+</ul>
+<p>Clear attention helps prevent effort spent on secondary or imagined problems.</p>
+</article><article class="slide" data-id="5c8122284291e6331a09101e36321729e4e855aa472221d794ecaf0143f40b2e-1" data-seconds="19" hidden><h2 id="a-state-check-before-you-begin">A state check before you begin</h2>
+<ul>
+<li>Am I rested enough to think clearly?</li>
+<li>What worry is occupying my attention?</li>
+<li>Which distraction can I remove?</li>
+<li>Am I assuming this must be difficult?</li>
+</ul>
+<p>Improve the conditions before demanding more concentration.</p>
+</article><article class="slide" data-id="8474e38ee48a44f30bff5b5a53563b1b8cb2b0c9719afc48e2e7a19436c69e6e-1" data-seconds="10" hidden><h1 id="part-ii-effortless-action">Part II · Effortless Action</h1>
+<p>Make essential work easier to do.</p>
+<p>The five shifts: Define, Start, Simplify, Progress, and Pace.</p>
+</article><article class="slide" data-id="4896e733bfeb1cff19117c8b9e28ed0f8a226b9f9434744afcfe87792a5bc26b-1" data-seconds="17" hidden><h2 id="define-the-finish-line">6 · Define the finish line</h2>
+<p>Vague goals invite endless work.</p>
+<p>Decide what completion means before starting: a concrete outcome, a clear boundary, and an observable result.</p>
+<p>Once the agreed result exists, recognize that the task can end.</p>
+</article><article class="slide" data-id="4e4a3b57fb00e68a3f3de92925fa475f5add43bf78246715e0be317b462b3958-1" data-seconds="17" hidden><h2 id="illustration-give-website-work-an-endpoint">Illustration · Give website work an endpoint</h2>
+<p>Vague: Improve the website.</p>
+<p>Concrete: Reduce homepage loading time below two seconds and fix the three most important mobile usability problems.</p>
+<p>A defined outcome helps separate necessary work from attractive extras.</p>
+</article><article class="slide" data-id="c9266b4d061bca531f3ad68e67d43df1cefacd704e8d0f713a6e1015c39c4bda-1" data-seconds="17" hidden><h2 id="define-a-successful-day">Define a successful day</h2>
+<p>Choose a short list of outcomes that would make today meaningfully productive.</p>
+<p>Use those outcomes to recognize completion.</p>
+<p>An unlimited list of possible improvements makes it difficult to feel finished, however much you accomplish.</p>
+</article><article class="slide" data-id="09dc3395c6a479c07d1462c25aa697b4c8bc3481000389805d1908219d8eab01-1" data-seconds="17" hidden><h2 id="find-the-first-obvious-action">7 · Find the first obvious action</h2>
+<p>A large, vague first step creates resistance.</p>
+<p>Choose the smallest concrete action that moves the project forward.</p>
+<p>The goal is to make starting straightforward enough that motivation becomes less important.</p>
+</article><article class="slide" data-id="ebec188424dd68b717febe466de493adfc727e1c29b97347eab05ec95da8c3e4-1" data-seconds="17" hidden><h2 id="illustration-begin-the-proposal">Illustration · Begin the proposal</h2>
+<p>Instead of: Write the comprehensive proposal.</p>
+<p>Start with: Open a document and write five section headings.</p>
+<p>A short starting session, such as ten minutes, can turn an intimidating project into something already underway.</p>
+</article><article class="slide" data-id="9385220bd5a6c71ab946962dbabbc5f6da18cd3a52d538e567090c6d6927de77-1" data-seconds="19" hidden><h2 id="start-from-zero">8 · Start from zero</h2>
+<p>Before making every step faster, ask which steps are necessary at all.</p>
+<p>Imagine the process does not yet exist. Add back only what the desired outcome requires.</p>
+<p>Removing unnecessary steps can save more effort than optimizing them.</p>
+</article><article class="slide" data-id="89bc1f25a83b6903f8ae92c2d1e6057ff3a0ba038628c93e447661fd4fcf21c3-1" data-seconds="18" hidden><h2 id="illustration-remove-the-approval-burden">Illustration · Remove the approval burden</h2>
+<p>A routine purchase requires six approvals.</p>
+<p>Instead of improving six forms, consider whether purchases below a clear spending limit need individual approval.</p>
+<p>The improvement may come from removing the procedure, while retaining appropriate boundaries.</p>
+</article><article class="slide" data-id="026dded472867ab71c37ebec204d977c9516b93e06fd553c1a40bbacdef6b6ed-1" data-seconds="18" hidden><h2 id="subtraction-beats-cosmetic-efficiency">Subtraction beats cosmetic efficiency</h2>
+<p>A twenty-step process may not need twenty faster steps.</p>
+<p>If twelve steps contribute nothing to the outcome, remove them first.</p>
+<p>Then improve the eight that remain. Avoid adding work simply because doing more looks impressive.</p>
+</article><article class="slide" data-id="908f52da3c1e585f915d9b3c394cf5a1d8249dbf1d3c62bd0016543bc7691e1b-1" data-seconds="20" hidden><h2 id="let-the-first-version-be-rough">9 · Let the first version be rough</h2>
+<p>An initial attempt provides something to test and improve.</p>
+<ul>
+<li>Write an imperfect draft.</li>
+<li>Build a crude working prototype.</li>
+<li>Test demand with a simple landing page.</li>
+</ul>
+<p>Early, inexpensive mistakes reveal weaknesses before a large investment.</p>
+</article><article class="slide" data-id="9cefdfad2926b3f663037435b85e595097e4719782e4a7349cb3392bb14164a8-1" data-seconds="17" hidden><h2 id="progress-creates-information">Progress creates information</h2>
+<p>A rough version answers questions that planning alone cannot.</p>
+<p>What works? What fails? What should change next?</p>
+<p>Accepting an imperfect first attempt means learning early; it does not mean abandoning standards for the finished result.</p>
+</article><article class="slide" data-id="117069894e4ef94db178bac0ef7939cefdd28b17a30900104265e184b9fb013c-1" data-seconds="18" hidden><h2 id="set-a-sustainable-pace">10 · Set a sustainable pace</h2>
+<p>Use both a minimum and a maximum amount of daily progress.</p>
+<ul>
+<li>The minimum maintains momentum.</li>
+<li>The maximum protects recovery.</li>
+</ul>
+<p>Consistency can produce more over time than repeated bursts of exhaustion and catch-up.</p>
+</article><article class="slide" data-id="d6dde478cff98a4a2e4ede2fb0edb23b0f8ed9c0f64bafd85b3141f1bc3adcfc-1" data-seconds="18" hidden><h2 id="illustration-protect-tomorrows-writing">Illustration · Protect tomorrow’s writing</h2>
+<p>A writer might choose a daily range of 300 to 1,000 words.</p>
+<p>The lower limit keeps the project moving. The upper limit discourages exhausting overwork.</p>
+<p>These numbers illustrate the principle; choose limits appropriate to the work.</p>
+</article><article class="slide" data-id="913d91d5d40c13ee14dd994ac078aadbc1be3f633a35004ec5d447415b8e1738-1" data-seconds="17" hidden><h2 id="turn-action-into-a-repeatable-routine">Turn action into a repeatable routine</h2>
+<ol type="1">
+<li>Define the result.</li>
+<li>Choose the smallest useful start.</li>
+<li>Remove unnecessary steps.</li>
+<li>Make a rough version.</li>
+<li>Stop at a sustainable boundary.</li>
+</ol>
+<p>Make progress easier to repeat tomorrow.</p>
+</article><article class="slide" data-id="ff8dcb7646f572010977a3fb28e2f2451808d44f8ac833c0a504552fbcc4d5de-1" data-seconds="10" hidden><h1 id="part-iii-effortless-results">Part III · Effortless Results</h1>
+<p>Make one investment of effort useful repeatedly.</p>
+<p>The five shifts: Learn, Lift, Automate, Trust, and Prevent.</p>
+</article><article class="slide" data-id="31a7e574a42c87d3ad8105fb1bd66289b2f226e037ab510be6eb829a58f9b0b4-1" data-seconds="18" hidden><h2 id="linear-versus-residual-results">Linear versus residual results</h2>
+<p>Linear: each additional result requires another round of work.</p>
+<p>Residual: an initial investment continues producing benefits.</p>
+<p>A reusable guide, acquired skill, or reliable process may reduce future effort. Continued value still depends on usefulness and maintenance.</p>
+</article><article class="slide" data-id="25285712aebde930ebad66c734e1f080cd9bdc98562e506cd70e31a060719b47-1" data-seconds="17" hidden><h2 id="learn-reusable-principles">11 · Learn reusable principles</h2>
+<p>Before solving everything independently, learn from people who have already faced similar problems.</p>
+<p>Seek principles that apply across situations, rather than only memorizing a single procedure.</p>
+<p>Useful knowledge can improve many later decisions.</p>
+</article><article class="slide" data-id="87162885f920644428d3b51ec8a6e12656eac59e87608707662a01cc72d81cd0-1" data-seconds="19" hidden><h2 id="illustration-learn-the-cause-not-just-the-fix">Illustration · Learn the cause, not just the fix</h2>
+<p>A software workaround may solve today’s error.</p>
+<p>Understanding the underlying architecture or root cause may help you prevent an entire category of errors.</p>
+<p>A broadly useful lesson can repay its cost many times.</p>
+</article><article class="slide" data-id="d5af38f3857b06acaac9cb6343c720f4847679c15cdde70cd174e09d4ccb8350-1" data-seconds="20" hidden><h2 id="lift-others-through-teaching">12 · Lift others through teaching</h2>
+<p>Teaching spreads the benefit of what you learn.</p>
+<p>Explain an idea simply enough that someone else can understand, remember, and teach it.</p>
+<p>Clear examples and memorable stories help knowledge travel. Teaching also exposes gaps in your own understanding.</p>
+</article><article class="slide" data-id="9e33d4421edba60d1ef90f96f00809f606191dba6bba6a8933e1ca8da8ad6e30-1" data-seconds="18" hidden><h2 id="illustration-replace-repeated-explanations">Illustration · Replace repeated explanations</h2>
+<p>A manager explains the same procedure to every new employee.</p>
+<p>A short training guide makes that knowledge reusable. Experienced employees can use it to teach newcomers.</p>
+<p>One clear explanation can support many future learning moments.</p>
+</article><article class="slide" data-id="8bbcb21be995265ab1e4a95098ec612700e21e358c81e3eb3adbe90521edf7c1-1" data-seconds="20" hidden><h2 id="systematize-recurring-work">13 · Systematize recurring work</h2>
+<p>Automation includes more than software.</p>
+<ul>
+<li>Checklists reduce dependence on memory.</li>
+<li>Templates reduce repeated setup.</li>
+<li>Calendar routines reduce recurring decisions.</li>
+<li>Scripts handle suitable repetitive operations.</li>
+</ul>
+<p>Build a reliable system once, then maintain it as needs change.</p>
+</article><article class="slide" data-id="c8a707d030462e58f4d80ad509c03dba1cc9e890bf9ba1eb5a7b0f04c876b100-1" data-seconds="18" hidden><h2 id="one-decision-can-remove-many">One decision can remove many</h2>
+<p>Deciding when to exercise every day creates repeated friction.</p>
+<p>Choosing a standing weekday time removes that recurring decision.</p>
+<p>Look for choices you can settle in advance, while keeping room to adjust when circumstances change.</p>
+</article><article class="slide" data-id="165f9365a9df284518f04f59a976968830c884ff8d5f77f0fae9de9e15577c46-1" data-seconds="17" hidden><h2 id="automate-a-useful-process">Automate a useful process</h2>
+<p>First define the outcome and remove unnecessary steps.</p>
+<p>Then systematize the repetition that remains.</p>
+<p>A recurring task is an opportunity to ask: Can this become a checklist, template, routine, or dependable software process?</p>
+</article><article class="slide" data-id="e8969aebe9898d36fbd726f3cea8c8f96b1d297cb6b2dc27ce905ba2cceadebd-1" data-seconds="18" hidden><h2 id="build-trust-with-clear-agreements">14 · Build trust with clear agreements</h2>
+<p>Unclear expectations and constant checking increase coordination costs.</p>
+<p>Agree on five things:</p>
+<ul>
+<li>Results</li>
+<li>Roles</li>
+<li>Rules</li>
+<li>Resources</li>
+<li>Rewards</li>
+</ul>
+<p>Choose trustworthy people and make responsibility and decision authority explicit.</p>
+</article><article class="slide" data-id="442c8ce1373b401ea1a3152ac2ce0a009c1d6e6b58cf25258a2e1376201b5a51-1" data-seconds="20" hidden><h2 id="illustration-delegate-without-constant-interruption">Illustration · Delegate without constant interruption</h2>
+<p>Assigning a task while checking every fifteen minutes keeps the manager involved in every step.</p>
+<p>A capable person with clear results, authority, resources, and boundaries can work more independently.</p>
+<p>Trust works best alongside a shared understanding of success.</p>
+</article><article class="slide" data-id="a242897e964f460f4f6afcac100d7c5ecc4419ecba21d97428a3c8e6b82fc424-1" data-seconds="18" hidden><h2 id="prevent-recurring-problems">15 · Prevent recurring problems</h2>
+<p>Repeated small fixes can conceal a large ongoing cost.</p>
+<p>Identify the cause and consider whether one intervention can prevent repeated incidents.</p>
+<p>Preparation, maintenance, clearer instructions, and checklists can reduce work that otherwise returns again and again.</p>
+</article><article class="slide" data-id="3845b7c7bc93ac60e16a19679065f0ef3f005340f67ed50eaad7658ada6c014a-1" data-seconds="19" hidden><h2 id="illustration-compare-the-recurring-cost">Illustration · Compare the recurring cost</h2>
+<p>An error takes 15 minutes to resolve each time.</p>
+<p>A lasting fix takes two hours: the same time as eight repeat fixes.</p>
+<p>If the repair prevents further incidents, subsequent time savings can repay that initial investment.</p>
+</article><article class="slide" data-id="ee56b611bb764c94bf0886607bce3314356a1f3e931724eff422b2ad24a0111b-1" data-seconds="20" hidden><h2 id="look-for-tomorrows-reusable-asset">Look for tomorrow’s reusable asset</h2>
+<p>Today’s work might create:</p>
+<ul>
+<li>A principle you can reuse</li>
+<li>A guide others can teach</li>
+<li>A reliable automated routine</li>
+<li>A clearer team agreement</li>
+<li>A recurring problem removed</li>
+</ul>
+<p>Ask what will still help after this task ends.</p>
+</article><article class="slide" data-id="a335c2b758df0989e3173391d57786133be3aa93eedf1043b92e11a26d5d7e0b-1" data-seconds="10" hidden><h1 id="apply-the-framework">Apply the framework</h1>
+<p>One project can produce both a useful result and an easier way to deliver the next one.</p>
+</article><article class="slide" data-id="89d6edb257d4771e62963fa175dd1238bbaba7db4196cc0efcbe3d944bb5550a-1" data-seconds="17" hidden><h2 id="before-the-project-improve-the-state">Before the project · Improve the state</h2>
+<p>Choose a time when you can think clearly.</p>
+<p>Remove distractions, prepare a pleasant workspace, and identify unrelated worries.</p>
+<p>Then ask whether you are assuming more complexity than the project actually requires.</p>
+</article><article class="slide" data-id="a872ddafa65c2a19aca49aeef057b612121e23f4c1fc30629fa9e1233d903097-1" data-seconds="17" hidden><h2 id="during-the-project-simplify-the-action">During the project · Simplify the action</h2>
+<p>Define a successful result and its boundaries.</p>
+<p>Start with one concrete action. Remove unnecessary steps. Test a rough version early.</p>
+<p>Use a pace that preserves the ability to continue tomorrow.</p>
+</article><article class="slide" data-id="bc907f2c88f5c9e91fd2b58572a95e4fbd237cf5da50f66196efc93e0577912d-1" data-seconds="17" hidden><h2 id="after-the-project-preserve-the-value">After the project · Preserve the value</h2>
+<p>Identify what will repeat.</p>
+<p>Turn useful work into templates, checklists, scripts, or training material. Clarify responsibilities and repair recurring causes of trouble.</p>
+<p>Improve the system while delivering the immediate result.</p>
+</article><article class="slide" data-id="5635d87353f2ec5892348014ebfa4d72a393c6ed4fcf88df8c1fe7fc9cee68a5-1" data-seconds="18" hidden><h2 id="five-questions-for-your-next-task">Five questions for your next task</h2>
+<ol type="1">
+<li>What would an easier method look like?</li>
+<li>What exactly counts as done?</li>
+<li>Which step can disappear?</li>
+<li>What small action can I take now?</li>
+<li>What can I create once and reuse?</li>
+</ol>
+</article><article class="slide" data-id="d2382dc219edb7268875f9c8adf1d2c4b2d823e362770678a78ba04ea5822b37-1" data-seconds="19" hidden><h2 id="important-limits">Important limits</h2>
+<p>Some difficulties remain despite good systems: illness, financial hardship, conflict, and uncertain work can require sustained effort.</p>
+<p>Use this framework to examine difficulty you can influence.</p>
+<p>Easier methods are an opportunity to investigate, not a promise that every challenge becomes easy.</p>
+</article><article class="slide" data-id="390c5c5714776a5b70ed00826189a75abb02e507af74b4cb4b2e473d5efdbf65-1" data-seconds="17" hidden><h2 id="measure-lasting-value">Measure lasting value</h2>
+<p>Effort is an input, not proof of effectiveness.</p>
+<p>Protect your state. Simplify essential action. Build results that keep helping.</p>
+<p>Judge your work by the useful, lasting value it creates—not by how exhausted you become.</p>
+</article><article class="slide" data-id="1d4e9797dab4f720cd3b484ab76d6d44553429901a42de4ef27d73264becb5e5-1" data-seconds="20" hidden><h2 id="source-and-adaptation">Source and adaptation</h2>
+<p>Based on your supplied thematic and chapter-by-chapter summary of Effortless by Greg McKeown (2021).</p>
+<p>Wording is condensed and reorganized. Practical illustrations come from the supplied summary.</p>
+<p>This presentation is a study aid, not the complete book or independently verified book text.</p>
+</article><p id="empty-slides" hidden>All slides muted. Restore a slide above to watch again.</p></div><footer><span id="status" role="status">Ready · loops continuously when playing</span><span class="revision">Revision 89db0d05e5</span></footer>
+</main>
+  <div class="controls" aria-label="Document display controls">
+    <button type="button" data-theme-control>Light mode</button>
+    <div class="sizes" role="group" aria-label="Font size">
+      <button type="button" data-size="small" aria-pressed="true">Small</button>
+      <button type="button" data-size="medium" aria-pressed="false">Medium</button>
+      <button type="button" data-size="large" aria-pressed="false">Large</button>
+    </div>
+    <button type="button" class="notability-button" data-notability>Send to Notability</button>
+    <button type="button" class="edit-button" data-edit aria-pressed="false">Edit</button>
+    <button type="button" class="save-button" data-save>Save</button>
+  </div>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const theme = document.querySelector('[data-theme-control]');
+      const buttons = [...document.querySelectorAll('[data-size]')];
+      const notability = document.querySelector('[data-notability]');
+      const editButton = document.querySelector('[data-edit]');
+      const saveButton = document.querySelector('[data-save]');
+      const main = document.querySelector('main');
+      const sizes = { small: '100%', medium: '150%', large: '200%' };
+      const setTheme = (value) => { root.dataset.theme = value; theme.textContent = value === 'dark' ? 'Light mode' : 'Dark mode'; };
+      const setSize = (value) => { root.style.fontSize = sizes[value]; buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.size === value))); };
+      const sendToNotability = () => {
+        if (window.location.protocol !== 'file:') { alert('Send to Notability is available for local HTML files.'); return; }
+        window.location.href = 'to-notability://import?file=' + encodeURIComponent(window.location.href);
+      };
+
+      // WYSIWYG in-place edit: Edit makes <main> editable, Save copies the
+      // serialized page to the clipboard and hands off to the local
+      // wysiwyg-save:// handler, which writes it to this exact file (with a
+      // timestamped backup in <folder>/.wysiwyg-save-backups/).
+      let editing = false;
+      const setEditing = (value) => {
+        editing = value;
+        main.contentEditable = value ? 'true' : 'false';
+        main.classList.toggle('editing', value);
+        editButton.textContent = value ? 'Editing…' : 'Edit';
+        editButton.setAttribute('aria-pressed', String(value));
+        saveButton.classList.toggle('visible', value);
+      };
+      const serializedDocument = () => {
+        const clone = root.cloneNode(true);
+        clone.removeAttribute('style');
+        clone.setAttribute('data-theme', 'dark');
+        const clonedMain = clone.querySelector('main');
+        clonedMain?.removeAttribute('contenteditable');
+        clonedMain?.classList.remove('editing');
+        clone.querySelector('[data-edit]')?.setAttribute('aria-pressed', 'false');
+        clone.querySelector('[data-edit]')?.replaceChildren(document.createTextNode('Edit'));
+        clone.querySelector('[data-save]')?.classList.remove('visible');
+        return '<!doctype html>\n' + clone.outerHTML + '\n';
+      };
+      const copyToClipboard = (text) => {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch { ok = false; }
+        document.body.removeChild(area);
+        return ok;
+      };
+      const saveDoc = () => {
+        if (window.location.protocol !== 'file:') { alert('Save is available for local HTML files.'); return; }
+        const html = serializedDocument();
+        if (!copyToClipboard(html)) { alert('Save failed: could not copy the document to the clipboard.'); return; }
+        window.location.href = 'wysiwyg-save://write?file=' + encodeURIComponent(decodeURIComponent(window.location.pathname));
+        saveButton.textContent = 'Saved';
+        setEditing(false);
+        setTimeout(() => { saveButton.textContent = 'Save'; }, 1500);
+      };
+
+      setTheme('dark'); setSize('small');
+      theme.addEventListener('click', () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+      buttons.forEach((button) => button.addEventListener('click', () => setSize(button.dataset.size)));
+      notability.addEventListener('click', sendToNotability);
+      editButton.addEventListener('click', () => setEditing(!editing));
+      saveButton.addEventListener('click', saveDoc);
+    })();
+  </script>
+<script>
+(() => {
+  'use strict';
+  const slides = [...document.querySelectorAll('.slide')];
+  const play = document.getElementById('play');
+  const status = document.getElementById('status');
+  const speed = document.getElementById('speed');
+  const mute = document.getElementById('mute');
+  const mutedPicker = document.getElementById('muted-slides');
+  const restore = document.getElementById('restore-slide');
+  const restoreAll = document.getElementById('restore-all');
+  const storageKey = `slideshow-muted:v1:${window.location.pathname}`;
+  const slideIds = slides.map(slide => slide.dataset.id);
+  let muted = new Set();
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(storageKey) || '[]');
+    if (Array.isArray(saved)) muted = new Set(saved.filter(id => slideIds.includes(id)));
+  } catch { /* Playback still works when browser storage is unavailable. */ }
+  let index = 0;
+  let playing = false;
+  let timer = null;
+  let wake = null;
+  let requestingWake = false;
+  let touchX = null;
+
+  function activeIndices() {
+    return slides.flatMap((slide, i) => muted.has(slideIds[i]) ? [] : [i]);
+  }
+  function nextIndex(delta) {
+    if (!activeIndices().length) return -1;
+    for (let offset = 1; offset <= slides.length; offset++) {
+      const candidate = (index + delta * offset + slides.length) % slides.length;
+      if (!muted.has(slideIds[candidate])) return candidate;
+    }
+    return -1;
+  }
+  function saveMuted() {
+    try { window.localStorage.setItem(storageKey, JSON.stringify([...muted])); }
+    catch { status.textContent = 'Mute changes apply now but cannot be saved in this browser.'; }
+  }
+
+  function show() {
+    const active = activeIndices();
+    const empty = active.length === 0;
+    slides.forEach((slide, i) => { slide.hidden = i !== index; });
+    document.getElementById('empty-slides').hidden = !empty;
+    document.getElementById('counter').textContent = empty ? 'All slides muted' : `${index + 1} / ${slides.length}` + (muted.size ? ` · ${active.length} active` : '');
+    play.disabled = empty;
+    mute.disabled = empty;
+    for (const id of ['previous', 'next', 'edge-previous', 'edge-next']) document.getElementById(id).disabled = empty;
+    const selection = mutedPicker.value;
+    const options = slides.flatMap((slide, i) => {
+      if (!muted.has(slideIds[i])) return [];
+      const option = document.createElement('option');
+      option.value = String(i);
+      option.textContent = `Slide ${i + 1}: ${slide.textContent.trim().replace(/\s+/g, ' ').slice(0, 65)}`;
+      return [option];
+    });
+    mutedPicker.replaceChildren(...options);
+    if (options.some(option => option.value === selection)) mutedPicker.value = selection;
+    mutedPicker.hidden = restore.hidden = restoreAll.hidden = !muted.size;
+    mutedPicker.setAttribute('aria-label', `Muted slides (${muted.size})`);
+    play.textContent = playing ? 'Pause' : 'Play';
+    play.setAttribute('aria-pressed', String(playing));
+  }
+  function schedule() {
+    clearTimeout(timer);
+    timer = null;
+    if (playing && index >= 0 && !document.hidden) {
+      timer = setTimeout(() => {
+        index = nextIndex(1);
+        show();
+        schedule();
+      }, Number(slides[index].dataset.seconds) * 1000 / Number(speed.value));
+    }
+  }
+  async function releaseWake() {
+    const held = wake;
+    wake = null;
+    if (held) { try { await held.release(); } catch { /* Already released by OS. */ } }
+  }
+  async function requestWake() {
+    if (!playing || document.hidden || wake || requestingWake) return;
+    if (!('wakeLock' in navigator)) {
+      status.textContent = 'Playing · keep this page open. If the screen sleeps, set iPad Auto-Lock to Never.';
+      return;
+    }
+    requestingWake = true;
+    try {
+      const lock = await navigator.wakeLock.request('screen');
+      if (!playing || document.hidden) { await lock.release(); return; }
+      wake = lock;
+      lock.addEventListener('release', () => {
+        if (wake === lock) wake = null;
+        if (playing) status.textContent = 'Playing · screen-awake lock released. Keep the screen awake manually if needed.';
+      });
+      status.textContent = 'Playing · looping · keeping screen awake';
+    } catch {
+      if (playing) status.textContent = 'Playing · screen-awake unavailable. iPad: Settings → Display & Brightness → Auto-Lock → Never, if available.';
+    } finally { requestingWake = false; }
+  }
+  function setPlaying(value) {
+    playing = value && activeIndices().length > 0;
+    show();
+    schedule();
+    if (playing) {
+      status.textContent = 'Playing · loops continuously';
+      requestWake();
+    } else {
+      status.textContent = 'Paused · press Play to resume';
+      releaseWake();
+    }
+  }
+  function step(delta) {
+    index = nextIndex(delta);
+    show();
+    schedule();
+  }
+  mute.addEventListener('click', () => {
+    if (index < 0) return;
+    muted.add(slideIds[index]);
+    index = nextIndex(1);
+    if (index < 0) setPlaying(false);
+    else { show(); schedule(); }
+    saveMuted();
+  });
+  function restoreMuted(all) {
+    const restoredIndex = Number(mutedPicker.value);
+    if (all) muted.clear();
+    else muted.delete(slideIds[restoredIndex]);
+    if (index < 0) index = all ? 0 : restoredIndex;
+    show();
+    schedule();
+    saveMuted();
+  }
+  restore.addEventListener('click', () => restoreMuted(false));
+  restoreAll.addEventListener('click', () => restoreMuted(true));
+  play.addEventListener('click', () => setPlaying(!playing));
+  document.getElementById('previous').addEventListener('click', () => step(-1));
+  document.getElementById('next').addEventListener('click', () => step(1));
+  document.getElementById('edge-previous').addEventListener('click', () => step(-1));
+  document.getElementById('edge-next').addEventListener('click', () => step(1));
+  speed.addEventListener('change', schedule);
+  document.addEventListener('visibilitychange', () => {
+    schedule();
+    if (document.hidden) releaseWake();
+    else if (playing) requestWake();
+  });
+  window.addEventListener('pagehide', () => { clearTimeout(timer); releaseWake(); });
+  window.addEventListener('pageshow', () => { schedule(); if (playing) requestWake(); });
+  document.addEventListener('keydown', event => {
+    if (event.target.closest('input, textarea, select, button, [contenteditable="true"]')) return;
+    if (event.key === 'ArrowRight') { event.preventDefault(); step(1); }
+    if (event.key === 'ArrowLeft') { event.preventDefault(); step(-1); }
+    if (event.code === 'Space') { event.preventDefault(); setPlaying(!playing); }
+  });
+  const stage = document.querySelector('.stage');
+  stage.addEventListener('touchstart', event => {
+    touchX = event.target.closest('.edge-navigation') ? null : event.touches[0].clientX;
+  }, {passive: true});
+  stage.addEventListener('touchend', event => {
+    if (touchX === null) return;
+    const delta = event.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(delta) > 65) step(delta < 0 ? 1 : -1);
+  }, {passive: true});
+  const fullscreen = document.getElementById('fullscreen');
+  const root = document.documentElement;
+  let presenting = false;
+  let nativeFullscreen = false;
+  let controlsTimer = null;
+  function revealControls() {
+    clearTimeout(controlsTimer);
+    root.classList.remove('controls-hidden');
+    if (!presenting) return;
+    controlsTimer = setTimeout(() => {
+      // Keep the speed picker and document editor usable while interacting.
+      if (document.activeElement?.closest('select, [contenteditable="true"]')) {
+        revealControls();
+        return;
+      }
+      if (document.activeElement?.closest('.playback, .controls')) stage.focus({preventScroll: true});
+      root.classList.add('controls-hidden');
+    }, 3000);
+  }
+  function setPresentation(value) {
+    presenting = value;
+    root.classList.toggle('presenting', value);
+    root.classList.remove('controls-hidden');
+    clearTimeout(controlsTimer);
+    fullscreen.textContent = value ? 'Exit full screen' : 'Full screen';
+    fullscreen.setAttribute('aria-pressed', String(value));
+    if (value) {
+      stage.focus({preventScroll: true});
+      root.classList.add('controls-hidden');
+    }
+  }
+  async function exitPresentation() {
+    setPresentation(false);
+    if (document.fullscreenElement) await document.exitFullscreen();
+  }
+  fullscreen.addEventListener('click', async () => {
+    if (presenting) { await exitPresentation(); return; }
+    setPresentation(true);
+    // Content-only view also works on devices without the browser fullscreen API.
+    try { await root.requestFullscreen?.(); }
+    catch { /* Keep the content-only view within the browser window. */ }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) {
+      nativeFullscreen = true;
+      if (!presenting) setPresentation(true);
+    } else if (nativeFullscreen) {
+      nativeFullscreen = false;
+      setPresentation(false);
+    }
+  });
+  document.addEventListener('pointerdown', event => {
+    if (!event.target?.closest('.edge-navigation')) revealControls();
+  });
+  document.addEventListener('focusin', event => {
+    if (presenting && event.target.closest('.playback, .controls')) revealControls();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && presenting) {
+      event.preventDefault();
+      exitPresentation();
+    } else if (presenting && !event.target.closest('.edge-navigation')) revealControls();
+  });
+  index = muted.has(slideIds[0]) ? nextIndex(1) : 0;
+  show();
+})();
+
+</script>
+</body>
+</html>
